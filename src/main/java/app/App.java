@@ -16,7 +16,7 @@ import io.javalin.core.util.RouteOverviewPlugin;
 
 public class App {
 
-    public static final int         JAVALIN_PORT    = 7000;
+    public static final int         JAVALIN_PORT    = 7001;
     public static final String      CSS_DIR         = "css/";
     public static final String      IMAGES_DIR      = "images/";
 
