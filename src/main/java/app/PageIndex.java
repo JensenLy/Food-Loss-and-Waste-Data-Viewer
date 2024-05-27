@@ -47,6 +47,13 @@ public class PageIndex implements Handler {
         // This uses a Java v15+ Text Block
         html = html + topnav.topnavString;
 
+        // indicating the current page 
+        html = html.replace("""
+            <a href="/">Home</a>
+            """, """
+                <a class = "current" href="/">Home</a>
+                """);
+
         // Add header content block
         html = html + """
             <div class='header'>

@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
  * Example Index HTML class using Javalin
  * <p>
@@ -46,6 +40,20 @@ public class PageMission implements Handler {
         // Add the topnav
         // This uses a Java v15+ Text Block
         html = html + topnav.topnavString;
+
+        //indicating the current page
+        html = html.replace("""
+            <a href="/mission.html">About Us</a>
+            """, """
+                <a class = "current" href="/mission.html">About Us</a>
+                    """);
+
+        //Secondary navbar
+        html = html + """
+            <div class = "secondNavBar"> 
+            <h1>Mission Statement</h1>
+            </div>
+                """;
 
         // Add header content block
         html = html + """
