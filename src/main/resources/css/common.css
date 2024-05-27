@@ -6,7 +6,7 @@
 
 body {
    font-family: Arial;
-   padding: 10px;
+   padding: 50px 10px;
    background: #f1f1f1;
 }
 
@@ -41,11 +41,109 @@ img.top-image {
    justify-content: space-between;
    align-items: center;
    z-index: 100;
- }
- 
- /* Style the topnav links */
- .topnav a {
+}
+
+/* Style the navbar links */
+.navbar a {
    font-size: 20px;
+   text-decoration: none;
+   font-weight: 500;
+   color: white;
+   margin-left: 30px;
+   display: inline-block;
+   padding: 30px 16px;
+   flex-wrap: wrap;
+}
+
+.navbar a:hover {
+   background-color:crimson;
+   color: rgb(255, 255, 255);
+   transition: 0.4s;
+}
+
+/* make the navbar glow green on the current page.*/
+.current {
+   background-color: green;
+   color: white;
+}
+
+/* formatting secondary navbar*/
+.secondNavBar h1 {
+   padding-left: 200px;
+   border-bottom: 4px solid;
+   font-size: 35px;
+   background-color: #f1f1f1;
+   position: fixed;
+   width: 100%;
+   z-index: 90;
+}
+
+.secondNavBar h1 div a{
+   font-size: 20px;
+   text-decoration: none;
+   font-weight: 500;
+   color: rgb(0, 0, 0);
+   display: inline-block;
+   padding: 15px 30px;
+   flex-wrap: wrap;
+}
+
+.secondNavBar h1 div a:hover {
+   background-color:rgb(0, 0, 0);
+   color: rgb(255, 255, 255);
+   transition: 0.4s;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+   background-color:crimson;
+    color: rgb(255, 255, 255);
+    transition: 0.4s;
+}
+
+/* Style the content */
+.content {
+   background-color: #ddd;
+   padding: 10px;
+}
+
+/* Style the footer */
+.footer {
+   background-color: #cccccc;
+   padding: 10px;
+}
+ 
+/* This part is for bringing stuff from the other repo
+*{
+   margin-left: 0;
+   padding-left: 0;
+   margin-right: 0;
+   padding-right: 0;
+   font-family: monospace;
+}
+
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+    padding-top: 50px;
+}
+
+.topnav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #000054;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.navbar a {
+    font-size: 20px;
     text-decoration: none;
     font-weight: 500;
     color: white;
@@ -53,23 +151,102 @@ img.top-image {
     display: inline-block;
     padding: 30px 16px;
     flex-wrap: wrap;
- }
- 
- /* Change color on hover */
- .topnav a:hover {
-   background-color:crimson;
+}
+
+.navbar a:hover {
+    background-color:crimson;
     color: rgb(255, 255, 255);
     transition: 0.4s;
- }
+  }
+
+h1 {
+    padding-left: 200px;
+    border-bottom: 4px solid;
+    font-size: 35px;
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    z-index: 90;
+}
+
+h1 div a{
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    display: inline-block;
+    padding: 15px 30px;
+    flex-wrap: wrap;
+}
+
+h1 div a:hover {
+    background-color:rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    transition: 0.4s;
+  }
+
+h2 {
+    font-size: 30px;
+}
+
+
+
+.sidebar {
+   position: fixed;
+   left: 0;
+   top: 125px;
+   width: 150px;
+   height: 100%;
+   border-right: solid black 3px;
+   background-color:ghostwhite;
+}
+
+.sidebar ul a {
+   display: block;
+   height: 100%;
+   width: 100%;
+   line-height: 100px;
+   font-size: 25px;
+   padding-left: 20px;
+   box-sizing: border-box;
+   border-bottom: 1px solid;
+   text-decoration: none;
+   color: black;
+   transition: 0.3s;
+}
+
+ul li:hover a{
+   background-color: black;
+   color: white;
+}
+
+h2, p{
+   margin-left: 160px;
+   margin-top: 100px
+   }
+
+#section1 {
+   height: 400px;
+   scroll-margin-top: 160px;
+}
+
+#section2 {
+   height: 400px;
+   scroll-margin-top: 160px;
+}
+
+#section3 {
+   height: 400px;
+   scroll-margin-top: 160px;
+}
+
+#section4 {
+   height: 1000px;
+   scroll-margin-top: 160px;
+}*/
  
- /* Style the content */
- .content {
-   background-color: #ddd;
-   padding: 10px;
- }
  
- /* Style the footer */
- .footer {
-   background-color: #cccccc;
-   padding: 10px;
- }
+ 
+
+
+ 
