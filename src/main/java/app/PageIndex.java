@@ -51,7 +51,7 @@ public class PageIndex implements Handler {
         html = html.replace("""
             <a href="/">Home</a>
             """, """
-                <a class = "current" href="/">Home</a>
+                <a id = "current" href="/">Home</a>
                 """);
 
         // Add header content block

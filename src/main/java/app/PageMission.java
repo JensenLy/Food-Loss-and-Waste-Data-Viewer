@@ -45,7 +45,7 @@ public class PageMission implements Handler {
         html = html.replace("""
             <a href="/mission.html">About Us</a>
             """, """
-                <a class = "current" href="/mission.html">About Us</a>
+                <a id = "current" href="/mission.html">About Us</a>
                     """);
 
         //Secondary navbar

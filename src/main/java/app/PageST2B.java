@@ -51,7 +51,7 @@ public class PageST2B implements Handler {
         html = html.replace("""
             <a href="/page2A.html">Surface Data</a>
             """, """
-                <a class = "current" href="/page2A.html">Surface Data</a>
+                <a id = "current" href="/page2A.html">Surface Data</a>
                 """);
 
         // Add the secondary topnav
@@ -60,7 +60,7 @@ public class PageST2B implements Handler {
             <h1>
                 <div>
                     <a href="/page2A.html">Country</a>
-                    <a class = "current" href="/page2B.html">Food Group</a>
+                    <a id = "current" href="/page2B.html">Food Group</a>
                 </div> 
             </h1>
         </div>
