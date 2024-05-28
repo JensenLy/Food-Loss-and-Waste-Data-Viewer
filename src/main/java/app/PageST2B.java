@@ -1,15 +1,7 @@
 package app;
 
-import java.util.ArrayList;
-
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * Example Index HTML class using Javalin
@@ -66,30 +58,70 @@ public class PageST2B implements Handler {
         </div>
                 """;
 
-        // Add header content block
+        // // Add header content block
+        // html = html + """
+        //     <div class='header'>
+        //         <h1>Subtask 2.B</h1>
+        //     </div>
+        // """;
+
+        // Add sidemenu
         html = html + """
-            <div class='header'>
-                <h1>Subtask 2.B</h1>
-            </div>
-        """;
+        <div class = "sidemenu">
+        <h2> Input Food Group</h2>
+        <input list="Food Group" placeholder="Enter Food Group" autofocus>
+        <datalist id="Food Group">
+            <option value="Vegetable"></option>
+            <option value="Fruit"></option>
+            <option value="Meat"></option>
+            <option value="Poultry"></option>
+            <option value="Grain"></option>
+        </datalist>
 
-        // Add Div for page Content
-        html = html + "<div class='content'>";
+        <h2> ---------------------------------------------</h2>
+        
+        <h2> Enter Year</h2>
+        <input placeholder="Start Year" autofocus>
+        <h2 style = "text-align: center; padding: 0; margin: 0;"> <img src = "triangle-png-28.png" height="25" width="25" ></h2>
+        <input placeholder="End Year" autofocus>
 
-        // Add HTML for the page content
-        html = html + """
-            <p>Subtask 2.B page content</p>
-            """;
+        <h2> ---------------------------------------------</h2>
+        
+        <h2>Filter options</h2>
+        <input class = "checkbox" type="checkbox" id = "check1">
+        <label for="check1">Activity</label> <br>
 
-        // Close Content div
-        html = html + "</div>";
+        <input class = "checkbox" type="checkbox" id = "check2">
+        <label for="check2">Cause of food loss/waste</label> <br>
 
-        // Footer
-        html = html + """
-            <div class='footer'>
-                <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
-            </div>
-        """;
+        <input class = "checkbox" type="checkbox" id = "check3">
+        <label for="check3">Food supply stage</label> <br>
+
+        <h2> ---------------------------------------------</h2>
+
+        <button>Search</button>
+
+
+        </div>
+                """; 
+
+        // // Add Div for page Content
+        // html = html + "<div class='content'>";
+
+        // // Add HTML for the page content
+        // html = html + """
+        //     <p>Subtask 2.B page content</p>
+        //     """;
+
+        // // Close Content div
+        // html = html + "</div>";
+
+        // // Footer
+        // html = html + """
+        //     <div class='footer'>
+        //         <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
+        //     </div>
+        // """;
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
