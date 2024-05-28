@@ -57,15 +57,14 @@ public class PageIndex implements Handler {
         // Add header content block
         html = html + """
             <div class='header'>
-                <img src='food.png' class='top-image' alt='Food image' height='75'>
+                <img>
+                    <img src='food.png' class='top-image' alt='Food image' width  = '1434' height='300'>
+                </img>
             </div>
         """;
 
         // Add Div for page Content
         html = html + "<div class='content'>";
-
-        // Get the ArrayList of Strings of all countries
-        ArrayList<String> countryNames = getAllCountries();
 
         // Add HTML for the country list
         html = html + "<h1>All Time Data 1966 - 2024 (Global)</h1>";

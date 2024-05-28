@@ -12,23 +12,28 @@ body {
 
 /* Header (div) formatting */
 .header {
-   padding: 10px;
    text-align: center;
    background-color: #cccccc;
    color: #000000;
-   padding-top: 120px;
 }
 
-.header h2 {
+.header::after {
+   content: "View Food Loss and Waste data \a 1966 - 2024";
+   position: absolute;
+   top: 150px;
+   white-space: pre;
+   right: 25%;
+   font-weight: bold;
    font-size: 50px;
+   background-color: antiquewhite;
 }
-
 
 /* Make the logo have a rounded edge */
 img.top-image {
    vertical-align: middle;
-   object-fit: contain;
-   
+   float: left;
+   object-fit: cover;
+   width: 100%;
 }
 
 /* CSS Layout from W3Schools: https://www.w3schools.com/css/css_templates.asp */
