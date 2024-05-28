@@ -57,34 +57,18 @@ public class PageIndex implements Handler {
         // Add header content block
         html = html + """
             <div class='header'>
-                <h1>
-                    <img src='logo.png' class='top-image' alt='RMIT logo' height='75'>
-                    Homepage
-                </h1>
+                <img src='food.png' class='top-image' alt='Food image' height='75'>
             </div>
         """;
 
         // Add Div for page Content
         html = html + "<div class='content'>";
 
-        // Add HTML for the page content
-        html = html + """
-            <p>Homepage content</p>
-            """;
-
         // Get the ArrayList of Strings of all countries
         ArrayList<String> countryNames = getAllCountries();
 
         // Add HTML for the country list
-        html = html + "<h1>All Countries in the food loss database</h1>" + "<ul>";
-
-        // Finally we can print out all of the countries
-        for (String name : countryNames) {
-            html = html + "<li>" + name + "</li>";
-        }
-
-        // Finish the List HTML
-        html = html + "</ul>";
+        html = html + "<h1>All Time Data 1966 - 2024 (Global)</h1>";
 
         // Close Content div
         html = html + "</div>";

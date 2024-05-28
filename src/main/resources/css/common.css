@@ -19,7 +19,7 @@ body {
    padding-top: 120px;
 }
 
-.header h1 {
+.header h2 {
    font-size: 50px;
 }
 
@@ -27,6 +27,8 @@ body {
 /* Make the logo have a rounded edge */
 img.top-image {
    vertical-align: middle;
+   object-fit: contain;
+   
 }
 
 /* CSS Layout from W3Schools: https://www.w3schools.com/css/css_templates.asp */
