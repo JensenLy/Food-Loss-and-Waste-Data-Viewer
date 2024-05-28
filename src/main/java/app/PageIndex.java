@@ -56,10 +56,14 @@ public class PageIndex implements Handler {
 
         // Add header content block
         html = html + """
-            <div class='header'>
+            <div class='image-container'>
                 <img>
                     <img src='food.png' class='top-image' alt='Food image' width  = '1434' height='300'>
                 </img>
+                <div class = 'overlay-text'>
+                    View Food Loss and Waste data
+                    <br>1966 - 2024</br>
+                </div>
             </div>
         """;
 
