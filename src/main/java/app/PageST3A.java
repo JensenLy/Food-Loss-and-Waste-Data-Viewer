@@ -51,7 +51,7 @@ public class PageST3A implements Handler {
         html = html.replace("""
             <a href="/page3A.html">In-depth Data</a>
             """, """
-                <a id = "current" href="/page3A.html">In-depth Data</a>
+                <a class = "current" href="/page3A.html">In-depth Data</a>
                 """);
 
         // Add the secondary topnav
@@ -59,7 +59,7 @@ public class PageST3A implements Handler {
             <div class = 'secondNavBar'> 
             <h1>
                 <div>
-                    <a id = "current" href="/page3A.html">Location</a>
+                    <a class = "current" href="/page3A.html">Location</a>
                     <a href="/page3B.html">Food Commodity</a>
                 </div> 
             </h1>

@@ -62,7 +62,12 @@ img.top-image {
 }
 
 /* make the navbar glow green on the current page.*/
-#current {
+.navbar .current {
+   background-color: green;
+   color: white;
+}
+
+.secondNavBar .current {
    background-color: green;
    color: white;
 }
