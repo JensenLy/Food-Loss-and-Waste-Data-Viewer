@@ -68,8 +68,12 @@ public class PageST2B implements Handler {
         // Add sidemenu
         html = html + """
         <div class = "sidemenu">
+        <form action = "/page2B.html">
+
         <h2> Input Food Group</h2>
-        <input list="Food Group" placeholder="Enter Food Group" autofocus>
+
+        <input list="Food Group" placeholder="Enter Food Group" name="foodGroup" autofocus required>
+
         <datalist id="Food Group">
             <option value="Vegetable"></option>
             <option value="Fruit"></option>
@@ -81,34 +85,35 @@ public class PageST2B implements Handler {
         <h2> ---------------------------------------------</h2>
         
         <h2> Enter Year</h2>
-        <input placeholder="Start Year" autofocus>
+        <input type = "number" placeholder="Start Year" min = "1966" max = "2022" name="startYear" autofocus required>
+
         <h2 style = "text-align: center; padding: 0; margin: 0;"> <img src = "triangle-png-28.png" height="25" width="25" ></h2>
-        <input placeholder="End Year" autofocus>
+        <input type = "number" placeholder="End Year" min = "1966" max = "2022" name="endYear" autofocus required>
 
         <h2> ---------------------------------------------</h2>
         
         <h2>Filter options</h2>
 
         <div>
-        <input class = "checkbox" type="checkbox" id = "check1">
+        <input type="checkbox" id = "check1">
         <label for="check1">Activity</label> 
         </div>
 
         <div>
-        <input class = "checkbox" type="checkbox" id = "check2">
+        <input type="checkbox" id = "check2">
         <label for="check2">Cause of food loss/waste</label>
         </div>
 
         <div>
-        <input class = "checkbox" type="checkbox" id = "check3">
+        <input type="checkbox" id = "check3">
         <label for="check3">Food supply stage</label> 
         </div>
 
         <h2> ---------------------------------------------</h2>
 
-        <button>Search</button>
+        <input type = "submit" value = "Search">
 
-
+        </form>
         </div>
                 """; 
 
