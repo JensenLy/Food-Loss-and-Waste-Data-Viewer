@@ -175,6 +175,33 @@ ul li:hover a{
    font-size: 20px;
 }
 
+.sidemenu input {
+   margin-top: 0px;
+   margin-left: 50px;
+   width: 75%;
+   text-align: center;
+   height: 40px;
+   font-size: 20px;
+}
+
+input[type = "StartYear"] {
+   margin-top: 13px;
+   margin-left: 50px;
+   width: 35%;
+   text-align: center;
+   height: 40px;
+   font-size: 15px;
+}
+
+input[type = "EndYear"] {
+   margin-top: 13px;
+   margin-right: 50px;
+   width: 35%;
+   text-align: center;
+   height: 40px;
+   font-size: 15px;
+}
+
 input[type="checkbox"] {
    width: 24px;
    height: 24px;

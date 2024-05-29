@@ -67,10 +67,23 @@ public class PageST2A implements Handler {
                 """;
 
         // Add header content block
-        html = html + """
+       /*  html = html + """
             <div class='header'>
                 <h1>Subtask 2.A</h1>
             </div>
+        """; */
+
+        html = html + """
+            <div class = "sidemenu">
+                <h2>Enter Country</h2>
+                <input list = "Country" placeholder = "Enter Country" autofocus>
+                <input class = "Year" type = "StartYear" placeholder = "Enter Start Year" autofocus>
+                <input class = "Year" type = "EndYear" placeholder = "Enter End Year" autofocus>
+
+                <h2> ---------------------------------------------</h2>
+
+
+            </div> 
         """;
 
         // Add Div for page Content
@@ -85,11 +98,11 @@ public class PageST2A implements Handler {
         html = html + "</div>";
 
         // Footer
-        html = html + """
+        /* html = html + """
             <div class='footer'>
                 <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
             </div>
-        """;
+        """; */
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
