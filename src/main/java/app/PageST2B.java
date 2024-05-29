@@ -95,17 +95,17 @@ public class PageST2B implements Handler {
         <h2>Filter options</h2>
 
         <div>
-        <input type="checkbox" id = "check1">
+        <input type="checkbox" id = "check1" name="activity">
         <label for="check1">Activity</label> 
         </div>
 
         <div>
-        <input type="checkbox" id = "check2">
+        <input type="checkbox" id = "check2" name="cause">
         <label for="check2">Cause of food loss/waste</label>
         </div>
 
         <div>
-        <input type="checkbox" id = "check3">
+        <input type="checkbox" id = "check3" name="supplyStage">
         <label for="check3">Food supply stage</label> 
         </div>
 
