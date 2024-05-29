@@ -149,13 +149,15 @@ ul li:hover a{
 
 /* Side menu (same as sidebar but for pages with information */
 .sidemenu {
+   padding-top: 150px;
    padding-left: -30px;
    margin-left: -30px;
    position: fixed;
+   overflow-y: scroll;
    left: 0;
-   top: 125px;
+   top: 0;
+   bottom: 0;
    width: 400px;
-   height: 100%;
    border-right: solid black 3px;
    background-color:#f1f1f1;
 }
