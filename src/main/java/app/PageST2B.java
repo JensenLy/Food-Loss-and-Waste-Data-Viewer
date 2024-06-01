@@ -68,7 +68,7 @@ public class PageST2B implements Handler {
         // Add sidemenu
         html = html + """
         <div class = "sidemenu">
-        <form action = "/page2B.html">
+        <form action = "/page2B.html" method = 'post'>
 
         <h2> Input Food Group</h2>
 
@@ -116,6 +116,45 @@ public class PageST2B implements Handler {
         </form>
         </div>
                 """; 
+
+        // Open the table and table row
+        html = html + "<table>" + "<tr>";
+
+        //Print the necessary headers if there's input
+        String foodGroup = context.formParam("foodGroup");
+        if (foodGroup != null){
+            html = html + """
+            <tr>
+            <th width = "200">Year</th>
+            <th width = "200">FoodType</th>
+            <th width = "400">Food Loss / Waste (%)</th>
+                """;
+        }
+
+        //  Get the Form Data and add the header if not null 
+        String activity = context.formParam("activity");
+        if (activity != null){
+            html = html + """
+                <th width = "200">Activity</th>
+                    """;
+        }
+
+        String cause = context.formParam("cause");
+        if (cause != null){
+            html = html + """
+                <th width = "400">Cause of food loss / waste</th>
+                    """;
+        }
+
+        String supplyStage = context.formParam("supplyStage");
+        if (supplyStage != null){
+            html = html + """
+                <th width = "400">Food Supply Stage</th>
+                    """;
+        }
+       
+        //Close the table
+        html = html + "</tr>" + "</table>";
 
         // // Add Div for page Content
         // html = html + "<div class='content'>";
