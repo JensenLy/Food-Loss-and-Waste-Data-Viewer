@@ -75,6 +75,8 @@ public class PageST2A implements Handler {
 
         html = html + """
             <div class = "sidemenu">
+            <form action = "/page2A.html">
+
                 <h2>Enter Country</h2>
                 <input list = "Country" placeholder = "Enter Country" autofocus>
                 <input class = "Year" type = "StartYear" placeholder = "Enter Start Year" autofocus>
