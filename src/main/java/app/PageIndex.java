@@ -62,7 +62,7 @@ public class PageIndex implements Handler {
                 </img>
                 <div class = 'overlay-text'>
                     View Food Loss and Waste data
-                    <br>1966 - 2024</br>
+                    <br>1966 - 2022</br>
                 </div>
             </div>
         """;
@@ -71,7 +71,7 @@ public class PageIndex implements Handler {
         html = html + "<div class='content'>";
 
         // Add HTML for the country list
-        html = html + "<h1>All Time Data 1966 - 2024 (Global)</h1>";
+        html = html + "<h1>All Time Data 1966 - 2022 (Global)</h1>";
 
         // Close Content div
         html = html + "</div>";

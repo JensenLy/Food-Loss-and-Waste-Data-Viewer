@@ -78,12 +78,51 @@ public class PageST2A implements Handler {
             <form action = "/page2A.html">
 
                 <h2>Enter Country</h2>
-                <input list = "Country" placeholder = "Enter Country" autofocus>
-                <input class = "Year" type = "StartYear" placeholder = "Enter Start Year" autofocus>
-                <input class = "Year" type = "EndYear" placeholder = "Enter End Year" autofocus>
+                <input list = "Country" placeholder = "Enter Country" autofocus required>
+
+                <h2>Enter Years</h2>
+                <div class="year-input">
+                    <input type = "number" placeholder = "Start Year" min = "1966" max = "2022" name = "StartYear" autofocus required>
+                    <input type = "number" placeholder = "End Year" min = "1966" max = "2022" name = "EndYear" autofocus required>
+                </div>
 
                 <h2> ---------------------------------------------</h2>
 
+                <h2>Select Fields</h2>
+                <div>
+                    <input type="checkbox" id = "check1" name="activity">
+                    <label for="check1">Activity</label> 
+                </div>
+
+                <div>
+                    <input type="checkbox" id = "check2" name="cause">
+                    <label for="check2">Cause of food loss/waste</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" id = "check3" name="supplyStage">
+                    <label for="check3">Food supply stage</label> 
+                </div>
+
+                <h2>Food Commodity</h2>
+                <div>
+                    <input type="checkbox" id = "check1" name="activity">
+                    <label for="check1">Rice</label> 
+                </div>
+
+                <div>
+                    <input type="checkbox" id = "check2" name="cause">
+                    <label for="check2">Wheat/waste</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" id = "check3" name="supplyStage">
+                    <label for="check3">Maize</label> 
+                </div>
+
+                <h2> ---------------------------------------------</h2>
+
+                
 
             </div> 
         """;
