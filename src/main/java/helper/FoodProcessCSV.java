@@ -121,9 +121,9 @@ public class FoodProcessCSV {
          query = "DROP TABLE IF EXISTS Class";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
-         query = "DROP TABLE IF EXISTS Student";
+         /*query = "DROP TABLE IF EXISTS Student";
          System.out.println("Executing: \n" + query);
-         statement.execute(query);
+         statement.execute(query);*/
          query = "PRAGMA foreign_keys = ON";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
@@ -148,6 +148,15 @@ public class FoodProcessCSV {
                   "      classNo           TEXT NOT NULL," + "\n" +
                   "      className         TEXT NOT NULL," + "\n" +
                   "      PRIMARY KEY (classNo)" + "\n" +
+                  ")";
+         System.out.println("Executing: \n" + query);
+         statement.execute(query);
+
+         query =  "CREATE TABLE CPC (" + "\n" +
+                  "      Group_Division           TEXT NOT NULL," + "\n" +
+                  "      Class         TEXT NOT NULL," + "\n" +
+                  "      Description         TEXT NOT NULL," + "\n" +
+                  "      PRIMARY KEY (Class)" + "\n" +
                   ")";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
