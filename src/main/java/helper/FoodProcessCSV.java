@@ -303,7 +303,7 @@ public class FoodProcessCSV {
 
             // String regionName = splitline[CountryFields.REGIONAME];
             // String cpcCode = splitline[CountryFields.CPCCODE];
-            // // remove double quotes from commodity
+            // remove double quotes from commodity
             // String commodity = splitline[CountryFields.COMMODITY].replaceAll("^\"|\"$", "");
             // String year = splitline[CountryFields.YEAR];
             // String lossPercentage = splitline[CountryFields.LOSSPERCENT];
