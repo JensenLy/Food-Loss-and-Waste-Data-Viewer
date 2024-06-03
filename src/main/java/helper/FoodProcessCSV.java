@@ -55,7 +55,7 @@ public class FoodProcessCSV {
       // Load up the Date table
       // This only needs to be done once
       // Comment this out after runnning it the first time
-      loadYears();
+      // loadYears();
 
 
       // loads all the 'Class' level codes into class table
@@ -121,6 +121,9 @@ public class FoodProcessCSV {
          query = "DROP TABLE IF EXISTS Class";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
+         query = "DROP TABLE IF EXISTS Student";
+         System.out.println("Executing: \n" + query);
+         statement.execute(query);
          query = "PRAGMA foreign_keys = ON";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
@@ -148,6 +151,16 @@ public class FoodProcessCSV {
                   ")";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
+
+         query =  "CREATE TABLE Student (" + "\n" +
+                  "      studentID           TEXT NOT NULL," + "\n" +
+                  "      studentName         TEXT NOT NULL," + "\n" +
+                  "      studentEmail         TEXT NOT NULL," + "\n" +
+                  "      PRIMARY KEY (studentID)" + "\n" +
+                  ")";
+         System.out.println("Executing: \n" + query);
+         statement.execute(query);
+
          System.out.println("\ndropped and recreated tables\npress enter to continue");
          System.in.read();
 
