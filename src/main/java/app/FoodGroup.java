@@ -8,24 +8,39 @@ package app;
 
 public class FoodGroup {
    // country Code
-   private String m49Code;
+   public String name;
 
    // country Name
-   private String name;
+   public int year;
+
+   public String percentage;
+   
+   public String activity;
+   
+   public String supplyStage;
+
+   public String cause;
+
+   public FoodGroup(){
+   }
 
    /**
     * Create a Country and set the fields
     */
    public FoodGroup(String m49Code, String name) {
-      this.m49Code = m49Code;
       this.name = name;
-   }
-
-   public String getM49Code() {
-      return m49Code;
+      this.year = year;
+      this.percentage = percentage;
+      this.activity = activity;
+      this.supplyStage = supplyStage;
+      this.cause = cause;
    }
 
    public String getName() {
       return name;
+   }
+
+   public String getPercentage() {
+      return percentage;
    }
 }
