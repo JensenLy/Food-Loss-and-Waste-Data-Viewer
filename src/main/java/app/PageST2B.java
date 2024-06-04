@@ -1,7 +1,15 @@
 package app;
 
+import java.util.ArrayList;
+
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Example Index HTML class using Javalin
@@ -73,15 +81,18 @@ public class PageST2B implements Handler {
         <h2> Input Food Group</h2>
 
         <input list="Food Group" placeholder="Enter Food Group" name="foodGroup" autofocus required>
+        """;
+        
+        // open datalist
+        html = html + "<datalist id='Food Group'>";
+        
+        // list all Food Groups in the db 
+        html = html + outputFoodGroups();
 
-        <datalist id="Food Group">
-            <option value="Vegetable"></option>
-            <option value="Fruit"></option>
-            <option value="Meat"></option>
-            <option value="Poultry"></option>
-            <option value="Grain"></option>
-        </datalist>
+        // close datalist
+        html = html + "</datalist>";
 
+        html = html + """ 
         <h2> ---------------------------------------------</h2>
         
         <h2> Enter Year</h2>
@@ -125,9 +136,9 @@ public class PageST2B implements Handler {
         if (foodGroup != null){
             html = html + """
             <tr>
-            <th width = "200">Year</th>
-            <th width = "200">FoodType</th>
-            <th width = "400">Food Loss / Waste (%)</th>
+            <th width = auto>Year</th>
+            <th width = auto>FoodType</th>
+            <th width = auto>Loss(%)</th>
                 """;
         }
 
@@ -135,26 +146,36 @@ public class PageST2B implements Handler {
         String activity = context.formParam("activity");
         if (activity != null){
             html = html + """
-                <th width = "200">Activity</th>
-                    """;
-        }
-
-        String cause = context.formParam("cause");
-        if (cause != null){
-            html = html + """
-                <th width = "400">Cause of food loss / waste</th>
+                <th width = auto>Activity</th>
                     """;
         }
 
         String supplyStage = context.formParam("supplyStage");
         if (supplyStage != null){
             html = html + """
-                <th width = "400">Food Supply Stage</th>
+                <th width = auto>Food Supply Stage</th>
                     """;
         }
+
+        String cause = context.formParam("cause");
+        if (cause != null){
+            html = html + """
+                <th width = auto>Cause of food loss / waste</th>
+                    """;
+        }
+
+        //Close the first row 
+        html = html + "</tr>";
+
+        String startYear = context.formParam("startYear");
+        String endYear = context.formParam("endYear");
+        int start = Integer.parseInt(startYear);
+        int end = Integer.parseInt(endYear);
+
+        html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage);
        
         //Close the table
-        html = html + "</tr>" + "</table>";
+        html = html + "</table>";
 
         // // Add Div for page Content
         // html = html + "<div class='content'>";
@@ -182,5 +203,53 @@ public class PageST2B implements Handler {
         // Makes Javalin render the webpage
         context.html(html);
     }
+    
+    public String outputFoodGroups() {
+        String html = "";
+
+        // Look up Food Groups from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<FoodGroup> groupName = jdbc.getFoodGroups();
+
+        // Add Food Groups type to dropdown
+        for (FoodGroup data : groupName ) {
+            html = html + "<option>" + data.name + "</option>";
+            System.out.println(data.name);
+        }
+        return html;
+    }
+
+    public String outputTable(String foodGroup, int start, int end, String activity, String cause, String supplyStage) {
+        String html = "";
+
+        // Look up Food Data from JDBC
+        JDBCConnection getdata = new JDBCConnection();
+        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end);
+
+        // Output table
+        for (FoodGroup data : baseTable) {
+            html = html + "<tr>";
+            html = html + "<td>" + data.year + "</td>";
+            html = html + "<td>" + data.name + "</td>";
+            html = html + "<td>" + data.percentage + "</td>";
+
+            if (activity != null){
+                html = html + "<td>" + data.activity + "</td>";
+            }
+
+            if (supplyStage != null){
+                html = html + "<td>" + data.supplyStage + "</td>";
+            }
+
+            if (cause != null){
+                html = html + "<td>" + data.cause + "</td>";
+            }
+
+            html = html + "</tr>";
+        }
+        return html;
+    }
+
+    
 
 }
