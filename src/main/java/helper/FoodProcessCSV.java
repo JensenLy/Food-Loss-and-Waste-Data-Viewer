@@ -62,7 +62,7 @@ public class FoodProcessCSV {
       // note it does not load any sub class OR sub sub classes (or divisions, sections, groups)
       // need to update this to handle this (based on your design)
       // Comment this out after runnning it the first time
-       loadCpcClass();
+       // loadCpcClass();
 
 
       // Load up the Country table
@@ -75,7 +75,7 @@ public class FoodProcessCSV {
       // read foodloss csv and check for matching country code and class codes in created tables
       // verifies the loaded data
       // you can also copy this to insert records after a lookup into your other tables
-      checkCountryAndClassCodesMatch();
+      // checkCountryAndClassCodesMatch();
 
       return;
    }
@@ -134,21 +134,6 @@ public class FoodProcessCSV {
                   "     PRIMARY KEY (m49Code)" + "\n" +
                   ")";
                       
-         System.out.println("Executing: \n" + query);
-         statement.execute(query);
-
-         query =  "CREATE TABLE Date (" + "\n" +
-                  "      year              INTEGER NOT NULL," + "\n" +
-                  "      PRIMARY KEY (year)" + "\n" +
-                  ")";
-         System.out.println("Executing: \n" + query);
-         statement.execute(query);
-
-         query =  "CREATE TABLE Class (" + "\n" +
-                  "      classNo           TEXT NOT NULL," + "\n" +
-                  "      className         TEXT NOT NULL," + "\n" +
-                  "      PRIMARY KEY (classNo)" + "\n" +
-                  ")";
          System.out.println("Executing: \n" + query);
          statement.execute(query);
 
