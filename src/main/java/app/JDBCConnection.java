@@ -90,4 +90,113 @@ public class JDBCConnection {
     }
 
     // TODO: Add your required methods here
+    public ArrayList<FoodGroup> getFoodGroups() {
+        ArrayList<FoodGroup> group = new ArrayList<FoodGroup>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT DISTINCT GroupName FROM CPC;";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a Movie Object
+                FoodGroup foodgroup = new FoodGroup();
+
+                foodgroup.name = results.getString("GroupName");
+
+                group.add(foodgroup);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return group;
+    }
+
+    public ArrayList<FoodGroup> getTable(String GroupName, int startYear, int endYear) {
+        ArrayList<FoodGroup> group = new ArrayList<FoodGroup>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT DISTINCT year, GroupName, lossPercentage, activity, causeOfLoss, foodSupplyStage FROM CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode WHERE year >= " + startYear + " AND year <= " + endYear + " AND GroupName = '" + GroupName + "'" + "ORDER BY year" + ";";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a Movie Object
+                FoodGroup foodgroup = new FoodGroup();
+
+                foodgroup.name = results.getString("GroupName");
+                foodgroup.year = results.getInt("year");
+                foodgroup.percentage = results.getString("lossPercentage");
+                foodgroup.activity = results.getString("activity");
+                foodgroup.cause = results.getString("causeOfLoss");
+                foodgroup.supplyStage = results.getString("foodSupplyStage");
+
+                group.add(foodgroup);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the movies
+        return group;
+    }
+
 }
