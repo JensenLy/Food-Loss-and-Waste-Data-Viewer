@@ -111,13 +111,13 @@ public class PageST2B implements Handler {
         </div>
 
         <div>
-        <input type="checkbox" id = "check2" name="cause">
-        <label for="check2">Cause of food loss/waste</label>
+        <input type="checkbox" id = "check2" name="supplyStage">
+        <label for="check2">Food supply stage</label> 
         </div>
 
         <div>
-        <input type="checkbox" id = "check3" name="supplyStage">
-        <label for="check3">Food supply stage</label> 
+        <input type="checkbox" id = "check3" name="cause">
+        <label for="check3">Cause of food loss/waste</label>
         </div>
 
         <h2> ---------------------------------------------</h2>
@@ -169,9 +169,21 @@ public class PageST2B implements Handler {
 
         String startYear = context.formParam("startYear");
         String endYear = context.formParam("endYear");
-        int start = Integer.parseInt(startYear);
-        int end = Integer.parseInt(endYear);
 
+        int start;
+        int end;
+
+        // This if statement prevents the page breaking itself when either startYear or endYear is null (happen when refresh the page via navbar)
+        if (startYear == null || endYear == null){
+            start = 0;
+            end = 0;
+        }
+        else {
+            start = Integer.parseInt(startYear);
+            end = Integer.parseInt(endYear);
+        }
+        
+        // Output table data
         html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage);
        
         //Close the table
