@@ -182,6 +182,14 @@ public class PageST2B implements Handler {
             start = Integer.parseInt(startYear);
             end = Integer.parseInt(endYear);
         }
+
+        // swap start and end year if start is larger than end
+        if (start > end){
+            int temp = 0;
+            temp = start; 
+            start = end;
+            end = temp; 
+        }
         
         // Output table data
         html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage);
