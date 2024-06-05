@@ -72,7 +72,9 @@ public class PageMission implements Handler {
         html = html + "<div class = 'content1B'>";
         html = html + "<section id = 'section1'>";
         html = html + "<h2>Purpose</h2>";
-        html = html + "<p><i> insert text here</i></p>";
+        html = html + "<p>";
+        html = html + "With the recent issue of food loss and waste, this website is designed to spread awareness and provide useful, unbiased information by presenting statistical data like food loss/waste by Food Group or Country, locations with similar food loss/waste, exploring food commodities and groups so that everyone can take part in minimising this problem.";
+        html = html + "</p>";
         html = html + "</section>";
 
         html = html + "<section id = 'section2'>";
@@ -82,7 +84,8 @@ public class PageMission implements Handler {
         
         html = html + "<section id = 'section3'>";
         html = html + "<h2>About us</h2>";
-        html = html + "<p><i> insert text here</i></p>";
+        html = html + "<p>This website is presented by:</p>";
+        html = html + outputStudent();
         html = html + "</section>";
         
         html = html + "<section id = 'section4'>";
@@ -142,6 +145,25 @@ public class PageMission implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+    }
+
+    public String outputStudent() {
+        // Open the student list
+        String html = "<ul id = 'studentInfo'>";
+
+        // Look up PersonaAndStudent from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<PersonaAndStudent> student = jdbc.getStudentInfo();
+
+        // Add Food Groups type to dropdown
+        for (PersonaAndStudent data : student ) {
+            html = html + "<li>" + data.studentName + " - " + data.studentID + " - " + data.studentEmail + "</li>";
+        }
+
+        // Close the student list 
+        html = html + "</ul>";
+
+        return html;
     }
 
 }
