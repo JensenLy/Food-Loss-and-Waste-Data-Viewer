@@ -119,14 +119,16 @@ img.top-image {
 /* Sidebar (only for mission page) */
 .sidebar {
    padding-left: -30px;
-   margin-left: -30px;
+   margin-left: -40px;
+   margin-top: -20px;
    position: fixed;
    left: 0;
    top: 125px;
+   bottom: 0;
    width: 200px;
-   height: 100%;
    border-right: solid black 3px;
    background-color:ghostwhite;
+   overflow-y: scroll;
 }
 
 .sidebar ul a {

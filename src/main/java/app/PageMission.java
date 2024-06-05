@@ -55,20 +55,34 @@ public class PageMission implements Handler {
             </div>
                 """;
 
-        // Add header content block
-        html = html + """
-            <div class='header'>
-                <h1>Our Mission</h1>
-            </div>
-        """;
+        // Open the list and sidebar
+        html = html + "<div class = 'sidebar'>";
+        html = html + "<ul>";
 
-        // Add Div for page Content
-        html = html + "<div class='content'>";
+        // List each sidebar's items
+        html = html + "<li><a href='#section1'>Purpose</a></li>";
+        html = html + "<li><a href='#section2'>Tutorial</a></li>";
+        html = html + "<li><a href='#section3'>About us</a></li>";
+        html = html + "<li><a href='#section4'>Personas</a></li>";
 
-        // Add HTML for the page content
-        html = html + """
-            <p>Mission page content</p>
-            """;
+        // Close the list and sidebar
+        html = html + "</ul>";
+        html = html + "</div>";
+
+        // // Add header content block
+        // html = html + """
+        //     <div class='header'>
+        //         <h1>Our Mission</h1>
+        //     </div>
+        // """;
+
+        // // Add Div for page Content
+        // html = html + "<div class='content'>";
+
+        // // Add HTML for the page content
+        // html = html + """
+        //     <p>Mission page content</p>
+        //     """;
 
         // This example uses JDBC to lookup the countries
         JDBCConnection jdbc = new JDBCConnection();
@@ -76,17 +90,17 @@ public class PageMission implements Handler {
         // Next we will ask this *class* for the Countries
         ArrayList<Country> countries = jdbc.getAllCountries();
 
-        // Add HTML for the countries list
-        html = html + "<h1>All Countries in the foodloss database (using JDBC Connection)</h1>" + "<ul>";
+        // // Add HTML for the countries list
+        // html = html + "<h1>All Countries in the foodloss database (using JDBC Connection)</h1>" + "<ul>";
 
-        // Finally we can print out all of the Countries
-        for (Country country : countries) {
-            html = html + "<li>" + country.getM49Code()
-                        + " - " + country.getName() + "</li>";
-        }
+        // // Finally we can print out all of the Countries
+        // for (Country country : countries) {
+        //     html = html + "<li>" + country.getM49Code()
+        //                 + " - " + country.getName() + "</li>";
+        // }
 
-        // Finish the List HTML
-        html = html + "</ul>";
+        // // Finish the List HTML
+        // html = html + "</ul>";
 
 
         // Close Content div
