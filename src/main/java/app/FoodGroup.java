@@ -7,10 +7,8 @@ package app;
  */
 
 public class FoodGroup {
-   // country Code
    public String name;
 
-   // country Name
    public int year;
 
    public String percentage;
@@ -21,13 +19,7 @@ public class FoodGroup {
 
    public String cause;
 
-   public FoodGroup(){
-   }
-
-   /**
-    * Create a Country and set the fields
-    */
-   public FoodGroup(String m49Code, String name) {
+   public FoodGroup() {
       this.name = name;
       this.year = year;
       this.percentage = percentage;

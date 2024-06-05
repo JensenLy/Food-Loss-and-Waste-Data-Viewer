@@ -138,7 +138,7 @@ public class JDBCConnection {
             }
         }
 
-        // Finally we return all of the movies
+        // Finally we return all of the food groups
         return group;
     }
 
@@ -195,7 +195,7 @@ public class JDBCConnection {
             }
         }
 
-        // Finally we return all of the movies
+        // Finally we return all of the table data 
         return group;
     }
 
