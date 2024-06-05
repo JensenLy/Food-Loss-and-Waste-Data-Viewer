@@ -69,6 +69,28 @@ public class PageMission implements Handler {
         html = html + "</ul>";
         html = html + "</div>";
 
+        html = html + "<div class = 'content1B'>";
+        html = html + "<section id = 'section1'>";
+        html = html + "<h2>Purpose</h2>";
+        html = html + "<p><i> insert text here</i></p>";
+        html = html + "</section>";
+
+        html = html + "<section id = 'section2'>";
+        html = html + "<h2>Tutorial</h2>";
+        html = html + "<p><i> insert text here</i></p>";
+        html = html + "</section>";
+        
+        html = html + "<section id = 'section3'>";
+        html = html + "<h2>About us</h2>";
+        html = html + "<p><i> insert text here</i></p>";
+        html = html + "</section>";
+        
+        html = html + "<section id = 'section4'>";
+        html = html + "<h2>Personas</h2>";
+        html = html + "<p><i> insert text here</i></p>";
+        html = html + "</section>";
+        html = html + "</div>";
+
         // // Add header content block
         // html = html + """
         //     <div class='header'>

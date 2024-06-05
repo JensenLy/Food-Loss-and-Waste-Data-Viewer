@@ -4,6 +4,10 @@
    box-sizing: border-box;
 }
 
+html {
+   scroll-behavior: smooth;
+}
+
 body {
    font-family: Arial;
    padding: 50px 10px;
@@ -147,6 +151,32 @@ img.top-image {
 ul li:hover a{
    background-color: black;
    color: white;
+}
+
+/* Content styling for 1B */
+.content1B h2, p{
+   margin-left: 160px;
+   margin-top: 100px
+   }
+
+#section1 {
+   height: 400px;
+   scroll-margin-top: 160px;
+}
+
+#section2 {
+   height: 400px;
+   scroll-margin-top: 160px;
+}
+
+#section3 {
+   height: 400px;
+   scroll-margin-top: 160px;
+}
+
+#section4 {
+   height: 1000px;
+   scroll-margin-top: 160px;
 }
 
 /* Side menu (same as sidebar but for pages with information */
