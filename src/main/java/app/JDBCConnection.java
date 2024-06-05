@@ -113,7 +113,7 @@ public class JDBCConnection {
 
             // Process all of the results
             while (results.next()) {
-                // Create a Movie Object
+                // Create a FoodGroup Object
                 FoodGroup foodgroup = new FoodGroup();
 
                 foodgroup.name = results.getString("GroupName");
@@ -165,7 +165,7 @@ public class JDBCConnection {
 
             // Process all of the results
             while (results.next()) {
-                // Create a Movie Object
+                // Create a FoodGroup Object
                 FoodGroup foodgroup = new FoodGroup();
 
                 foodgroup.name = results.getString("GroupName");
@@ -197,6 +197,119 @@ public class JDBCConnection {
 
         // Finally we return all of the table data 
         return group;
+    }
+
+    public ArrayList<PersonaAndStudent> getStudentInfo() {
+        ArrayList<PersonaAndStudent> info = new ArrayList<PersonaAndStudent>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT * FROM Student";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a PersonaAndStudent Object
+                PersonaAndStudent data = new PersonaAndStudent();
+
+                data.studentName = results.getString("studentName");
+                data.studentID = results.getString("studentID");
+                data.studentEmail = results.getString("studentEmail");
+
+                info.add(data);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the data of the student
+        return info;
+    }
+
+    public ArrayList<PersonaAndStudent> getPersonaInfo() {
+        ArrayList<PersonaAndStudent> info = new ArrayList<PersonaAndStudent>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "SELECT * FROM Persona";
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a PersonaAndStudent Object
+                PersonaAndStudent data = new PersonaAndStudent();
+
+                data.personaName = results.getString("personaName");
+                data.personaImagePath = results.getString("personaImage");
+                data.personaAge = results.getInt("Age");
+                data.personaGender = results.getString("Gender");
+                data.personaEthnicity = results.getString("Ethnicity");
+                data.personaBackground = results.getString("Background");
+                data.personaNeed = results.getString("NeedsAndGoals");
+                data.personaSkill = results.getString("SkillsAndExperience");
+
+                info.add(data);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the data of the persona 
+        return info;
     }
 
 }
