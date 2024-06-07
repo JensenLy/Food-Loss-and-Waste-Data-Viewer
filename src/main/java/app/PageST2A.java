@@ -106,24 +106,46 @@ public class PageST2A implements Handler {
 
                 <h2>Food Commodity</h2>
                 <div>
-                    <input type="checkbox" id = "check1" name="activity">
-                    <label for="check1">Rice</label> 
+                    <input type="checkbox" id = "check4" name="Commodity">
+                    <label for="check4">Rice</label> 
                 </div>
 
                 <div>
-                    <input type="checkbox" id = "check2" name="cause">
-                    <label for="check2">Wheat/waste</label>
+                    <input type="checkbox" id = "check5" name="Commodity">
+                    <label for="check5">Wheat/waste</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" id = "check3" name="supplyStage">
-                    <label for="check3">Maize</label> 
+                    <input type="checkbox" id = "check6" name="Commodity">
+                    <label for="check6">Maize</label> 
                 </div>
 
                 <h2> ---------------------------------------------</h2>
 
-                
+                <h2>Sort by Food Loss</h2>
 
+                <div class = "sorting-buttons">
+                    <div>
+                        <input type = "radio" id = "ascending" name="Sort">
+                        <label for = "ascending">Ascending</label>
+                    </div>
+
+                    <div>
+                        <input type = "radio" id = "descending" name="Sort">
+                        <label for = "descending">Descending</label>
+                    </div>
+
+                    <div>
+                        <input type = "radio" id = "chronological" name="Sort">
+                        <label for = "chronological">Chronological</label>
+                    </div>
+                </div>
+
+                <div class="submit-button">
+                    <input type = "submit" value = "Search" name = "search2A">
+                </div>
+
+            </form>     
             </div> 
         """;
 

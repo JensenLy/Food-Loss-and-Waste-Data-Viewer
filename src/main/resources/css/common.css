@@ -235,6 +235,7 @@ ul li:hover a{
    font-size: 20px;
 }
 
+/* year input css for page 2A */
 .year-input {
    display: flex;
    justify-content: flex-start;
@@ -264,6 +265,23 @@ input[type="checkbox"] {
    height: 24px;
    margin: 10px;
    margin-left: 50px;
+}
+
+/* Radio Buttons for page 2A */
+.sorting-buttons label {
+   margin-top: 100px;
+}
+
+input[type="radio"] {
+   width: 24px;
+   height: 24px;
+   margin: 10px;
+   margin-left: 50px;
+   text-align: center;
+} 
+
+.submit-button {
+   margin-top: 15px;
 }
 
 label {
