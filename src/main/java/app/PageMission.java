@@ -90,7 +90,23 @@ public class PageMission implements Handler {
         
         html = html + "<section id = 'section4'>";
         html = html + "<h2>Personas</h2>";
-        html = html + "<p><i> insert text here</i></p>";
+
+        html = html + "<section class = 'container'>";
+        html = html + "<div class = 'slider-wrapper'>";
+
+        html = html + "<div class = 'slider'>";
+        html = html + outputPersona();
+        html = html + "</div>";
+
+        html = html + "<div class = 'slider-nav'>";
+        html = html + "<a href = '#persona1'></a>";
+        html = html + "<a href = '#persona2'></a>";
+        html = html + "<a href = '#persona3'></a>";
+        html = html + "</div>";
+
+        html = html + "</div>";
+        html = html + "</section>";
+
         html = html + "</section>";
         html = html + "</div>";
 
@@ -155,13 +171,55 @@ public class PageMission implements Handler {
         JDBCConnection jdbc = new JDBCConnection();
         ArrayList<PersonaAndStudent> student = jdbc.getStudentInfo();
 
-        // Add Food Groups type to dropdown
+        // Add Student Info to the list
         for (PersonaAndStudent data : student ) {
             html = html + "<li>" + data.studentName + " - " + data.studentID + " - " + data.studentEmail + "</li>";
         }
 
         // Close the student list 
         html = html + "</ul>";
+
+        return html;
+    }
+
+    public String outputPersona() {
+        String html = "";
+
+        // Look up PersonaAndStudent from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<PersonaAndStudent> persona = jdbc.getPersonaInfo();
+
+        // Add Student Info to the list
+        for (PersonaAndStudent data : persona ) {
+            html = html + "<div class = 'wrapper' id = 'persona" + data.personaID + "'>";
+            html = html + "<p><img src='" + data.personaImagePath + "' width = '400' height = '400' ></p>";
+            html = html + "<div class = 'text-box'>";
+
+            // Persona name: 
+            html = html + "<p><strong>Name: </strong>" + data.personaName;
+
+            // Persona age:
+            html = html + "<p><strong>Age: </strong>" + data.personaAge;
+
+            // Persona gender:
+            html = html + "<p><strong>Gender: </strong>" + data.personaGender;
+
+            // Persona Ethnicity:
+            html = html + "<p><strong>Ethnicity: </strong>" + data.personaEthnicity;
+
+            // Persona Background: 
+            html = html + "<p><strong>Background: </strong>" + data.personaBackground;
+
+            // Needs and Goals:
+            html = html + "<p><strong>Needs and Goals: </strong>" + data.personaNeed;
+
+            // Skills and Experience: 
+            html = html + "<p><strong>Skills and Experience: </strong>" + data.personaSkill;
+
+            // Close the wrapper div 
+            html = html + "</div>";
+            html = html + "</div>";
+        }
 
         return html;
     }

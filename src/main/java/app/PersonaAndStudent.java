@@ -29,10 +29,12 @@ public class PersonaAndStudent {
 
    public String personaSkill;
 
+   public String personaID;
+
    public PersonaAndStudent(){
    }
 
-   public PersonaAndStudent(String studentName, String studentID, String studentEmail, String personaName, String personaImagePath, int personaAge, String personaGender, String personaEthnicity, String personaBackground, String personaNeed, String personaSkill) {
+   public PersonaAndStudent(String studentName, String studentID, String studentEmail, String personaName, String personaImagePath, int personaAge, String personaGender, String personaEthnicity, String personaBackground, String personaNeed, String personaSkill, String personaID) {
       this.studentName = studentName;
       this.studentID = studentID;
       this.studentEmail = studentEmail;
@@ -44,6 +46,7 @@ public class PersonaAndStudent {
       this.personaBackground = personaBackground;
       this.personaNeed = personaNeed;
       this.personaSkill = personaSkill;
+      this.personaID = personaID;
    }
 
    // public String getName() {
