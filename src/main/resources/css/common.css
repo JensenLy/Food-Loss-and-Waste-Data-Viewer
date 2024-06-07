@@ -312,6 +312,16 @@ td {
    text-align: center;
 }
 
+/* Styling the persona image and information */
+
+.wrapper img {
+   float: left;
+   margin-right: 10px;
+}
+
+.text-box p {
+   margin-bottom: 20px;
+}
  
  
  
