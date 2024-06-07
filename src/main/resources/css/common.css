@@ -5,7 +5,7 @@
 }
 
 html {
-   scroll-behavior: smooth;
+   scroll-behavior: smooth !important;
 }
 
 body {
@@ -132,7 +132,7 @@ img.top-image {
    width: 200px;
    border-right: solid black 3px;
    background-color:ghostwhite;
-   overflow-y: scroll;
+   overflow-y: auto;
 }
 
 .sidebar ul a {
@@ -194,6 +194,7 @@ ul li:hover a{
 #section4 {
    height: auto;
    scroll-margin-top: 160px;
+   background-color: beige;
 }
 
 /* Side menu (same as sidebar but for pages with information */
@@ -322,6 +323,49 @@ td {
 .text-box p {
    margin-bottom: 20px;
 }
+
+.slider-wrapper{
+   position: relative;
+   max-width: 100%;
+   margin-left: 150px;
+}
+
+.slider {
+   display: flex;
+   overflow-x: auto;
+   scroll-snap-type: x mandatory;
+   box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+}
+
+.slider .wrapper{
+   flex: 1 0 100%;
+   scroll-snap-align: start;
+   object-fit: cover;
+}
+
+.slider-nav {
+   display: flex;
+   column-gap: 1rem;
+   position: absolute;
+   bottom: 1.75rem;
+   left: 50%;
+   transform: translateX(-50%);
+   z-index: 1;
+}
+
+.slider-nav a{
+   width: 1rem;
+   height: 1rem;
+   border-radius: 50%;
+   background-color: #000000;
+   opacity: 0.75;
+   transition: opacity ease 250ms;
+}
+
+.slider-nav a:hover{
+   opacity: 1;
+}
+
  
  
  

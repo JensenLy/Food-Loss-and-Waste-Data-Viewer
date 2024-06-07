@@ -92,13 +92,13 @@ public class PageMission implements Handler {
         html = html + "<h2>Personas</h2>";
 
         html = html + "<section class = 'container'>";
-        html = html + "<div class = 'slider wrapper'>";
+        html = html + "<div class = 'slider-wrapper'>";
 
         html = html + "<div class = 'slider'>";
         html = html + outputPersona();
         html = html + "</div>";
 
-        html = html + "<div class = 'slider-nav'";
+        html = html + "<div class = 'slider-nav'>";
         html = html + "<a href = '#persona1'></a>";
         html = html + "<a href = '#persona2'></a>";
         html = html + "<a href = '#persona3'></a>";
