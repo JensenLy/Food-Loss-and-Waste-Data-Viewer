@@ -287,6 +287,7 @@ public class JDBCConnection {
                 data.personaBackground = results.getString("Background");
                 data.personaNeed = results.getString("NeedsAndGoals");
                 data.personaSkill = results.getString("SkillsAndExperience");
+                data.personaID = results.getString("personaID");
 
                 info.add(data);
             }
