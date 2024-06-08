@@ -199,7 +199,7 @@ ul li:hover a{
 
 /* Side menu (same as sidebar but for pages with information */
 .sidemenu {
-   padding-top: 150px;
+   margin-top: 135px;
    padding-left: -30px;
    margin-left: -30px;
    position: fixed;
@@ -323,12 +323,14 @@ th {
    font-size: 25px;
    min-width: 150px;
    max-width: 600px;
-   min-height: 200px;
+   height: 100px;
 }
 
 td {
    font-size: 20px;
    text-align: center;
+   height: 100px;
+   min-width: 150px
 }
 
 /* Styling the persona image and information */
@@ -384,6 +386,21 @@ td {
    opacity: 1;
 }
 
+/*Format for the food group checkboxes */
+.foodGroup {
+height: 300px;
+overflow-y: auto;
+border: #000000 solid;
+}
+
+.foodGroup label {
+   display: block;
+   margin-left: 40px;
+}
+
+.foodGroup label input{
+   margin-left: 0px;
+}
  
  
  
