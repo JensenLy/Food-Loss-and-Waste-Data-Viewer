@@ -75,11 +75,17 @@ public class PageST2A implements Handler {
 
         html = html + """
             <div class = "sidemenu">
-            <form action = "/page2A.html">
+            <form action = "/page2A.html" method = 'post' id = 'page2A'>
 
                 <h2>Enter Country</h2>
-                <input list = "Country" placeholder = "Enter Country" autofocus required>
+                <input list = "Country" placeholder = "Enter Country" name = "countryName" autofocus required>
+        """;
 
+        html = html + "<datalist id = 'Country'>";
+        html = html + outputCountries();
+        html = html + "</datalist>";
+            
+        html = html + """
                 <h2>Enter Years</h2>
                 <div class="year-input">
                     <input type = "number" placeholder = "Start Year" min = "1966" max = "2022" name = "StartYear" autofocus required>
@@ -88,8 +94,19 @@ public class PageST2A implements Handler {
 
                 <h2> ---------------------------------------------</h2>
 
-                <h2>Select Fields</h2>
-                <div>
+                <h2>Select Food Commodities</h2> 
+                <div class = "tags-input-container">
+                    <ul id = "tags"></ul>
+                    <input type = "text" id = "tags-input" list = "food-commodities" placeholder = "Select an option" />
+                    <datalist id = "food-commodities"> 
+        """;
+
+        html = html + outputFoodGroups();
+        html = html + "</datalist>";
+        
+        html = html + "</div>";
+
+                /* <div>
                     <input type="checkbox" id = "check1" name="activity">
                     <label for="check1">Activity</label> 
                 </div>
@@ -118,8 +135,9 @@ public class PageST2A implements Handler {
                 <div>
                     <input type="checkbox" id = "check6" name="Commodity">
                     <label for="check6">Maize</label> 
-                </div>
+                </div>*/
 
+        html = html + """
                 <h2> ---------------------------------------------</h2>
 
                 <h2>Sort by Food Loss</h2>
@@ -142,12 +160,26 @@ public class PageST2A implements Handler {
                 </div>
 
                 <div class="submit-button">
-                    <input type = "submit" value = "Search" name = "search2A">
+                    <input type = "submit" value = "Search">
                 </div>
 
             </form>     
             </div> 
-        """;
+        """; 
+
+        html = html + "<table>" + "<tr>";
+
+        String country = context.formParam("countryName");
+        if (country != null) {
+            html = html + """
+                <tr>
+                    <th width = auto>Year</th>
+                    <th width = auto>Food Loss</th>
+                </tr>
+            """;
+        }
+
+        html = html + "</table>";
 
         // Add Div for page Content
         html = html + "<div class='content'>";
@@ -174,6 +206,31 @@ public class PageST2A implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+    }
+
+    public String outputCountries() {
+        String html = "";
+
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<Country> countryName = jdbc.getAllCountries();
+
+        for (Country data : countryName) {
+            html = html + "<option>" + data.getName() + "</option>";
+        }
+        return html;
+    }
+
+    public String outputFoodGroups() {
+        String html = "";
+
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<FoodGroup> groupName = jdbc.getFoodGroups();
+
+        for (FoodGroup data : groupName ) {
+            html = html + "<option>" + data.name + "</option>";
+            System.out.println(data.name);
+        }
+        return html;
     }
 
 }
