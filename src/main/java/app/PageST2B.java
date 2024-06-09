@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -78,28 +79,23 @@ public class PageST2B implements Handler {
         <div class = "sidemenu">
         <form action = "/page2B.html" method = 'post'>
 
-        <h2> Input Food Group</h2>
+        <h2> Choose Food Group</h2>
 
-        <input list="Food Group" placeholder="Enter Food Group" name="foodGroup" autofocus required>
         """;
-        
-        // open datalist
-        html = html + "<datalist id='Food Group'>";
         
         // list all Food Groups in the db 
         html = html + outputFoodGroups();
-
-        // close datalist
-        html = html + "</datalist>";
 
         html = html + """ 
         <h2> ---------------------------------------------</h2>
         
         <h2> Enter Year</h2>
-        <input type = "number" placeholder="Start Year" min = "1966" max = "2022" name="startYear" autofocus required>
 
-        <h2 style = "text-align: center; padding: 0; margin: 0;"> <img src = "triangle-png-28.png" height="25" width="25" ></h2>
-        <input type = "number" placeholder="End Year" min = "1966" max = "2022" name="endYear" autofocus required>
+        <div class = "year-input">
+        <input type = "number" placeholder="Start Year" min = "1966" max = "2022" name="StartYear" autofocus required>
+        <h2 style = "text-align: center; margin: 0; margin-right: -10px"> <img src = "triangle-png-28.png" height="25" width="25" ></h2>
+        <input type = "number" placeholder="End Year" min = "1966" max = "2022" name="EndYear" autofocus required>
+        </div>
 
         <h2> ---------------------------------------------</h2>
         
@@ -122,6 +118,11 @@ public class PageST2B implements Handler {
 
         <h2> ---------------------------------------------</h2>
 
+        <h2>Sort loss percentage</h2>
+
+        <label><input type="radio" name="sort" value = "Ascending">Ascending</label>
+        <label><input type="radio" name="sort" value = "Descending">Descending</label>
+
         <input type = "submit" value = "Search">
 
         </form>
@@ -132,13 +133,12 @@ public class PageST2B implements Handler {
         html = html + "<table>" + "<tr>";
 
         //Print the necessary headers if there's input
-        String foodGroup = context.formParam("foodGroup");
-        if (foodGroup != null){
+        List<String> foodGroup = context.formParams("foodGroup");
+        if (foodGroup.size() != 0){
             html = html + """
             <tr>
-            <th width = auto>Year</th>
-            <th width = auto>FoodType</th>
-            <th width = auto>Loss(%)</th>
+            <th>FoodType</th>
+            <th>Loss(%)</th>
                 """;
         }
 
@@ -146,29 +146,30 @@ public class PageST2B implements Handler {
         String activity = context.formParam("activity");
         if (activity != null){
             html = html + """
-                <th width = auto>Activity</th>
+                <th>Activity</th>
                     """;
         }
 
         String supplyStage = context.formParam("supplyStage");
         if (supplyStage != null){
             html = html + """
-                <th width = auto>Food Supply Stage</th>
+                <th>Food Supply Stage</th>
                     """;
         }
 
         String cause = context.formParam("cause");
         if (cause != null){
             html = html + """
-                <th width = auto>Cause of food loss / waste</th>
+                <th>Cause of food loss / waste</th>
                     """;
         }
 
         //Close the first row 
         html = html + "</tr>";
 
-        String startYear = context.formParam("startYear");
-        String endYear = context.formParam("endYear");
+        // Get input years
+        String startYear = context.formParam("StartYear");
+        String endYear = context.formParam("EndYear");
 
         int start;
         int end;
@@ -190,9 +191,12 @@ public class PageST2B implements Handler {
             start = end;
             end = temp; 
         }
+
+        // Get sort preference 
+        String sort = context.formParam("sort");
         
         // Output table data
-        html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage);
+        html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage, sort);
        
         //Close the table
         html = html + "</table>";
@@ -225,31 +229,38 @@ public class PageST2B implements Handler {
     }
     
     public String outputFoodGroups() {
-        String html = "";
+        String html = "<div class = 'foodGroup'>";
 
         // Look up Food Groups from JDBC
         JDBCConnection jdbc = new JDBCConnection();
         ArrayList<FoodGroup> groupName = jdbc.getFoodGroups();
 
-        // Add Food Groups type to dropdown
+        // Add Food Groups type to the multiselect list
+        // html = html + "<label><input type='checkbox' name = 'foodGroup' value = 'all'>Select All</label>";
+
         for (FoodGroup data : groupName ) {
-            html = html + "<option>" + data.name + "</option>";
+            html = html + "<label>";
+            html = html + "<input type='checkbox' name = 'foodGroup' value = '" + data.name +"'>";
+            html = html + data.name;
+            html = html + "</label>";
             System.out.println(data.name);
         }
+
+        html = html + "</div>";
         return html;
     }
 
-    public String outputTable(String foodGroup, int start, int end, String activity, String cause, String supplyStage) {
+    public String outputTable(List<String> foodGroup, int start, int end, String activity, String cause, String supplyStage, String sort) {
         String html = "";
 
         // Look up Food Data from JDBC
         JDBCConnection getdata = new JDBCConnection();
-        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end);
+        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end, sort);
 
         // Output table
         for (FoodGroup data : baseTable) {
             html = html + "<tr>";
-            html = html + "<td>" + data.year + "</td>";
+            // html = html + "<td>" + data.year + "</td>";
             html = html + "<td>" + data.name + "</td>";
             html = html + "<td>" + data.percentage + "</td>";
 

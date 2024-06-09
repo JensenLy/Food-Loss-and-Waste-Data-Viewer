@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -105,7 +106,7 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT DISTINCT GroupName FROM CPC;";
+            String query = "SELECT DISTINCT GroupName FROM CPC ORDER BY GroupName;";
             System.out.println(query);
             
             // Get Result
@@ -142,7 +143,7 @@ public class JDBCConnection {
         return group;
     }
 
-    public ArrayList<FoodGroup> getTable(String GroupName, int startYear, int endYear) {
+    public ArrayList<FoodGroup> getTable(List<String> GroupName, int startYear, int endYear, String sort) {
         ArrayList<FoodGroup> group = new ArrayList<FoodGroup>();
 
         // Setup the variable for the JDBC connection
@@ -157,7 +158,29 @@ public class JDBCConnection {
             statement.setQueryTimeout(30);
 
             // The Query
-            String query = "SELECT DISTINCT year, GroupName, lossPercentage, activity, causeOfLoss, foodSupplyStage FROM CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode WHERE year >= " + startYear + " AND year <= " + endYear + " AND GroupName = '" + GroupName + "'" + "ORDER BY year" + ";";
+
+            // Chaining UNION for each selected food group
+            String query = "";
+            for (int i = 0; i < GroupName.size(); ++i){
+                if (i == 0){
+                    query = query + "SELECT GroupName, AVG(lossPercentage), activity, causeOfLoss, foodSupplyStage FROM CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode WHERE year >= " + startYear + " AND year <= " + endYear + " AND GroupName = '" + GroupName.get(i) + "'";
+                }
+                else {
+                    query = query + " UNION SELECT GroupName, AVG(lossPercentage), activity, causeOfLoss, foodSupplyStage FROM CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode WHERE year >= " + startYear + " AND year <= " + endYear + " AND GroupName = '" + GroupName.get(i) + "'";
+                }
+            }
+            
+            // Processing sort
+            if (sort == null){
+                query = query + " ORDER BY AVG(lossPercentage);";
+            }
+            else if (sort.equals("Descending")){
+                query = query + " ORDER BY AVG(lossPercentage) DESC ;";
+            }
+            else{
+                query = query + " ORDER BY AVG(lossPercentage) ASC ;";
+            }
+            
             System.out.println(query);
             
             // Get Result
@@ -169,11 +192,16 @@ public class JDBCConnection {
                 FoodGroup foodgroup = new FoodGroup();
 
                 foodgroup.name = results.getString("GroupName");
-                foodgroup.year = results.getInt("year");
-                foodgroup.percentage = results.getString("lossPercentage");
+                // foodgroup.year = results.getInt("year");
+                foodgroup.percentage = results.getString("AVG(lossPercentage)");
                 foodgroup.activity = results.getString("activity");
                 foodgroup.cause = results.getString("causeOfLoss");
                 foodgroup.supplyStage = results.getString("foodSupplyStage");
+
+                // If the value is null then skip
+                if(foodgroup.percentage == null){
+                    continue;
+                }
 
                 group.add(foodgroup);
             }
