@@ -129,11 +129,43 @@ public class PageST2B implements Handler {
         </div>
                 """; 
 
+        // Get Food Groups
+        List<String> foodGroup = context.formParams("foodGroup");
+
+        // Get input years
+        String startYear = context.formParam("StartYear");
+        String endYear = context.formParam("EndYear");
+
+        int start;
+        int end;
+
+        // This if statement prevents the page from breaking itself when either startYear or endYear is null (happen when access the page via navbar)
+        if (startYear == null || endYear == null){
+            start = 0;
+            end = 0;
+        }
+        else {
+            start = Integer.parseInt(startYear);
+            end = Integer.parseInt(endYear);
+        }
+
+        // swap start and end year if start is larger than end
+        if (start > end){
+            int temp = 0;
+            temp = start; 
+            start = end;
+            end = temp; 
+        }
+
+        // Display selected group(s) and years 
+        if (start != 0){
+            html = html + displaySelectedGroupsAndYears(foodGroup, start, end);
+        }
+
         // Open the table and table row
         html = html + "<table>" + "<tr>";
 
         //Print the necessary headers if there's input
-        List<String> foodGroup = context.formParams("foodGroup");
         if (foodGroup.size() != 0){
             html = html + """
             <tr>
@@ -166,31 +198,6 @@ public class PageST2B implements Handler {
 
         //Close the first row 
         html = html + "</tr>";
-
-        // Get input years
-        String startYear = context.formParam("StartYear");
-        String endYear = context.formParam("EndYear");
-
-        int start;
-        int end;
-
-        // This if statement prevents the page breaking itself when either startYear or endYear is null (happen when refresh the page via navbar)
-        if (startYear == null || endYear == null){
-            start = 0;
-            end = 0;
-        }
-        else {
-            start = Integer.parseInt(startYear);
-            end = Integer.parseInt(endYear);
-        }
-
-        // swap start and end year if start is larger than end
-        if (start > end){
-            int temp = 0;
-            temp = start; 
-            start = end;
-            end = temp; 
-        }
 
         // Get sort preference 
         String sort = context.formParam("sort");
@@ -281,6 +288,28 @@ public class PageST2B implements Handler {
         return html;
     }
 
-    
+    public String displaySelectedGroupsAndYears(List<String> foodGroup, int start, int end){
+        String html = "<div class = displaySelectedOption>";
+
+        // Display chosen years
+        if (start == end){
+            html = html + "<p>Showing data at year " + start;
+        }
+        else {
+            html = html + "<p>Showing data from year " + start + " to " + end;
+        }
+
+        // Display chosen food groups
+        html = html + " <strong>|</strong> " + foodGroup.size() + " selected food group(s):</p>";
+
+        html = html + "<ul>";
+        for (int i = 0; i < foodGroup.size(); i++){
+            html = html + "<li>" + foodGroup.get(i) + "</li>";
+        }
+        html = html + "</ul>";
+        html = html + "</div>";
+
+        return html;
+    }
 
 }

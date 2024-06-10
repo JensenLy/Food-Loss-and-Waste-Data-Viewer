@@ -308,10 +308,24 @@ button {
    padding: 10px;
 }
 
+/* Format for selected food group(s) and year(s) */
+.displaySelectedOption {
+   margin-left: 400px;
+   margin-top: 100px;
+   padding: 0;
+   font-size: 25px;
+}
+
+.displaySelectedOption ul{
+   max-height: 125px;
+   overflow-y: auto;
+   border: solid green 3px;
+}
+
 /* Table format */
 table {
    margin-left: 400px;
-   margin-top: 100px;
+   margin-top: 20px;
    background-color: green;
 }
 
