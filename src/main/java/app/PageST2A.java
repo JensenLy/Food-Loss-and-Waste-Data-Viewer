@@ -94,49 +94,32 @@ public class PageST2A implements Handler {
 
                 <h2> ---------------------------------------------</h2>
 
-                <h2>Select Food Commodities</h2> 
-                <div class = "tags-input-container">
-                    <ul id = "tags"></ul>
-                    <input type = "text" id = "tags-input" list = "food-commodities" placeholder = "Select an option" />
-                    <datalist id = "food-commodities"> 
+                <h2>Select Fields</h2> 
+        """;
+
+        
+        html = html + """ 
+            <div>
+                <input type="checkbox" id = "check1" name="activity">
+                <label for="check1">Activity</label> 
+            </div>
+        
+            <div>
+                <input type="checkbox" id = "check2" name="cause">
+                <label for="check2">Cause of food loss/waste</label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id = "check3" name="supplyStage">
+                <label for="check3">Food supply stage</label> 
+            </div>
+
+            <h2> ---------------------------------------------</h2>
+            <h2>Select Food Commodities</h2>
         """;
 
         html = html + outputFoodGroups();
-        html = html + "</datalist>";
         
-        html = html + "</div>";
-
-                /* <div>
-                    <input type="checkbox" id = "check1" name="activity">
-                    <label for="check1">Activity</label> 
-                </div>
-
-                <div>
-                    <input type="checkbox" id = "check2" name="cause">
-                    <label for="check2">Cause of food loss/waste</label>
-                </div>
-
-                <div>
-                    <input type="checkbox" id = "check3" name="supplyStage">
-                    <label for="check3">Food supply stage</label> 
-                </div>
-
-                <h2>Food Commodity</h2>
-                <div>
-                    <input type="checkbox" id = "check4" name="Commodity">
-                    <label for="check4">Rice</label> 
-                </div>
-
-                <div>
-                    <input type="checkbox" id = "check5" name="Commodity">
-                    <label for="check5">Wheat/waste</label>
-                </div>
-
-                <div>
-                    <input type="checkbox" id = "check6" name="Commodity">
-                    <label for="check6">Maize</label> 
-                </div>*/
-
         html = html + """
                 <h2> ---------------------------------------------</h2>
 
@@ -221,15 +204,24 @@ public class PageST2A implements Handler {
     }
 
     public String outputFoodGroups() {
-        String html = "";
+        String html = "<div class = 'foodGroup'>";
 
+        // Look up Food Groups from JDBC
         JDBCConnection jdbc = new JDBCConnection();
         ArrayList<FoodGroup> groupName = jdbc.getFoodGroups();
 
+        // Add Food Groups type to the multiselect list
+        // html = html + "<label><input type='checkbox' name = 'foodGroup' value = 'all'>Select All</label>";
+
         for (FoodGroup data : groupName ) {
-            html = html + "<option>" + data.name + "</option>";
+            html = html + "<label>";
+            html = html + "<input type='checkbox' name = 'foodGroup' value = '" + data.name +"'>";
+            html = html + data.name;
+            html = html + "</label>";
             System.out.println(data.name);
         }
+
+        html = html + "</div>";
         return html;
     }
 
