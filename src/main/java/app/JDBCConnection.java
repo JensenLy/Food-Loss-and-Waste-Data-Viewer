@@ -341,4 +341,75 @@ public class JDBCConnection {
         return info;
     }
 
+    
+    public ArrayList<Country> getDataByYear(List<String> groupName, String country, int start, int end, String sort) {
+        ArrayList<Country> tableData = new ArrayList<>();
+
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // query
+            // Chaining Union for each food group
+            String query = "";
+            for (int i = 0; i < groupName.size(); ++i) {
+                if (i == 0) {
+                    query += "SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName  FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
+                }
+                else {
+                    query += "UNION SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName  FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
+                }
+            }
+
+            // Selecting sort
+            if (sort.equals("Chronological")){
+                query = query + " ORDER BY year ASC;";
+            }
+            else if (sort.equals("Descending")){
+                query = query + " ORDER BY l DESC ;";
+            }
+            else if (sort.equals("Ascending")){
+                query = query + " ORDER BY l ASC ;";
+            }
+
+            System.out.println(query);
+
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            while (results.next()) {
+                // Create new country object
+                Country countryObj = new Country();
+
+                countryObj.year = results.getString("year");
+                countryObj.lossPercent = results.getInt("l");
+                countryObj.activity = results.getString("activity");
+                countryObj.cause = results.getString("causeOfLoss");
+                countryObj.supplyStage = results.getString("foodSupplyStage");
+
+                tableData.add(countryObj);
+            }
+            statement.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        return tableData;
+    }
+
 }

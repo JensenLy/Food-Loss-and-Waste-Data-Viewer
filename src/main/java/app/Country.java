@@ -13,11 +13,21 @@ public class Country {
    // country Name
    private String name;
 
+   public String year;
+   public int lossPercent;
+   public String activity;
+   public String cause;
+   public String supplyStage;
+
    /**
     * Create a Country and set the fields
     */
    public Country(String m49Code, String name) {
       this.m49Code = m49Code;
+      this.name = name;
+   }
+
+   public Country() {
       this.name = name;
    }
 

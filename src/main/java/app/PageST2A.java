@@ -151,7 +151,37 @@ public class PageST2A implements Handler {
             </div> 
         """; 
 
-        html = html + "<table>";
+        // Store which food groups have been selected in a list
+        List<String> foodGroup = context.formParams("foodGroup");
+        // Store which sort option has been selected in a String
+        String sort = context.formParam("Sort");
+
+        // Store start and end years as Strings
+        String startYear = context.formParam("StartYear");
+        String endYear = context.formParam("EndYear");
+
+        int start, end;
+
+        // Assign start and end ints based on the strings
+        if (startYear == null || endYear == null) {
+            start = 0;
+            end = 0;
+        }
+        else {
+            start = Integer.parseInt(startYear);
+            end = Integer.parseInt(endYear);
+        }
+
+        // Swap start and end ints if start is greater than end
+        if (start > end) {
+            int temp = 0;
+            temp = start;
+            start = end;
+            end = temp;
+        }
+        
+        // Begin html table to display output
+        html = html + "<table class = 'page2A'>";
 
         String country = context.formParam("countryName");
         if (country != null) {
@@ -183,10 +213,8 @@ public class PageST2A implements Handler {
             """;
         }
 
-        String sort = context.formParam("Sort");
-        List<String> foodGroup = context.formParams("foodGroup");
-
         html = html + "</tr>";
+        html = html + outputTable(foodGroup, country, activity, supplyStage, cause, sort, start, end);
         html = html + "</table>";
 
         // Add Div for page Content
@@ -247,13 +275,37 @@ public class PageST2A implements Handler {
         }
 
         html = html + "</div>";
-        return html;
+        return html; 
+    }
 
-        /* 
-        public String outputTable() {
-            html = "";
-            return html;
+    
+    public String outputTable(List<String> foodGroup, String country, String activity, String supplyStage, String cause, String sort, int start, int end) {
+        String html = "";
+
+        JDBCConnection getData = new JDBCConnection();
+        ArrayList<Country> baseTable = getData.getDataByYear(foodGroup, country, start, end, sort);
+
+        // Output table
+        for (Country data : baseTable) {
+            html = html + "<tr>";
+            html = html + "<td>" + data.year + "</td>";
+            html = html + "<td>" + data.lossPercent + "% </td>";
+
+            if (activity != null){
+                html = html + "<td>" + data.activity + "</td>";
+            }
+
+            if (supplyStage != null){
+                html = html + "<td>" + data.supplyStage + "</td>";
+            }
+
+            if (cause != null){
+                html = html + "<td>" + data.cause + "</td>";
+            }
+
+            html = html + "</tr>";
         }
-        */
+
+        return html;
     }
 }

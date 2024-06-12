@@ -347,6 +347,12 @@ td {
    min-width: 150px
 }
 
+table.page2A {
+   margin-left: 400px;
+   margin-top: 100px;
+   background-color: green;
+}
+
 /* Styling the persona image and information */
 
 .wrapper img {
