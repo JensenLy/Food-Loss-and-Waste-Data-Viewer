@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -137,7 +138,7 @@ public class PageST2A implements Handler {
                     </div>
 
                     <div>
-                        <input type = "radio" id = "chronological" name="Sort">
+                        <input type = "radio" id = "chronological" name="Sort" checked = "checked">
                         <label for = "chronological">Chronological</label>
                     </div>
                 </div>
@@ -150,22 +151,46 @@ public class PageST2A implements Handler {
             </div> 
         """; 
 
-        html = html + "<table>" + "<tr>";
+        html = html + "<table>";
 
         String country = context.formParam("countryName");
         if (country != null) {
             html = html + """
                 <tr>
                     <th width = auto>Year</th>
-                    <th width = auto>Food Loss</th>
-                </tr>
+                    <th width = auto>Food Loss (%)</th>
             """;
         }
 
+        String activity = context.formParam("activity");
+        if (activity != null) {
+            html = html + """
+                <th width = auto>Activity</th>        
+            """;
+        }
+
+        String cause = context.formParam("cause");
+        if (cause != null) {
+            html = html + """
+                <th width = auto>Cause of Loss/Waste</th>        
+            """;
+        }
+
+        String supplyStage = context.formParam("supplyStage");
+        if (supplyStage != null) {
+            html = html + """
+                <th width = auto>Supply Stage</th>        
+            """;
+        }
+
+        String sort = context.formParam("Sort");
+        List<String> foodGroup = context.formParams("foodGroup");
+
+        html = html + "</tr>";
         html = html + "</table>";
 
         // Add Div for page Content
-        html = html + "<div class='content'>";
+       /*  html = html + "<div class='content'>";
 
         // Add HTML for the page content
         html = html + """
@@ -173,7 +198,7 @@ public class PageST2A implements Handler {
             """;
 
         // Close Content div
-        html = html + "</div>";
+        html = html + "</div>"; */
 
         // Footer
         /* html = html + """
@@ -223,6 +248,12 @@ public class PageST2A implements Handler {
 
         html = html + "</div>";
         return html;
-    }
 
+        /* 
+        public String outputTable() {
+            html = "";
+            return html;
+        }
+        */
+    }
 }
