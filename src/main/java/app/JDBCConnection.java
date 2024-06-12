@@ -360,10 +360,10 @@ public class JDBCConnection {
             String query = "";
             for (int i = 0; i < groupName.size(); ++i) {
                 if (i == 0) {
-                    query += "SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName  FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
+                    query += "SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
                 }
                 else {
-                    query += "UNION SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName  FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
+                    query += "UNION SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
                 }
             }
 
@@ -388,10 +388,14 @@ public class JDBCConnection {
                 Country countryObj = new Country();
 
                 countryObj.year = results.getString("year");
-                countryObj.lossPercent = results.getInt("l");
+                countryObj.lossPercent = results.getDouble("l");
                 countryObj.activity = results.getString("activity");
-                countryObj.cause = results.getString("causeOfLoss");
                 countryObj.supplyStage = results.getString("foodSupplyStage");
+                countryObj.cause = results.getString("causeOfLoss");
+
+                if (countryObj.cause == null) {
+                    continue;
+                }
 
                 tableData.add(countryObj);
             }

@@ -14,7 +14,7 @@ public class Country {
    private String name;
 
    public String year;
-   public int lossPercent;
+   public double lossPercent;
    public String activity;
    public String cause;
    public String supplyStage;

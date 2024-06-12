@@ -101,18 +101,18 @@ public class PageST2A implements Handler {
         
         html = html + """ 
             <div>
-                <input type="checkbox" id = "check1" name="activity">
+                <input type="checkbox" id = "check1" name="activity" checked = "checked">
                 <label for="check1">Activity</label> 
             </div>
         
             <div>
-                <input type="checkbox" id = "check2" name="cause">
-                <label for="check2">Cause of food loss/waste</label>
-            </div>
-        
-            <div>
-                <input type="checkbox" id = "check3" name="supplyStage">
+                <input type="checkbox" id = "check3" name="supplyStage" checked = "checked">
                 <label for="check3">Food supply stage</label> 
+            </div>
+
+            <div>
+                <input type="checkbox" id = "check2" name="cause" checked = "">
+                <label for="check2">Cause of food loss/waste</label>
             </div>
 
             <h2> ---------------------------------------------</h2>
@@ -199,17 +199,17 @@ public class PageST2A implements Handler {
             """;
         }
 
-        String cause = context.formParam("cause");
-        if (cause != null) {
-            html = html + """
-                <th width = auto>Cause of Loss/Waste</th>        
-            """;
-        }
-
         String supplyStage = context.formParam("supplyStage");
         if (supplyStage != null) {
             html = html + """
                 <th width = auto>Supply Stage</th>        
+            """;
+        }
+
+        String cause = context.formParam("cause");
+        if (cause != null) {
+            html = html + """
+                <th width = auto>Cause of Loss/Waste</th>        
             """;
         }
 
@@ -289,7 +289,8 @@ public class PageST2A implements Handler {
         for (Country data : baseTable) {
             html = html + "<tr>";
             html = html + "<td>" + data.year + "</td>";
-            html = html + "<td>" + data.lossPercent + "% </td>";
+            double scale = Math.pow(10, 2);
+            html = html + "<td>" + Math.round(data.lossPercent * scale)/scale + "% </td>";
 
             if (activity != null){
                 html = html + "<td>" + data.activity + "</td>";
