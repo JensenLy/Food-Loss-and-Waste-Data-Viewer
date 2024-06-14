@@ -168,7 +168,7 @@ public class JDBCConnection {
                                                 "                AVG(t1.lossPercentage) AS startPercentage,\r\n" + //
                                                 "                t2.year,\r\n" + //
                                                 "                AVG(t2.lossPercentage) AS endPercentage,\r\n" + //
-                                                "                ((AVG(t2.lossPercentage) / AVG(t1.lossPercentage)) - 1 ) * 100 AS diff";
+                                                "                ABS(AVG(t2.lossPercentage) - AVG(t1.lossPercentage)) AS diff";
                     if (supplyStage != null){
                         query = query + ", t1.foodSupplyStage";
                     }
@@ -203,7 +203,7 @@ public class JDBCConnection {
                                                 "                AVG(t1.lossPercentage) AS startPercentage,\r\n" + //
                                                 "                t2.year,\r\n" + //
                                                 "                AVG(t2.lossPercentage) AS endPercentage,\r\n" + //
-                                                "                ((AVG(t2.lossPercentage) / AVG(t1.lossPercentage)) - 1 ) * 100 AS diff";
+                                                "                ABS(t1.lossPercentage - t2.lossPercentage) AS diff";
                     if (supplyStage != null){
                         query = query + ", t1.foodSupplyStage";
                     }
