@@ -238,10 +238,10 @@ public class JDBCConnection {
                 query = query + " ORDER BY diff;";
             }
             else if (sort.equals("Descending")){
-                query = query + " ORDER BY diff;";
+                query = query + " ORDER BY diff DESC;";
             }
             else{
-                query = query + " ORDER BY diff;";
+                query = query + " ORDER BY diff ASC;";
             }
             
             System.out.println(query);

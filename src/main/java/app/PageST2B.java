@@ -155,12 +155,7 @@ public class PageST2B implements Handler {
             temp = start; 
             start = end;
             end = temp; 
-        }
-
-        // Display selected group(s) and years 
-        if (start != 0){
-            html = html + displaySelectedGroupsAndYears(foodGroup, start, end);
-        }      
+        }    
 
         //  Get the Form Data 
         String activity = context.formParam("activity");
@@ -169,6 +164,11 @@ public class PageST2B implements Handler {
 
         // Get sort preference 
         String sort = context.formParam("sort");
+
+        // Display selected group(s) and years 
+        if (start != 0){
+            html = html + displaySelectedGroupsAndYears(foodGroup, start, end, sort);
+        }  
         
         // Output table data
         html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage, sort);
@@ -225,6 +225,10 @@ public class PageST2B implements Handler {
     public String outputTable(List<String> foodGroup, int start, int end, String activity, String cause, String supplyStage, String sort) {
         String html = "";
 
+        // Look up Food Data from JDBC
+        JDBCConnection getdata = new JDBCConnection();
+        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end, sort, supplyStage, activity, cause);
+
         // Open the table and table row
         html = html + "<table>" + "<tr>";
 
@@ -258,10 +262,6 @@ public class PageST2B implements Handler {
         //Close the first row 
         html = html + "</tr>";
 
-        // Look up Food Data from JDBC
-        JDBCConnection getdata = new JDBCConnection();
-        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end, sort, supplyStage, activity, cause);
-
         // Output table
         for (FoodGroup data : baseTable) {
             html = html + "<tr>";
@@ -286,13 +286,18 @@ public class PageST2B implements Handler {
             html = html + "</tr>";
 
         }
+
+        if (baseTable.size() == 0) {
+            html = "<div class = 'noResult'><h1>No Result Found</h1></div>";
+        }
+
         //Close the table   
         html = html + "</table>";
 
         return html;
     }
 
-    public String displaySelectedGroupsAndYears(List<String> foodGroup, int start, int end){
+    public String displaySelectedGroupsAndYears(List<String> foodGroup, int start, int end, String sort){
         String html = "<div class = displaySelectedOption>";
 
         // Display chosen years
@@ -304,7 +309,9 @@ public class PageST2B implements Handler {
         }
 
         // Display chosen food groups
-        html = html + " <strong>|</strong> " + foodGroup.size() + " selected food group(s):</p>";
+        html = html + " <strong>|</strong> " + foodGroup.size() + " selected food group(s):";
+
+        html = html + " <strong>|</strong> " + sort + "</p>";
 
         html = html + "<ul>";
         for (int i = 0; i < foodGroup.size(); i++){
