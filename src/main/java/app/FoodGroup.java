@@ -11,7 +11,11 @@ public class FoodGroup {
 
    public int year;
 
-   public String percentage;
+   public double startPercentage;
+
+   public double endPercentage;
+   
+   public double diff;
    
    public String activity;
    
@@ -22,7 +26,9 @@ public class FoodGroup {
    public FoodGroup() {
       this.name = name;
       this.year = year;
-      this.percentage = percentage;
+      this.startPercentage = startPercentage;
+      this.endPercentage = endPercentage;
+      this.diff = diff;
       this.activity = activity;
       this.supplyStage = supplyStage;
       this.cause = cause;
@@ -30,9 +36,5 @@ public class FoodGroup {
 
    public String getName() {
       return name;
-   }
-
-   public String getPercentage() {
-      return percentage;
    }
 }

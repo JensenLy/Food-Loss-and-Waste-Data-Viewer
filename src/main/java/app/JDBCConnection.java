@@ -143,7 +143,7 @@ public class JDBCConnection {
         return group;
     }
 
-    public ArrayList<FoodGroup> getTable(List<String> GroupName, int startYear, int endYear, String sort) {
+    public ArrayList<FoodGroup> getTable(List<String> GroupName, int startYear, int endYear, String sort, String supplyStage, String activity, String cause) {
         ArrayList<FoodGroup> group = new ArrayList<FoodGroup>();
 
         // Setup the variable for the JDBC connection
@@ -163,22 +163,85 @@ public class JDBCConnection {
             String query = "";
             for (int i = 0; i < GroupName.size(); ++i){
                 if (i == 0){
-                    query = query + "SELECT GroupName, AVG(lossPercentage), activity, causeOfLoss, foodSupplyStage FROM CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode WHERE year >= " + startYear + " AND year <= " + endYear + " AND GroupName = '" + GroupName.get(i) + "'";
+                    query = query + "SELECT DISTINCT t1.GroupName,\r\n" + //
+                                                "                t1.year,\r\n" + //
+                                                "                AVG(t1.lossPercentage) AS startPercentage,\r\n" + //
+                                                "                t2.year,\r\n" + //
+                                                "                AVG(t2.lossPercentage) AS endPercentage,\r\n" + //
+                                                "                ((AVG(t2.lossPercentage) / AVG(t1.lossPercentage)) - 1 ) * 100 AS diff";
+                    if (supplyStage != null){
+                        query = query + ", t1.foodSupplyStage";
+                    }
+                    if (activity != null){
+                        query = query + ", t1.activity";
+                    }
+                    if (cause != null){
+                        query = query + ", t1.causeOfLoss";
+                    }
+
+                    query = query + " FROM ( CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode ) AS t1 INNER JOIN CountryLossEvent AS t2 ON t1.cpcCode = t2.cpcCode";
+
+                    query = query + " WHERE t1.year = " + startYear + " AND " + "t2.year = " + endYear + " AND " + "t1.GroupName = '" + GroupName.get(i) + "' AND ";
+
+                    if (cause != null){
+                        query = query + "t1.causeOfLoss != ''";
+                        query = query + " GROUP BY t1.causeOfLoss ";
+                    }
+                    else if (activity != null){
+                        query = query + "t1.activity != ''";
+                        query = query + " GROUP BY t1.activity ";
+                    }
+                    else if (supplyStage != null){
+                        query = query + "t1.foodSupplyStage != ''";
+                        query = query + " GROUP BY t1.foodSupplyStage ";
+                    }
+
                 }
                 else {
-                    query = query + " UNION SELECT GroupName, AVG(lossPercentage), activity, causeOfLoss, foodSupplyStage FROM CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode WHERE year >= " + startYear + " AND year <= " + endYear + " AND GroupName = '" + GroupName.get(i) + "'";
+                    query = query + " UNION SELECT DISTINCT t1.GroupName,\r\n" + //
+                                                "                t1.year,\r\n" + //
+                                                "                AVG(t1.lossPercentage) AS startPercentage,\r\n" + //
+                                                "                t2.year,\r\n" + //
+                                                "                AVG(t2.lossPercentage) AS endPercentage,\r\n" + //
+                                                "                ((AVG(t2.lossPercentage) / AVG(t1.lossPercentage)) - 1 ) * 100 AS diff";
+                    if (supplyStage != null){
+                        query = query + ", t1.foodSupplyStage";
+                    }
+                    if (activity != null){
+                        query = query + ", t1.activity";
+                    }
+                    if (cause != null){
+                        query = query + ", t1.causeOfLoss";
+                    }
+
+                    query = query + " FROM ( CPC JOIN CountryLossEvent ON CPC.cpcCode = CountryLossEvent.cpcCode ) AS t1 INNER JOIN CountryLossEvent AS t2 ON t1.cpcCode = t2.cpcCode";
+
+                    query = query + " WHERE t1.year = " + startYear + " AND " + "t2.year = " + endYear + " AND " + "t1.GroupName = '" + GroupName.get(i) + "' AND ";
+
+                    if (cause != null){
+                        query = query + "t1.causeOfLoss != ''";
+                        query = query + " GROUP BY t1.causeOfLoss ";
+                    }
+                    else if (activity != null){
+                        query = query + "t1.activity != ''";
+                        query = query + " GROUP BY t1.activity ";
+                    }
+                    else if (supplyStage != null){
+                        query = query + "t1.foodSupplyStage != ''";
+                        query = query + " GROUP BY t1.foodSupplyStage ";
+                    }
                 }
             }
             
             // Processing sort
             if (sort == null){
-                query = query + " ORDER BY AVG(lossPercentage);";
+                query = query + " ORDER BY diff;";
             }
             else if (sort.equals("Descending")){
-                query = query + " ORDER BY AVG(lossPercentage) DESC ;";
+                query = query + " ORDER BY diff;";
             }
             else{
-                query = query + " ORDER BY AVG(lossPercentage) ASC ;";
+                query = query + " ORDER BY diff;";
             }
             
             System.out.println(query);
@@ -192,14 +255,22 @@ public class JDBCConnection {
                 FoodGroup foodgroup = new FoodGroup();
 
                 foodgroup.name = results.getString("GroupName");
-                // foodgroup.year = results.getInt("year");
-                foodgroup.percentage = results.getString("AVG(lossPercentage)");
-                foodgroup.activity = results.getString("activity");
-                foodgroup.cause = results.getString("causeOfLoss");
-                foodgroup.supplyStage = results.getString("foodSupplyStage");
+                foodgroup.startPercentage = results.getDouble("startPercentage");
+                foodgroup.endPercentage = results.getDouble("endPercentage");
+                foodgroup.diff = results.getDouble("diff");
+
+                if (supplyStage != null){
+                    foodgroup.supplyStage = results.getString("foodSupplyStage");
+                }
+                if (activity != null){
+                    foodgroup.activity = results.getString("activity");
+                }
+                if (cause != null){
+                    foodgroup.cause = results.getString("causeOfLoss");
+                }
 
                 // If the value is null then skip
-                if(foodgroup.percentage == null){
+                if(foodgroup.name == null){
                     continue;
                 }
 

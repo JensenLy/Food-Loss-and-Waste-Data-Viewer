@@ -160,53 +160,18 @@ public class PageST2B implements Handler {
         // Display selected group(s) and years 
         if (start != 0){
             html = html + displaySelectedGroupsAndYears(foodGroup, start, end);
-        }
+        }      
 
-        // Open the table and table row
-        html = html + "<table>" + "<tr>";
-
-        //Print the necessary headers if there's input
-        if (foodGroup.size() != 0){
-            html = html + """
-            <tr>
-            <th>FoodType</th>
-            <th>Loss(%)</th>
-                """;
-        }
-
-        //  Get the Form Data and add the header if not null 
+        //  Get the Form Data 
         String activity = context.formParam("activity");
-        if (activity != null){
-            html = html + """
-                <th>Activity</th>
-                    """;
-        }
-
         String supplyStage = context.formParam("supplyStage");
-        if (supplyStage != null){
-            html = html + """
-                <th>Food Supply Stage</th>
-                    """;
-        }
-
         String cause = context.formParam("cause");
-        if (cause != null){
-            html = html + """
-                <th>Cause of food loss / waste</th>
-                    """;
-        }
-
-        //Close the first row 
-        html = html + "</tr>";
 
         // Get sort preference 
         String sort = context.formParam("sort");
         
         // Output table data
         html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage, sort);
-       
-        //Close the table
-        html = html + "</table>";
 
         // // Add Div for page Content
         // html = html + "<div class='content'>";
@@ -260,16 +225,51 @@ public class PageST2B implements Handler {
     public String outputTable(List<String> foodGroup, int start, int end, String activity, String cause, String supplyStage, String sort) {
         String html = "";
 
+        // Open the table and table row
+        html = html + "<table>" + "<tr>";
+
+        //Print the necessary headers if there's input
+        if (foodGroup.size() != 0){
+            html = html + "<tr>";
+            html = html + "<th>FoodType</th>";
+            html = html + "<th>" + start + " loss percentage" + "</th>";
+            html = html + "<th>" + end + " loss percentage" + "</th>";
+            html = html + "<th>Difference</th>";
+        }
+
+        if (supplyStage != null){
+            html = html + """
+                <th>Food Supply Stage</th>
+                    """;
+        }
+
+        if (activity != null){
+            html = html + """
+                <th>Activity</th>
+                    """;
+        }
+
+        if (cause != null){
+            html = html + """
+                <th>Cause of food loss / waste</th>
+                    """;
+        }
+
+        //Close the first row 
+        html = html + "</tr>";
+
         // Look up Food Data from JDBC
         JDBCConnection getdata = new JDBCConnection();
-        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end, sort);
+        ArrayList<FoodGroup> baseTable = getdata.getTable(foodGroup, start, end, sort, supplyStage, activity, cause);
 
         // Output table
         for (FoodGroup data : baseTable) {
             html = html + "<tr>";
             // html = html + "<td>" + data.year + "</td>";
             html = html + "<td>" + data.name + "</td>";
-            html = html + "<td>" + data.percentage + "</td>";
+            html = html + "<td>" + String.format("%.2f", data.startPercentage) + "%" + "</td>";
+            html = html + "<td>" + String.format("%.2f", data.endPercentage) + "%" + "</td>";
+            html = html + "<td>" +  String.format("%.2f", data.diff) + "%" + "</td>";
 
             if (activity != null){
                 html = html + "<td>" + data.activity + "</td>";
@@ -284,7 +284,11 @@ public class PageST2B implements Handler {
             }
 
             html = html + "</tr>";
+
         }
+        //Close the table   
+        html = html + "</table>";
+
         return html;
     }
 
