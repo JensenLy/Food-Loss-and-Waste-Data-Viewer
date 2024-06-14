@@ -429,23 +429,24 @@ public class JDBCConnection {
             // query
             // Chaining Union for each food group
             String query = "";
+
             for (int i = 0; i < groupName.size(); ++i) {
                 if (i == 0) {
-                    query += "SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
+                    query += "SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
                 }
                 else {
-                    query += "UNION SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss, GroupName FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
+                    query += " UNION SELECT countryName, year, AVG(lossPercentage) AS l, activity, foodSupplyStage, causeOfLoss FROM Page2A WHERE countryName = '" + country + "' AND GroupName = '" + groupName.get(i) + "' AND year BETWEEN " + start + " AND " + end + " GROUP BY year";
                 }
             }
 
             // Selecting sort
-            if (sort.equals("Chronological")){
+            if (sort.equals("chronological")){
                 query = query + " ORDER BY year ASC;";
             }
-            else if (sort.equals("Descending")){
+            else if (sort.equals("descending")){
                 query = query + " ORDER BY l DESC ;";
             }
-            else if (sort.equals("Ascending")){
+            else if (sort.equals("ascending")){
                 query = query + " ORDER BY l ASC ;";
             }
 
@@ -465,7 +466,7 @@ public class JDBCConnection {
                 countryObj.cause = results.getString("causeOfLoss");
 
                 if (countryObj.cause == null) {
-                    continue;
+                    countryObj.cause = "No Result";
                 }
 
                 tableData.add(countryObj);

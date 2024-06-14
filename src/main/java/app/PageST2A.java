@@ -128,17 +128,17 @@ public class PageST2A implements Handler {
 
                 <div class = "sorting-buttons">
                     <div>
-                        <input type = "radio" id = "ascending" name="Sort">
+                        <input type = "radio" id = "ascending" value = "ascending" name="Sort">
                         <label for = "ascending">Ascending</label>
                     </div>
 
                     <div>
-                        <input type = "radio" id = "descending" name="Sort">
+                        <input type = "radio" id = "descending" value = "descending" name="Sort">
                         <label for = "descending">Descending</label>
                     </div>
 
                     <div>
-                        <input type = "radio" id = "chronological" name="Sort" checked = "checked">
+                        <input type = "radio" id = "chronological" value = "chronological" name="Sort" checked = "checked">
                         <label for = "chronological">Chronological</label>
                     </div>
                 </div>
@@ -180,42 +180,14 @@ public class PageST2A implements Handler {
             end = temp;
         }
         
-        // Begin html table to display output
-        html = html + "<table class = 'page2A'>";
-
+        // Variables to check whether fields have been selected
         String country = context.formParam("countryName");
-        if (country != null) {
-            html = html + """
-                <tr>
-                    <th width = auto>Year</th>
-                    <th width = auto>Food Loss (%)</th>
-            """;
-        }
-
         String activity = context.formParam("activity");
-        if (activity != null) {
-            html = html + """
-                <th width = auto>Activity</th>        
-            """;
-        }
-
         String supplyStage = context.formParam("supplyStage");
-        if (supplyStage != null) {
-            html = html + """
-                <th width = auto>Supply Stage</th>        
-            """;
-        }
-
         String cause = context.formParam("cause");
-        if (cause != null) {
-            html = html + """
-                <th width = auto>Cause of Loss/Waste</th>        
-            """;
-        }
-
-        html = html + "</tr>";
+        
+        // Begin html table to display output
         html = html + outputTable(foodGroup, country, activity, supplyStage, cause, sort, start, end);
-        html = html + "</table>";
 
         // Add Div for page Content
        /*  html = html + "<div class='content'>";
@@ -286,6 +258,32 @@ public class PageST2A implements Handler {
         ArrayList<Country> baseTable = getData.getDataByYear(foodGroup, country, start, end, sort);
 
         // Output table
+        html = html + "<table class = 'page2A'>";
+
+        if (country != null) {
+            html = html + """
+                <tr>
+                    <th width = auto>Year</th>
+                    <th width = auto>Food Loss (%)</th>
+            """;
+        }
+        if (activity != null) {
+            html = html + """
+                <th width = auto>Activity</th>        
+            """;
+        }
+        if (supplyStage != null) {
+            html = html + """
+                <th width = auto>Supply Stage</th>        
+            """;
+        }
+        if (cause != null) {
+            html = html + """
+                <th width = auto>Cause of Loss/Waste</th>        
+            """;
+        }
+        html = html + "</tr>";
+
         for (Country data : baseTable) {
             html = html + "<tr>";
             html = html + "<td>" + data.year + "</td>";
@@ -295,16 +293,19 @@ public class PageST2A implements Handler {
             if (activity != null){
                 html = html + "<td>" + data.activity + "</td>";
             }
-
             if (supplyStage != null){
                 html = html + "<td>" + data.supplyStage + "</td>";
             }
-
             if (cause != null){
                 html = html + "<td>" + data.cause + "</td>";
             }
-
             html = html + "</tr>";
+        }
+        html = html + "</table>";
+
+        if (baseTable.size() == 0) {
+            html = "<h1 class  = 'noResult2A'>No Result Found</h1>";
+            System.out.println("No result.");
         }
 
         return html;
