@@ -353,6 +353,10 @@ table.page2A {
    background-color: green;
 }
 
+.noResult h1 {
+   margin-left: 400px;
+}
+
 /* Styling the persona image and information */
 
 .wrapper img {
