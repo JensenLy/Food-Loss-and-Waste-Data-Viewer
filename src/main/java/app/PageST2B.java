@@ -287,7 +287,7 @@ public class PageST2B implements Handler {
 
         }
 
-        if (baseTable.size() == 0) {
+        if (baseTable.size() == 0 && start != 0) {
             html = "<div class = 'noResult'><h1>No Result Found</h1></div>";
         }
 
