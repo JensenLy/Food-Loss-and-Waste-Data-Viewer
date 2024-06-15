@@ -73,6 +73,8 @@ public class PageIndex implements Handler {
         // Add HTML for the country list
         html = html + "<h1>All Time Data 1966 - 2022 (Global)</h1>";
 
+        html += outputSnapshot();
+
         // Close Content div
         html = html + "</div>";
 
@@ -146,5 +148,31 @@ public class PageIndex implements Handler {
 
         // Finally we return all of the countries
         return countries;
+    }
+
+    public String outputSnapshot() {
+        String html = "";
+
+        JDBCConnection getData = new JDBCConnection();
+        Country max = getData.maxLoss();
+        Country min = getData.minLoss();
+        
+        html += "   <table class = 'home'>";
+        html += "       <tr>";
+        html += "           <th>Maximum Loss: " + max.year + "</th>";
+        html += "           <th>Minimum Loss: " + min.year + "</th>";
+        html += "       </tr>";
+        html += "       <tr>";
+        html += "           <th>" + String.format("%,.0f" , max.lossPercent) + "%</th>";
+        html += "           <th>" + String.format("%,.4f" , min.lossPercent) + "%</th>";
+        html += "       </tr>";
+        html += "       <tr>";
+        html += "           <td>" + max.groupName + " - " + max.getName() + "</th>";
+        html += "           <td>" + min.groupName + " - " + min.getName() + "</th>";
+        html += "       </tr>";
+        html += "   </table>";
+        
+
+        return html;
     }
 }

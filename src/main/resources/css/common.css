@@ -431,6 +431,25 @@ border: #000000 solid;
    margin-top: 10%;
    margin-left: 30%;
 }
+
+.home {
+   border-collapse: collapse;
+   margin: 25px 0;
+   font-size: 0.9em;
+   min-width: 400px;
+   border-spacing: 100px;
+   outline: #000000;
+}
+
+.home tr {
+   text-align: center;
+   background-color: rgb(241, 227, 209);
+}
+.home th,
+.home td {
+   padding: 1px 15px;
+   height: 50px;
+}
  
  
  

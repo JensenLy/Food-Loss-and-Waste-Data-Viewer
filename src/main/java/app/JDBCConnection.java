@@ -488,4 +488,76 @@ public class JDBCConnection {
         return tableData;
     }
 
+    public Country maxLoss() {
+        Connection connection = null;
+        Country country = null;
+
+        try {
+            connection = DriverManager.getConnection(DATABASE);
+
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT countryName, year, GroupName, MAX(lossPercentage) FROM Page2A;";
+            System.out.println(query);
+
+            ResultSet result = statement.executeQuery(query);
+            country = new Country(result.getString("countryName"));
+
+            country.year = result.getString("year");
+            country.groupName = result.getString("GroupName");
+            country.lossPercent = result.getDouble("MAX(lossPercentage)");
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        return country;
+    }
+
+    public Country minLoss() {
+        Connection connection = null;
+        Country country = null;
+
+        try {
+            connection = DriverManager.getConnection(DATABASE);
+
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "SELECT countryName, year, GroupName, MIN(lossPercentage) FROM Page2A;";
+            System.out.println(query);
+
+            ResultSet result = statement.executeQuery(query);
+            country = new Country(result.getString("countryName"));
+
+            country.year = result.getString("year");
+            country.groupName = result.getString("GroupName");
+            country.lossPercent = result.getDouble("MIN(lossPercentage)");
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        return country;
+    }
+
 }
