@@ -301,12 +301,12 @@ public class PageST2A implements Handler {
             }
             html = html + "</tr>";
         }
-        html = html + "</table>";
-
+        
         if (baseTable.size() == 0) {
             html = "<h1 class  = 'noResult2A'>No Result Found</h1>";
             System.out.println("No result.");
         }
+        html = html + "</table>";
 
         return html;
     }
