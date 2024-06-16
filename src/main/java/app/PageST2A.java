@@ -264,7 +264,7 @@ public class PageST2A implements Handler {
             html = html + """
                 <tr>
                     <th width = auto>Year</th>
-                    <th width = auto>Food Loss (%)</th>
+                    <th width = auto> AVG Food Loss(%)</th>
             """;
         }
         if (activity != null) {

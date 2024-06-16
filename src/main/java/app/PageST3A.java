@@ -67,22 +67,29 @@ public class PageST3A implements Handler {
                 """;
 
         // Add header content block
-        html = html + """
+        /* html = html + """
             <div class='header'>
                 <h1>Subtask 3.A</h1>
+            </div>
+        """;*/
+
+        html = html + """
+            <div class = "sidemenu">
+            <form action = "/page2A.html" method = 'post' id = 'page2A'>
+
             </div>
         """;
 
         // Add Div for page Content
-        html = html + "<div class='content'>";
+        // html = html + "<div class='content'>";
 
         // Add HTML for the page content
-        html = html + """
+        /*html = html + """
             <p>Subtask 3.A page content</p>
-            """;
+            """;*/
 
         // Close Content div
-        html = html + "</div>";
+        // html = html + "</div>";
 
         // Footer
         html = html + """
