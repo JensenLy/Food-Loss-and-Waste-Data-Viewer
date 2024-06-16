@@ -79,7 +79,11 @@ public class PageMission implements Handler {
 
         html = html + "<section id = 'section2'>";
         html = html + "<h2>Tutorial</h2>";
-        html = html + "<p><i> insert text here</i></p>";
+        html = html + "<p style = 'margin-bottom: 0'><strong>Use the Main Navigation Menu:</strong> Located at the top of every page, this menu allows you to quickly jump between different sections of the website.</p>";
+        html = html + "<p style = 'margin-bottom: 10px'>1.Using on the 'Surface Data' link in the main navigation menu.</p>";
+        html = html + "<p style = 'margin-left: 200px; margin-bottom: 10px'>+There will be two tab when clicked onto 'Surface Data' on the navigation bar: Country and Food Group, click on the one that is more relevant to you. </p>";
+        html = html + "<p style = 'margin-left: 240px; margin-bottom: 10px'>-In 'Country', you will be able to look up data about country of food loss, years, food commodity, activity, food supply stage and cause of loss.</p>";
+        html = html + "<p style = 'margin-left: 240px'>-In 'Food Group', you will be able to look up data by choosing food group of loss, years, activity, food supply stage and cause of loss.</p>";
         html = html + "</section>";
         
         html = html + "<section id = 'section3'>";
@@ -89,7 +93,7 @@ public class PageMission implements Handler {
         html = html + "</section>";
         
         html = html + "<section id = 'section4'>";
-        html = html + "<h2>Personas</h2>";
+        html = html + "<h2>Special thanks to these contributors in testing the website</h2>";
 
         html = html + "<section class = 'container'>";
         html = html + "<div class = 'slider-wrapper'>";

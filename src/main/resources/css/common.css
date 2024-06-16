@@ -157,10 +157,17 @@ ul li:hover a{
 .content1B h2{
    font-size: 30px;
    margin-left: 160px;
-   margin-top: 100px
+   margin-top: 30px
    }
 
 .content1B p{
+   margin-left: 160px;
+   margin-top: 20px;
+   margin-bottom: 50px;
+   font-size: 25px;
+}
+
+.content1B h1{
    margin-left: 160px;
    margin-top: 20px;
    margin-bottom: 50px;
@@ -177,24 +184,30 @@ ul li:hover a{
 #section1 {
    height: auto;
    scroll-margin-top: 160px;
+   margin-top: 100px;
    width: 75%;
+}
+
+#section1 h2 {
+   height: auto;
 }
 
 #section2 {
    height: auto;
-   scroll-margin-top: 160px;
-   width: 75%;
+   scroll-margin-top: 120px;
+   border-top: 4px solid black;
 }
 
 #section3 {
    height: auto;
-   scroll-margin-top: 160px;
+   scroll-margin-top: 120px;
+   border-top: 4px solid black;
 }
 
 #section4 {
    height: auto;
-   scroll-margin-top: 160px;
-   background-color: beige;
+   scroll-margin-top: 120px;
+   border-top: 4px solid black;
 }
 
 /* Side menu (same as sidebar but for pages with information */
