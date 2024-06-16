@@ -75,18 +75,27 @@ public class PageIndex implements Handler {
 
         html += outputSnapshot();
 
-        // Close Content div
-        html = html + "</div>";
-
-        // Footer
-        html = html + """
-            <div class='footer'>
-                <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
-            </div>
+        html += """
+                
+                <div class = "aboutUslink">
+                    <a href="/mission.html#section2">
+                        <button>View Instructions</button>
+                    </a>                
+                </div>
         """;
 
+        // Close Content div
+        //html = html + "</div>";
+
+        // Footer
+        //html = html + """
+            //<div class='footer'>
+                //<p>COSC2803 - Studio Project Starter Code (Apr24)</p>
+            //</div>
+        //""";
+
         // Finish the HTML webpage
-        html = html + "</body>" + "</html>";
+        //html = html + "</body>" + "</html>";
 
 
         // DO NOT MODIFY THIS
@@ -172,7 +181,6 @@ public class PageIndex implements Handler {
         html += "       </tr>";
         html += "   </table>";
         
-
         return html;
     }
 }

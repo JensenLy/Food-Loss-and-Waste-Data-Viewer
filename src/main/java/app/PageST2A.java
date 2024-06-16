@@ -302,7 +302,7 @@ public class PageST2A implements Handler {
             html = html + "</tr>";
         }
         
-        if (baseTable.size() == 0) {
+        if (baseTable.size() == 0 && start != 0) {
             html = "<h1 class  = 'noResult2A'>No Result Found</h1>";
             System.out.println("No result.");
         }
