@@ -67,29 +67,66 @@ public class PageST3B implements Handler {
                 """;
 
         // Add header content block
+
+        // Add sidemenu
         html = html + """
-            <div class='header'>
-                <h1>Subtask 3.B</h1>
-            </div>
+        <div class = "sidemenu">
+        <form action = "/page2B.html" method = 'post'>
+
+        <h2>Enter Food Commodity</h2>
+
         """;
+        
+        // list all Food Groups in the db 
+        html = html + outputCommodity();
 
-        // Add Div for page Content
-        html = html + "<div class='content'>";
+        html = html + """ 
+        <h2> ---------------------------------------------</h2>
+        
+        <h2>Similarity Type</h2>
 
-        // Add HTML for the page content
-        html = html + """
-            <p>Subtask 3.B page content</p>
-            """;
+        <input list = "similarity" name = "similarityType" placeholder = "Select Similarity Type">
+        <datalist id = "similarity">
+        <option value = "By Ratio (loss : waste)">
+        <option value = "Highest % of loss/waste">
+        <option value = "Lowest % of loss/waste">
+        </datalist>
 
-        // Close Content div
-        html = html + "</div>";
+        <h2> ---------------------------------------------</h2>
 
-        // Footer
-        html = html + """
-            <div class='footer'>
-                <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
-            </div>
-        """;
+        <input type = "number" placeholder="No. of Similar Group(s)" min = "0" name="similarNo" autofocus required>
+
+        <h2></h2>
+        <h1></h1>
+
+        <input type = "submit" value = "Search">
+
+        </form>
+        </div>
+        // html = html + """;
+
+        //     <div class='header'>
+        //         <h1>Subtask 3.B</h1>
+        //     </div>
+        // """;
+
+        // // Add Div for page Content
+        // html = html + "<div class='content'>";
+
+        // // Add HTML for the page content
+        // html = html + """
+        //     <p>Subtask 3.B page content</p>
+        //     """;
+
+        // // Close Content div
+        // html = html + "</div>";
+
+        // // Footer
+        // html = html + """
+        //     <div class='footer'>
+        //         <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
+        //     </div>
+        // """;
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
@@ -98,6 +135,26 @@ public class PageST3B implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+    }
+
+    public String outputCommodity() {
+        String html = "";
+        html = html + "<input list = 'commodities' name = 'commodity' placeholder = 'Enter Food Commodity'>";
+        html = html + "<datalist id= 'commodities'>";
+
+        // Look up Food Groups from JDBC
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<FoodGroup> groupName = jdbc.getCommodity();
+
+        // Add Food Groups type to the multiselect list
+        // html = html + "<label><input type='checkbox' name = 'foodGroup' value = 'all'>Select All</label>";
+
+        for (FoodGroup data : groupName ) {
+            html = html + "<option value = '" + data.activity + " (" + data.name + ")'>";
+        }
+
+        html = html + "</datalist>";
+        return html;
     }
 
 }
