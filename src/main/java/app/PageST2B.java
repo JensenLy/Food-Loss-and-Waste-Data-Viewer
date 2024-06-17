@@ -93,7 +93,6 @@ public class PageST2B implements Handler {
 
         <div class = "year-input">
         <input type = "number" placeholder="Start Year" min = "1966" max = "2022" name="StartYear" autofocus required>
-        <h2 style = "text-align: center; margin: 0; margin-right: -10px"> <img src = "triangle-png-28.png" height="25" width="25" ></h2>
         <input type = "number" placeholder="End Year" min = "1966" max = "2022" name="EndYear" autofocus required>
         </div>
 
