@@ -121,6 +121,10 @@ public class PageST3A implements Handler {
             </div>
         """;
 
+        String country = context.formParam("countryName");
+
+
+
         // Add Div for page Content
         // html = html + "<div class='content'>";
 
@@ -157,6 +161,18 @@ public class PageST3A implements Handler {
         for (Country data : countryName) {
             html = html + "<option>" + data.getName() + "</option>";
         }
+        return html;
+    }
+
+    public String printResults() {
+        String html = "";
+
+        html += """
+                <h1>Search Results</h1> 
+        
+
+        """;
+        
         return html;
     }
 
