@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -71,7 +72,7 @@ public class PageST3B implements Handler {
         // Add sidemenu
         html = html + """
         <div class = "sidemenu">
-        <form action = "/page2B.html" method = 'post'>
+        <form action = "/page3B.html" method = 'post'>
 
         <h2>Enter Food Commodity</h2>
 
@@ -94,7 +95,7 @@ public class PageST3B implements Handler {
 
         <h2> ---------------------------------------------</h2>
 
-        <input type = "number" placeholder="No. of Similar Group(s)" min = "0" name="similarNo" autofocus required>
+        <input type = "number" placeholder="No. of Similar Group(s)" min = "1" name="similarNo" autofocus required>
 
         <h2></h2>
         <h1></h1>
@@ -102,25 +103,73 @@ public class PageST3B implements Handler {
         <input type = "submit" value = "Search">
 
         </form>
-        </div>
-        // html = html + """;
+        </div> """;
+
+        html = html + "</body>" + "</html>";
+        
+        String commodity = context.formParam("commodity");
+
+        String numString = context.formParam("similarNo");
+        int num;
+        if (numString == null){
+            num = 0;
+        }
+        else {
+            num = Integer.parseInt(numString);
+        }
+
+        String similarity = context.formParam("similarityType");
+
+
+        if (num != 0){
+        html = html + displaySelectedOptions(commodity, num, similarity);
+        }
+
+        if (num != 0){
+        html = html + "<ul id = 'accordion'>"; 
+
+        html = html + "<li>"; 
+        html = html + "<label for = 'acc1'>1. Group: Vegetable <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+        html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+        html = html + "<div class = 'content'>"; 
+        html = html + "<p>Product with highest percentage of food loss/waste : Broccoli</p>"; 
+        html = html + "<p>Loss percentage: 15%</p>"; 
+        html = html + "</div>"; 
+        html = html + "</li>"; 
+
+        html = html + "<li>"; 
+        html = html + "<label for = 'acc2'>2. Group: Fruit <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+        html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc2' checked>"; 
+        html = html + "<div class = 'content'>"; 
+        html = html + "<p>Product with highest percentage of food loss/waste : Apple</p>"; 
+        html = html + "<p>Loss percentage: 10%</p>"; 
+        html = html + "</div>"; 
+        html = html + "</li>"; 
+
+        html = html + "<li>"; 
+        html = html + "<label for = 'acc3'>3. Group: Cereals <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+        html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc3' checked>"; 
+        html = html + "<div class = 'content'>"; 
+        html = html + "<p>Product with highest percentage of food loss/waste : Wheat</p>"; 
+        html = html + "<p>Loss percentage: 20%</p>"; 
+        html = html + "</div>"; 
+        html = html + "</li>"; 
+
+        html = html + "</ul>"; 
+        }
 
         //     <div class='header'>
         //         <h1>Subtask 3.B</h1>
         //     </div>
         // """;
 
-        // // Add Div for page Content
-        // html = html + "<div class='content'>";
-
-        // // Add HTML for the page content
+        // // Footer
         // html = html + """
-        //     <p>Subtask 3.B page content</p>
-        //     """;
-
-        // // Close Content div
-        // html = html + "</div>";
-
+        //     <div class='footer'>
+        //         <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
+        //     </div>
+        // """;
+       
         // // Footer
         // html = html + """
         //     <div class='footer'>
@@ -154,6 +203,25 @@ public class PageST3B implements Handler {
         }
 
         html = html + "</datalist>";
+        return html;
+    }
+
+    public String displaySelectedOptions(String commodity, int num, String similarType){
+        String html = "<div class = displaySelectedOption>";
+
+        // Display chosen commodity
+        html = html + "<p><strong>Selected commodity:</strong> " + commodity;
+
+        // Display chosen food groups
+        html = html + " <strong>|</strong> <strong>Similarity Type:</strong> " + similarType;
+
+        html = html + " <strong>|</strong> <strong>Number of requested groups:</strong> " + num + "</p>";
+
+        html = html + "<p><strong>Search Result:</strong> 3 results found";
+
+        html = html + "</ul>";
+        html = html + "</div>";
+
         return html;
     }
 
