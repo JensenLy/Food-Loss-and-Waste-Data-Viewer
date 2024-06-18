@@ -274,6 +274,25 @@ input[name = "EndYear"] {
    display: inline-block;
 }
 
+/* page 3A */
+input[name = "Year"] {
+   margin-right: 5px;
+   width: 35%;
+   text-align: center;
+   height: 40px;
+   font-size: 20px;
+   display: inline-block;
+}
+
+input[name = "Results"] {
+   margin-left: 15px;
+   width: 35%;
+   text-align: center;
+   height: 40px;
+   font-size: 20px;
+   display: inline-block;
+}
+
 input[type="checkbox"] {
    width: 24px;
    height: 24px;

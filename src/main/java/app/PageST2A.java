@@ -106,12 +106,12 @@ public class PageST2A implements Handler {
             </div>
         
             <div>
-                <input type="checkbox" id = "check3" name="supplyStage" checked = "checked">
+                <input type="checkbox" id = "check2" name="supplyStage" checked = "checked">
                 <label for="check3">Food supply stage</label> 
             </div>
 
             <div>
-                <input type="checkbox" id = "check2" name="cause" checked = "">
+                <input type="checkbox" id = "check3" name="cause" checked = "">
                 <label for="check2">Cause of food loss/waste</label>
             </div>
 

@@ -75,7 +75,48 @@ public class PageST3A implements Handler {
 
         html = html + """
             <div class = "sidemenu">
-            <form action = "/page2A.html" method = 'post' id = 'page2A'>
+            <form action = "/page3A.html" method = 'post' id = 'page3A'>
+        """;
+
+        html += """
+                <h2>Enter Country</h2>
+                <input list = "Country" placeholder = "Enter Country" name = "countryName" autofocus required>        
+        """;
+        html = html + "<datalist id = 'Country'>";
+        html = html + outputCountries();
+        html = html + "</datalist>";
+
+        html += """
+            <h2> ---------------------------------------------</h2> 
+            
+            <h2>Select Year and No. Results</h2>
+                <div class="year-input">
+                    <input type = "number" placeholder = "Year" min = "1966" max = "2022" name = "Year" autofocus required>
+                    <input type = "number" placeholder = "No. Results" min = "1" max = "5" name = "Results" autofocus required>
+                </div>
+            <h2> ---------------------------------------------</h2>
+
+                <input list = "SimilarityOptions" placeholder = "Select Similarity Combination" name = "SimilarityCombination" autfocus required>
+                <datalist id = "SimilarityOptions">
+                    <option>Common Food Products</option>
+                    <option>Overrall Food Loss/Waste (%)</option>
+                </datalist>
+
+            <h2> ---------------------------------------------</h2>
+                <h2>Select Similarity Method</h2>
+                <div>
+                    <input type = "radio" id = "radio1" name="method" value = "absolute" checked = "checked">
+                    <label for="radio1">Absolute Values</label>
+                </div>
+                <div>
+                    <input type = "radio" id = "radio2" name="method" value = "overlap">
+                    <label for="radio2">Level of Overlap</label>
+                </div>
+            <h2> ---------------------------------------------</h2>
+
+                <div class="submit-button">
+                    <input type = "submit" value = "Search">
+                </div>
 
             </div>
         """;
@@ -105,6 +146,18 @@ public class PageST3A implements Handler {
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
         context.html(html);
+    }
+
+    public String outputCountries() {
+        String html = "";
+
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<Country> countryName = jdbc.getAllCountries();
+
+        for (Country data : countryName) {
+            html = html + "<option>" + data.getName() + "</option>";
+        }
+        return html;
     }
 
 }
