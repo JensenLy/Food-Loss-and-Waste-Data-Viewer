@@ -122,6 +122,73 @@ public class PageST3A implements Handler {
         """;
 
         String country = context.formParam("countryName");
+        String year = context.formParam("Year");
+        String numString = context.formParam("Results");
+        int num;
+        if (numString == null){
+            num = 0;
+        }
+        else {
+            num = Integer.parseInt(numString);
+        }
+
+        if (num != 0){
+
+            html += """
+                <div class = "searchHeading">
+                    <h2>Search Results</h2> 
+                    <sub>Displaying 3 results</sub>
+                    <hr>
+            """;
+            html += "<h2 class = 'countryHeading'>Country/Region: " + country + " " + year + "</h2>";
+            html += "</div>";
+
+
+            html = html + "<ul id = 'accordion'>"; 
+    
+            html = html + "<li>"; 
+            html = html + "<label for = 'acc1'>1. New Zealand - 83% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+            html = html + "<div class = 'content'>"; 
+            html = html + "<p>Values used to determine similarity</p>"; 
+            html = html + "<ul id = 'food-values'>";
+            html = html + "<li>Rice, Milled: 45% Food Loss</li>";
+            html = html + "<li>Wheat: 37% Food Loss</li>";
+            html = html + "<li>Millet: 12% Food Loss</li>";
+            html = html + "</ul>"; 
+            html = html + "</div>"; 
+            html = html + "</li>"; 
+
+            html = html + "<li>"; 
+            html = html + "<label for = 'acc1'>2. Brazil - 67% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+            html = html + "<div class = 'content'>"; 
+            html = html + "<p>Values used to determine similarity</p>"; 
+            html = html + "<ul id = 'food-values'>";
+            html = html + "<li>Oats (Cereals): 32% Food Loss</li>";
+            html = html + "<li>Millet: 28% Food Loss</li>";
+            html = html + "<li>Melons (Vegetables): 12% Food Loss</li>";
+            html = html + "</ul>"; 
+            html = html + "</div>"; 
+            html = html + "</li>";
+
+            html = html + "<li>"; 
+            html = html + "<label for = 'acc1'>3. China - 56% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+            html = html + "<div class = 'content'>"; 
+            html = html + "<p>Values used to determine similarity</p>"; 
+            html = html + "<ul id = 'food-values'>";
+            html = html + "<li>Rice, Milled: 45% Food Loss</li>";
+            html = html + "<li>Wheat: 37% Food Loss</li>";
+            html = html + "<li>Millet: 12% Food Loss</li>";
+            html = html + "</ul>"; 
+            html = html + "</div>"; 
+            html = html + "</li>";
+    
+            
+    
+            html = html + "</ul>"; 
+            }
 
 
 
@@ -137,11 +204,11 @@ public class PageST3A implements Handler {
         // html = html + "</div>";
 
         // Footer
-        html = html + """
+        /* html = html + """
             <div class='footer'>
                 <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
             </div>
-        """;
+        """;*/
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";

@@ -486,6 +486,40 @@ border: #000000 solid;
 .aboutUsLink {
    width: 25%;
 }
+
+/* Search Heading format */
+.searchHeading {
+   margin-top: 6%;
+   margin-left: 27%;
+}
+
+.searchHeading h2 {
+   margin: auto;
+   font-size: xxx-large;
+   font-weight: bold;
+   line-height: 1;
+   padding: auto;
+}
+.searchHeading h2.countryHeading {
+   margin: auto;
+   margin-bottom: 4%;
+   font-size: xx-large;
+   font-weight: bold;
+   line-height: 1;
+   padding: auto;
+}
+
+.searchHeading sub {
+   margin-left: 3;
+   margin-top: 2%;
+   color: #918d8d;
+   font-size: larger;
+}
+
+.searchHeading hr {
+   margin-top: 2%;
+   border: 1px solid black;
+}
  
 /* Accordion format */
 
@@ -540,7 +574,26 @@ border: #000000 solid;
    max-height: 400px;
 }
 
+/* Temporary Styling used for testing */
  
+#accordion li label span.score{
+   transform: rotate(0deg);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   font-size: 30px;
+   font-weight: 600;
+   cursor: pointer;
+   color: rgb(133, 134, 133);
+}
 
+#accordion ul[id = "food-values"] {
+   list-style-type: disc;
+   color: rgb(133, 134, 133);
+}
+
+#accordion ul[id = "food-values"] li {
+   display: list-item;
+}
 
  
