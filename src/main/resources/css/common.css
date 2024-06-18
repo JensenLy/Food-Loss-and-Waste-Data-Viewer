@@ -1,8 +1,8 @@
 /* External CSS style file */
 
-* {
+/* * {
    box-sizing: border-box;
-}
+} */
 
 html {
    scroll-behavior: smooth !important;
@@ -12,6 +12,12 @@ body {
    font-family: Arial;
    padding: 50px 10px;
    background: #f1f1f1;
+   margin-left: 0;
+   margin-right: 0;
+}
+
+[type="checkbox"], [type="radio"] {
+    vertical-align:middle;
 }
 
 /* Header (div) formatting */
@@ -57,15 +63,16 @@ img.top-image {
 }
 
 /* Style the navbar links */
+
 .navbar a {
    font-size: 20px;
    text-decoration: none;
    font-weight: 500;
    color: white;
-   margin-left: 30px;
    display: inline-block;
    padding: 30px 16px;
    flex-wrap: wrap;
+   margin-left: -5px;
 }
 
 .navbar a:hover {
@@ -105,6 +112,7 @@ img.top-image {
    display: inline-block;
    padding: 15px 30px;
    flex-wrap: wrap;
+   margin-left: -10px;
 }
 
 .secondNavBar h1 div a:hover {
@@ -213,14 +221,13 @@ ul li:hover a{
 /* Side menu (same as sidebar but for pages with information */
 .sidemenu {
    margin-top: 135px;
-   padding-left: -30px;
    margin-left: -30px;
    position: fixed;
    overflow-y: auto;
    left: 0;
    top: 0;
    bottom: 0;
-   width: 400px;
+   width: 370px;
    border-right: solid black 3px;
    background-color:#f1f1f1;
 }
@@ -423,7 +430,7 @@ table.page2A {
    display: flex;
    column-gap: 1rem;
    position: absolute;
-   bottom: 1.75rem;
+   bottom: 1.25rem;
    left: 50%;
    transform: translateX(-50%);
    z-index: 1;

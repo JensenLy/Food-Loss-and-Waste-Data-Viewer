@@ -82,18 +82,27 @@ public class PageST3B implements Handler {
         html = html + outputCommodity();
 
         html = html + """ 
-        <h2> ---------------------------------------------</h2>
+        <h2> -----------------------------------------</h2>
         
         <h2>Similarity Type</h2>
 
-        <input list = "similarity" name = "similarityType" placeholder = "Select Similarity Type">
-        <datalist id = "similarity">
-        <option value = "By Ratio (loss : waste)">
-        <option value = "Highest % of loss/waste">
-        <option value = "Lowest % of loss/waste">
-        </datalist>
+        <div class = "sorting-buttons">
 
-        <h2> ---------------------------------------------</h2>
+        <div>
+        <label><input type="radio" name="similarityType" value = "ratio" checked>By Ratio (loss : waste)</label>
+        </div>
+
+        <div>
+        <label><input type="radio" name="similarityType" value = "highest">Highest % of loss/waste</label>
+        </div>
+
+        <div>
+        <label><input type="radio" name="similarityType" value = "lowest">Lowest % of loss/waste</label>
+        </div>
+
+        </div>
+
+        <h2> -----------------------------------------</h2>
 
         <input type = "number" placeholder="No. of Similar Group(s)" min = "1" name="similarNo" autofocus required>
 
