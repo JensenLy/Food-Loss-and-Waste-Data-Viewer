@@ -93,7 +93,7 @@ public class PageMission implements Handler {
         html = html + "</section>";
         
         html = html + "<section id = 'section4'>";
-        html = html + "<h2>Special thanks to these contributors in testing the website</h2>";
+        html = html + "<h2>Personas</h2>";
 
         html = html + "<section class = 'container'>";
         html = html + "<div class = 'slider-wrapper'>";

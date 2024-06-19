@@ -89,15 +89,15 @@ public class PageST3B implements Handler {
         <div class = "sorting-buttons">
 
         <div>
-        <label><input type="radio" name="similarityType" value = "ratio" checked>By Ratio (loss : waste)</label>
+        <label><input type="radio" name="similarityType" value = "By Ratio (loss : waste)" checked>By Ratio (loss : waste)</label>
         </div>
 
         <div>
-        <label><input type="radio" name="similarityType" value = "highest">Highest % of loss/waste</label>
+        <label><input type="radio" name="similarityType" value = "Highest % of loss/waste">Highest % of loss/waste</label>
         </div>
 
         <div>
-        <label><input type="radio" name="similarityType" value = "lowest">Lowest % of loss/waste</label>
+        <label><input type="radio" name="similarityType" value = "Lowest % of loss/waste">Lowest % of loss/waste</label>
         </div>
 
         </div>
@@ -105,6 +105,16 @@ public class PageST3B implements Handler {
         <h2> -----------------------------------------</h2>
 
         <input type = "number" placeholder="No. of Similar Group(s)" min = "1" name="similarNo" autofocus required>
+
+        <h2> -----------------------------------------</h2>
+
+        <div>
+        <label><input type="radio" name="sort" value = "Ascending" checked>Least Similar</label>
+        </div>
+
+        <div>
+        <label><input type="radio" name="sort" value = "Descending">Most Similar</label>
+        </div>
 
         <h2></h2>
         <h1></h1>
@@ -208,7 +218,7 @@ public class PageST3B implements Handler {
         // html = html + "<label><input type='checkbox' name = 'foodGroup' value = 'all'>Select All</label>";
 
         for (FoodGroup data : groupName ) {
-            html = html + "<option value = '" + data.activity + " (" + data.name + ")'>";
+            html = html + "<option value = '" + data.name + "'>";
         }
 
         html = html + "</datalist>";
@@ -216,15 +226,17 @@ public class PageST3B implements Handler {
     }
 
     public String displaySelectedOptions(String commodity, int num, String similarType){
+        JDBCConnection connect = new JDBCConnection();
+
         String html = "<div class = displaySelectedOption>";
 
         // Display chosen commodity
-        html = html + "<p><strong>Selected commodity:</strong> " + commodity;
+        html = html + "<p><strong>Selected commodity:</strong> " + commodity + " <strong>from Group:</strong> " + connect.getGroupByFood(commodity);
 
         // Display chosen food groups
         html = html + " <strong>|</strong> <strong>Similarity Type:</strong> " + similarType;
 
-        html = html + " <strong>|</strong> <strong>Number of requested groups:</strong> " + num + "</p>";
+        html = html + " <strong>|</strong> <strong>Requested number of groups:</strong> " + num + "</p>";
 
         html = html + "<p><strong>Search Result:</strong> 3 results found";
 
