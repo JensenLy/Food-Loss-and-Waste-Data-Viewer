@@ -125,7 +125,9 @@ public class PageST3A implements Handler {
 
         String country = context.formParam("countryName");
         String year = context.formParam("Year");
-        String combination = context.formParam("combination");
+        String commonCombination = context.formParam("common");
+        String overallCombination = context.formParam("overall");
+        String method = context.formParam("method");
         String numString = context.formParam("Results");
         int num;
         if (numString == null){
@@ -234,15 +236,22 @@ public class PageST3A implements Handler {
         return html;
     }
 
-    public String printResults() {
+    public String createCountryAccordion(String country, String score, String dataValue1, String dataValue2, String dataValue3) {
         String html = "";
 
-        html += """
-                <h1>Search Results</h1> 
-        
+        html = html + "<li>"; 
+            html = html + "<label for = 'acc1'>1. " + country + " - " + score + "% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+            html = html + "<div class = 'content'>"; 
+            html = html + "<p>Values used to determine similarity</p>"; 
+            html = html + "<ul id = 'food-values'>";
+            html = html + "<li>" + dataValue1 + "</li>";
+            html = html + "<li>" + dataValue2 + "</li>";
+            html = html + "<li>" + dataValue3 + "</li>";
+            html = html + "</ul>"; 
+            html = html + "</div>"; 
+        html = html + "</li>";
 
-        """;
-        
         return html;
     }
 

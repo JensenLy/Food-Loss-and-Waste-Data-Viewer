@@ -778,4 +778,56 @@ public class JDBCConnection {
         return commodity;
     }
 
+    public ArrayList<Country> get3AData(String country, String year, String common, String overall, String method) {
+        ArrayList<Country> similarCountry = new ArrayList<>();
+
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection(DATABASE);
+
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            String query = "";
+
+            if (common == "common" && overall == "overall") {
+                query +=
+            }
+            else if (common == "common" && overall == null) {
+                if (method == "absolute") {
+
+                }
+                else if (method == "overlap") {
+
+                }
+            }
+            else if (common == null && overall == "overall") {
+                if (method == "absolute") {
+
+                }
+                else if (method == "overlap") {
+
+                }
+            }
+            
+        } catch (Exception e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        return similarCountry;
+    }
+
+    
+
 }
