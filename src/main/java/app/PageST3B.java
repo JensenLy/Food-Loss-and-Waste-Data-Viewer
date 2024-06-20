@@ -82,7 +82,7 @@ public class PageST3B implements Handler {
         html = html + outputCommodity();
 
         html = html + """ 
-        <h2> -----------------------------------------</h2>
+        <h2>----------------------------------------</h2>
         
         <h2>Similarity Type</h2>
 
@@ -102,11 +102,11 @@ public class PageST3B implements Handler {
 
         </div>
 
-        <h2> -----------------------------------------</h2>
+        <h2>----------------------------------------</h2>
 
         <input type = "number" placeholder="No. of Similar Group(s)" min = "1" name="similarNo" autofocus required>
 
-        <h2> -----------------------------------------</h2>
+        <h2>----------------------------------------</h2>
 
         <h2>Sort by Similarity</h2>
 

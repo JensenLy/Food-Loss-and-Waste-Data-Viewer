@@ -87,7 +87,7 @@ public class PageST2B implements Handler {
         html = html + outputFoodGroups();
 
         html = html + """ 
-        <h2> -----------------------------------------</h2>
+        <h2>----------------------------------------</h2>
         
         <h2> Enter Year</h2>
 
@@ -96,7 +96,7 @@ public class PageST2B implements Handler {
         <input type = "number" placeholder="End Year" min = "1966" max = "2022" name="EndYear" autofocus required>
         </div>
 
-        <h2> -----------------------------------------</h2>
+        <h2>----------------------------------------</h2>
         
         <h2>Filter options</h2>
 
@@ -115,7 +115,7 @@ public class PageST2B implements Handler {
         <label for="check3">Cause of food loss/waste</label>
         </div>
 
-        <h2> -----------------------------------------</h2>
+        <h2>----------------------------------------</h2>
 
         <h2>Sort loss percentage</h2>
 

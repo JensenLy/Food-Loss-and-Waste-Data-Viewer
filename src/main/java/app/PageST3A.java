@@ -87,14 +87,14 @@ public class PageST3A implements Handler {
         html = html + "</datalist>";
 
         html += """
-            <h2> ---------------------------------------------</h2> 
+            <h2>----------------------------------------</h2> 
             
             <h2>Select Year and No. Results</h2>
                 <div class="year-input">
                     <input type = "number" placeholder = "Year" min = "1966" max = "2022" name = "Year" autofocus required>
                     <input type = "number" placeholder = "No. Results" min = "1" max = "5" name = "Results" autofocus required>
                 </div>
-            <h2> ---------------------------------------------</h2>
+            <h2>----------------------------------------</h2>
 
                 <input list = "SimilarityOptions" placeholder = "Select Similarity Combination" name = "SimilarityCombination" autfocus required>
                 <datalist id = "SimilarityOptions">
@@ -102,7 +102,7 @@ public class PageST3A implements Handler {
                     <option>Overrall Food Loss/Waste (%)</option>
                 </datalist>
 
-            <h2> ---------------------------------------------</h2>
+            <h2>----------------------------------------</h2>
                 <h2>Select Similarity Method</h2>
                 <div>
                     <input type = "radio" id = "radio1" name="method" value = "absolute" checked = "checked">
@@ -112,7 +112,7 @@ public class PageST3A implements Handler {
                     <input type = "radio" id = "radio2" name="method" value = "overlap">
                     <label for="radio2">Level of Overlap</label>
                 </div>
-            <h2> ---------------------------------------------</h2>
+            <h2>----------------------------------------</h2>
 
                 <div class="submit-button">
                     <input type = "submit" value = "Search">
