@@ -1,0 +1,158 @@
+SELECT * FROM Page2A;
+
+
+-- Similarity by Food Products (Absolute Values)
+WITH SelectedCountryProducts AS (
+    SELECT DISTINCT GroupName
+    FROM Page2A
+    WHERE countryName = 'United States of America'
+      AND year = 1994
+),
+SelectedCountryProductCount AS (
+    SELECT COUNT(*) AS selected_country_products
+    FROM SelectedCountryProducts
+),
+OtherCountriesProducts AS (
+    SELECT countryName, COUNT(DISTINCT GroupName) AS common_products
+    FROM Page2A
+    WHERE GroupName IN (SELECT GroupName FROM SelectedCountryProducts)
+      AND year = 1994
+      AND countryName != 'Unites States of America'
+    GROUP BY countryName
+),
+OtherCountriesProductCount AS (
+    SELECT countryName, COUNT(DISTINCT GroupName) AS total_products
+    FROM Page2A
+    WHERE year = 1994
+    GROUP BY countryName
+)
+SELECT c.countryName, o.common_products, oc.total_products, scp.selected_country_products
+FROM OtherCountriesProducts o
+JOIN country c ON o.countryName = c.countryName
+JOIN OtherCountriesProductCount oc ON o.countryName = oc.countryName
+CROSS JOIN SelectedCountryProductCount scp
+ORDER BY o.common_products DESC
+LIMIT 5;
+
+
+-- Similarity by Food Loss/Waste (Absolute Values)
+WITH SelectedCountryLoss AS (
+    SELECT GroupName, lossPercentage
+    FROM Page2A
+    WHERE countryName = 'Myanmar'
+      AND year = 1994
+),
+OtherCountriesLoss AS (
+    SELECT P.countryName, 
+           AVG(ABS(P.lossPercentage - sc.lossPercentage)) AS avg_loss_diff
+    FROM Page2A P
+    JOIN SelectedCountryLoss sc ON P.GroupName = sc.GroupName
+    WHERE P.year = 1994
+      AND P.countryName != 'Myanmar'
+    GROUP BY P.countryName
+),
+SelectedCountryLossSummary AS (
+    SELECT AVG(lossPercentage) AS selected_country_avg_loss
+    FROM SelectedCountryLoss
+),
+NormalizedOtherCountriesLoss AS (
+    SELECT o.countryName, 
+           o.avg_loss_diff,
+           (1 - (o.avg_loss_diff / (SELECT MAX(avg_loss_diff) FROM OtherCountriesLoss))) AS normalized_avg_loss_diff,
+           scl.selected_country_avg_loss
+    FROM OtherCountriesLoss o
+    CROSS JOIN SelectedCountryLossSummary scl
+)
+SELECT c.countryName, 
+       n.avg_loss_diff, 
+       n.selected_country_avg_loss,
+       (n.normalized_avg_loss_diff * 0.5 + (n.selected_country_avg_loss / 100) * 0.5) AS similarity_score
+FROM NormalizedOtherCountriesLoss n
+JOIN country c ON n.countryName = c.countryName
+ORDER BY similarity_score DESC
+LIMIT 5;
+
+
+-- Similarity by Food Products (Level of Overlap)
+WITH SelectedCountryProducts AS (
+    SELECT DISTINCT GroupName
+    FROM Page2A
+    WHERE countryName = 'Myanmar'
+      AND year = 1994
+),
+OtherCountriesProducts AS (
+    SELECT P.countryName, 
+           COUNT(DISTINCT P.GroupName) AS total_products,
+           COUNT(DISTINCT sc.GroupName) AS common_products
+    FROM Page2A P
+    LEFT JOIN SelectedCountryProducts sc ON P.GroupName = sc.GroupName
+    WHERE P.year = 1994
+      AND P.countryName != 'Myanmar'
+    GROUP BY P.countryName
+)
+SELECT c.countryName, o.common_products, o.total_products,
+       (o.common_products / o.total_products) AS overlap_score
+FROM OtherCountriesProducts o
+JOIN country c ON o.countryName = c.countryName
+ORDER BY overlap_score DESC
+LIMIT 5;
+
+
+-- Similarity by Food Loss/Waste (Level of Overlap)
+WITH SelectedCountryLoss AS (
+    SELECT GroupName, lossPercentage
+    FROM Page2A
+    WHERE countryName = 'Myanmar'
+      AND year = 1994
+),
+OtherCountriesLoss AS (
+    SELECT P.countryName,
+           COUNT(DISTINCT P.GroupName) AS total_products,
+           COUNT(DISTINCT sc.GroupName) AS common_products,
+           AVG(ABS(P.lossPercentage - sc.lossPercentage)) AS avg_loss_diff
+    FROM Page2A P
+    LEFT JOIN SelectedCountryLoss sc ON P.GroupName = sc.GroupName
+    WHERE P.year = 1994
+      AND P.countryName != 'Myanmar'
+    GROUP BY P.countryName
+)
+SELECT c.countryName, o.common_products, o.total_products, o.avg_loss_diff,
+       ((o.common_products / o.total_products) * (1 / NULLIF(o.avg_loss_diff, 0))) AS similarity_score
+FROM OtherCountriesLoss o
+JOIN country c ON o.countryName = c.countryName
+ORDER BY similarity_score DESC
+LIMIT 5;
+
+
+-- Combined Similarity
+WITH SelectedCountryData AS (
+    SELECT GroupName, lossPercentage
+    FROM Page2A
+    WHERE countryName = 'Myanmar'
+      AND year = 1994
+),
+OtherCountriesData AS (
+    SELECT P.countryName, 
+           COUNT(DISTINCT P.GroupName) AS common_products,
+           AVG(ABS(P.lossPercentage - sc.lossPercentage)) AS avg_loss_diff
+    FROM Page2A P
+    JOIN SelectedCountryData sc ON P.GroupName = sc.GroupName
+    WHERE P.year = 1994
+      AND P.countryName != 'Myanmar'
+    GROUP BY P.countryName
+),
+OtherCountriesProductCount AS (
+    SELECT countryName, COUNT(DISTINCT GroupName) AS total_products
+    FROM Page2A
+    WHERE year = 1994
+    GROUP BY countryName
+)
+SELECT c.countryName, o.common_products, o.avg_loss_diff, oc.total_products,
+       (o.common_products * 0.5 + (1 / NULLIF(o.avg_loss_diff, 0)) * 0.5) AS similarity_score
+FROM OtherCountriesData o
+JOIN country c ON o.countryName = c.countryName
+JOIN OtherCountriesProductCount oc ON o.countryName = oc.countryName
+ORDER BY similarity_score DESC
+LIMIT 5;
+
+
