@@ -62,8 +62,8 @@ public class PageMission implements Handler {
         // List each sidebar's items
         html = html + "<li><a href='#section1'>Purpose</a></li>";
         html = html + "<li><a href='#section2'>Tutorial</a></li>";
-        html = html + "<li><a href='#section3'>About us</a></li>";
-        html = html + "<li><a href='#section4'>Personas</a></li>";
+        html = html + "<li><a href='#section3'>Personas</a></li>";
+        html = html + "<li><a href='#section4'>About Us</a></li>";
 
         // Close the list and sidebar
         html = html + "</ul>";
@@ -87,12 +87,6 @@ public class PageMission implements Handler {
         html = html + "</section>";
         
         html = html + "<section id = 'section3'>";
-        html = html + "<h2>About us</h2>";
-        html = html + "<p>This website is presented by:</p>";
-        html = html + outputStudent();
-        html = html + "</section>";
-        
-        html = html + "<section id = 'section4'>";
         html = html + "<h2>Personas</h2>";
 
         html = html + "<section class = 'container'>";
@@ -110,8 +104,15 @@ public class PageMission implements Handler {
 
         html = html + "</div>";
         html = html + "</section>";
-
         html = html + "</section>";
+
+        html = html + "<section id = 'section4'>";
+        html = html + "<h2>About us</h2>";
+        html = html + "<p>This website is presented by:</p>";
+        html = html + outputStudent();
+        html = html + "</section>";
+
+
         html = html + "</div>";
 
         // // Add header content block
@@ -151,12 +152,12 @@ public class PageMission implements Handler {
         // Close Content div
         html = html + "</div>";
 
-        // Footer
-        html = html + """
-            <div class='footer'>
-                <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
-            </div>
-        """;
+        // // Footer
+        // html = html + """
+        //     <div class='footer'>
+        //         <p>COSC2803 - Studio Project Starter Code (Apr24)</p>
+        //     </div>
+        // """;
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
@@ -196,7 +197,7 @@ public class PageMission implements Handler {
         // Add Student Info to the list
         for (PersonaAndStudent data : persona ) {
             html = html + "<div class = 'wrapper' id = 'persona" + data.personaID + "'>";
-            html = html + "<p><img src='" + data.personaImagePath + "' width = '400' height = '400' ></p>";
+            html = html + "<p><img src='" + data.personaImagePath + "' width = '300' height = '300' ></p>";
             html = html + "<div class = 'text-box'>";
 
             // Persona name: 

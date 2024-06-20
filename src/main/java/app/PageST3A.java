@@ -87,7 +87,7 @@ public class PageST3A implements Handler {
         html = html + "</datalist>";
 
         html += """
-            <h2> ---------------------------------------------</h2> 
+            <h2>----------------------------------------</h2> 
             
             <h2>Select Year and No. Results</h2>
                 <div class="year-input">
@@ -114,7 +114,7 @@ public class PageST3A implements Handler {
                     <input type = "radio" id = "radio2" name="method" value = "overlap">
                     <label for="radio2">Level of Overlap</label>
                 </div>
-            <h2> ---------------------------------------------</h2>
+            <h2>----------------------------------------</h2>
 
                 <div class="submit-button">
                     <input type = "submit" value = "Search">

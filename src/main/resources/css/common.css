@@ -4,13 +4,29 @@
    box-sizing: border-box;
 } */
 
+/* @media (-webkit-min-device-pixel-ratio: 1.25) {
+   *{
+      zoom: 1;
+   }
+}
+@media (-webkit-min-device-pixel-ratio: 1) {
+   *{
+      zoom: 1.1;
+   }
+}
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+   *{
+      zoom: 1;
+   }
+} */
+
 html {
    scroll-behavior: smooth !important;
 }
 
 body {
    font-family: Arial;
-   padding: 50px 10px;
+   padding: 30px 10px;
    background: #f1f1f1;
    margin-left: 0;
    margin-right: 0;
@@ -70,7 +86,7 @@ img.top-image {
    font-weight: 500;
    color: white;
    display: inline-block;
-   padding: 30px 16px;
+   padding: 20px 32px;
    flex-wrap: wrap;
    margin-left: -5px;
 }
@@ -135,7 +151,7 @@ img.top-image {
    margin-top: -20px;
    position: fixed;
    left: 0;
-   top: 125px;
+   top: 109px;
    bottom: 0;
    width: 200px;
    border-right: solid black 3px;
@@ -172,7 +188,7 @@ ul li:hover a{
    margin-left: 160px;
    margin-top: 20px;
    margin-bottom: 50px;
-   font-size: 25px;
+   font-size: 22px;
 }
 
 .content1B h1{
@@ -191,7 +207,7 @@ ul li:hover a{
 
 #section1 {
    height: auto;
-   scroll-margin-top: 160px;
+   scroll-margin-top: 150px;
    margin-top: 100px;
    width: 75%;
 }
@@ -202,25 +218,25 @@ ul li:hover a{
 
 #section2 {
    height: auto;
-   scroll-margin-top: 120px;
+   scroll-margin-top: 100px;
    border-top: 4px solid black;
 }
 
 #section3 {
    height: auto;
-   scroll-margin-top: 120px;
+   scroll-margin-top: 100px;
    border-top: 4px solid black;
 }
 
 #section4 {
    height: auto;
-   scroll-margin-top: 120px;
+   scroll-margin-top: 100px;
    border-top: 4px solid black;
 }
 
 /* Side menu (same as sidebar but for pages with information */
 .sidemenu {
-   margin-top: 135px;
+   margin-top: 118px;
    margin-left: -30px;
    position: fixed;
    overflow-y: auto;
@@ -403,21 +419,26 @@ table.page2A {
    margin-right: 10px;
 }
 
+.wrapper p {
+   margin-left: 20px;
+}
+
 .text-box p {
    margin-bottom: 20px;
+   margin: 10px auto;
 }
 
 .slider-wrapper{
    position: relative;
    max-width: 100%;
-   margin-left: 150px;
+   margin-left: 155px;
 }
 
 .slider {
    display: flex;
    overflow-x: auto;
    scroll-snap-type: x mandatory;
-   box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+   /* box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25); */
 }
 
 .slider .wrapper{

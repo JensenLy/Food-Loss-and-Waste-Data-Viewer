@@ -4,7 +4,7 @@ public class topnav {
     public static final String topnavString = """
         <header class = "topnav">
             <div class = "logo"> 
-                <a href = "/"><img src="rmit.png" height="75" width="75"></a> 
+                <a href = "/"><img src="rmit.png" height="60" width="60"></a> 
             </div>
 
             <div class = "navbar">
