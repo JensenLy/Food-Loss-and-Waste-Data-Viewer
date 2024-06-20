@@ -108,6 +108,8 @@ public class PageST3B implements Handler {
 
         <h2> -----------------------------------------</h2>
 
+        <h2>Sort by Similarity</h2>
+
         <div>
         <label><input type="radio" name="sort" value = "Least Similar" checked>Least Similar</label>
         </div>

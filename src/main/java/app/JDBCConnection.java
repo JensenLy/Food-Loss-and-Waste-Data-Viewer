@@ -719,8 +719,8 @@ public class JDBCConnection {
 
             query = query.replace("Tomatoes", name);
 
-            if (sort == "Most Similar"){
-                query = query.replace("ASC", "DESC");
+            if (sort.equals("Least Similar")){
+                query = query.replace("ORDER BY similarity_score ASC", "ORDER BY similarity_score DESC");
             }
 
             if (similarityType == "Lowest % of loss/waste"){
@@ -731,6 +731,7 @@ public class JDBCConnection {
             }
 
             System.out.println(query);
+            System.out.println(sort);
             
             // Get Result
             ResultSet results = statement.executeQuery(query);
