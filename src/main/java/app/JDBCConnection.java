@@ -792,7 +792,7 @@ public class JDBCConnection {
             String query = "";
 
             if (common == "common" && overall == "overall") {
-                query +=
+                
             }
             else if (common == "common" && overall == null) {
                 if (method == "absolute") {
