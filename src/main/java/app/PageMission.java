@@ -197,7 +197,7 @@ public class PageMission implements Handler {
         // Add Student Info to the list
         for (PersonaAndStudent data : persona ) {
             html = html + "<div class = 'wrapper' id = 'persona" + data.personaID + "'>";
-            html = html + "<p><img src='" + data.personaImagePath + "' width = '400' height = '400' ></p>";
+            html = html + "<p><img src='" + data.personaImagePath + "' width = '300' height = '300' ></p>";
             html = html + "<div class = 'text-box'>";
 
             // Persona name: 
