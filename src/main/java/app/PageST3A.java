@@ -95,13 +95,15 @@ public class PageST3A implements Handler {
                     <input type = "number" placeholder = "No. Results" min = "1" max = "5" name = "Results" autofocus required>
                 </div>
             <h2> ---------------------------------------------</h2>
-
-                <input list = "SimilarityOptions" placeholder = "Select Similarity Combination" name = "SimilarityCombination" autfocus required>
-                <datalist id = "SimilarityOptions">
-                    <option>Common Food Products</option>
-                    <option>Overrall Food Loss/Waste (%)</option>
-                </datalist>
-
+                <h2>Select Similarity Combination</h2>
+                <div>
+                    <input type = "checkbox" id = "radio3" name="common" value = "common">
+                    <label for="radio3">Common Food Products</label>
+                </div>
+                <div>
+                    <input type = "checkbox" id = "radio4" name="overall" value = "overall">
+                    <label for="radio4">Overall Food Loss/Waste %</label>
+                </div>
             <h2> ---------------------------------------------</h2>
                 <h2>Select Similarity Method</h2>
                 <div>
@@ -123,6 +125,7 @@ public class PageST3A implements Handler {
 
         String country = context.formParam("countryName");
         String year = context.formParam("Year");
+        String combination = context.formParam("combination");
         String numString = context.formParam("Results");
         int num;
         if (numString == null){
