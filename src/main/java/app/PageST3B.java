@@ -89,11 +89,11 @@ public class PageST3B implements Handler {
         <div class = "sorting-buttons">
 
         <div>
-        <label><input type="radio" name="similarityType" value = "By Ratio (loss : waste)" checked>By Ratio (loss : waste)</label>
+        <label><input type="radio" name="similarityType" value = "By Ratio (loss : waste)">By Ratio (loss : waste)</label>
         </div>
 
         <div>
-        <label><input type="radio" name="similarityType" value = "Highest % of loss/waste">Highest % of loss/waste</label>
+        <label><input type="radio" name="similarityType" value = "Highest % of loss/waste" checked>Highest % of loss/waste</label>
         </div>
 
         <div>
@@ -109,11 +109,11 @@ public class PageST3B implements Handler {
         <h2> -----------------------------------------</h2>
 
         <div>
-        <label><input type="radio" name="sort" value = "Ascending" checked>Least Similar</label>
+        <label><input type="radio" name="sort" value = "Least Similar" checked>Least Similar</label>
         </div>
 
         <div>
-        <label><input type="radio" name="sort" value = "Descending">Most Similar</label>
+        <label><input type="radio" name="sort" value = "Most Similar">Most Similar</label>
         </div>
 
         <h2></h2>
@@ -139,42 +139,15 @@ public class PageST3B implements Handler {
 
         String similarity = context.formParam("similarityType");
 
+        String sort = context.formParam("sort");
+
 
         if (num != 0){
-        html = html + displaySelectedOptions(commodity, num, similarity);
+        html = html + displaySelectedOptions(commodity, num, similarity, sort);
         }
 
         if (num != 0){
-        html = html + "<ul id = 'accordion'>"; 
-
-        html = html + "<li>"; 
-        html = html + "<label for = 'acc1'>1. Group: Vegetable <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-        html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
-        html = html + "<div class = 'content'>"; 
-        html = html + "<p>Product with highest percentage of food loss/waste : Broccoli</p>"; 
-        html = html + "<p>Loss percentage: 15%</p>"; 
-        html = html + "</div>"; 
-        html = html + "</li>"; 
-
-        html = html + "<li>"; 
-        html = html + "<label for = 'acc2'>2. Group: Fruit <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-        html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc2' checked>"; 
-        html = html + "<div class = 'content'>"; 
-        html = html + "<p>Product with highest percentage of food loss/waste : Apple</p>"; 
-        html = html + "<p>Loss percentage: 10%</p>"; 
-        html = html + "</div>"; 
-        html = html + "</li>"; 
-
-        html = html + "<li>"; 
-        html = html + "<label for = 'acc3'>3. Group: Cereals <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-        html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc3' checked>"; 
-        html = html + "<div class = 'content'>"; 
-        html = html + "<p>Product with highest percentage of food loss/waste : Wheat</p>"; 
-        html = html + "<p>Loss percentage: 20%</p>"; 
-        html = html + "</div>"; 
-        html = html + "</li>"; 
-
-        html = html + "</ul>"; 
+        html = html + accordion(commodity, similarity, num, sort);
         }
 
         //     <div class='header'>
@@ -225,23 +198,89 @@ public class PageST3B implements Handler {
         return html;
     }
 
-    public String displaySelectedOptions(String commodity, int num, String similarType){
-        JDBCConnection connect = new JDBCConnection();
+    public String displaySelectedOptions(String commodity, int num, String similarType, String sort){
+        JDBCConnection jdbc = new JDBCConnection();
 
         String html = "<div class = displaySelectedOption>";
 
         // Display chosen commodity
-        html = html + "<p><strong>Selected commodity:</strong> " + commodity + " <strong>from Group:</strong> " + connect.getGroupByFood(commodity);
+        html = html + "<p><strong>Selected commodity:</strong> " + commodity + " <strong>from Group:</strong> " + jdbc.getGroupByFood(commodity);
 
         // Display chosen food groups
         html = html + " <strong>|</strong> <strong>Similarity Type:</strong> " + similarType;
 
-        html = html + " <strong>|</strong> <strong>Requested number of groups:</strong> " + num + "</p>";
+        html = html + " <strong>|</strong> <strong>Requested number of groups:</strong> " + num;
 
-        html = html + "<p><strong>Search Result:</strong> 3 results found";
+        html = html + " <strong>|</strong> <strong>Sort:</strong> " + sort + "</p>";
+
+        return html;
+    }
+
+    public String accordion(String name, String similarityType, int num, String sort){
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<FoodGroup> accordion = jdbc.get3BData(name, similarityType, num, sort);
+
+        String html = "";
+
+        int count = 1; 
+
+        html = html + "<p><strong>Search Result:</strong> -1 results found";
 
         html = html + "</ul>";
         html = html + "</div>";
+
+        html = html + "<ul id = 'accordion'>"; 
+
+        for (FoodGroup get : accordion){
+            if (count <= 3){
+                html = html + "<li>"; 
+                html = html + "<label for = 'acc" + count + "'>" + count + ". Group: " + get.name + " <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+                html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc" + count + "' checked>"; 
+                html = html + "<div class = 'content'>"; 
+
+                if (similarityType == "Lowest % of loss/waste") {
+                    html = html + "<p><strong>Product with lowest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + " %</p>"; 
+                }
+                else {
+                    html = html + "<p><strong>Product with highest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + "%</p>"; 
+                }
+
+                html = html + "<p><strong>Difference: </strong>" + get.diff + "%</p>";
+
+                html = html + "</div>"; 
+                html = html + "</li>";
+
+                count++;
+            }
+            else {
+                html = html + "<li>"; 
+                html = html + "<label for = 'acc" + count + "'>" + count + ". Group: " + get.name + " <span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+                html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc" + count + "'>"; 
+                html = html + "<div class = 'content'>"; 
+
+                if (similarityType == "Lowest % of loss/waste") {
+                    html = html + "<p><strong>Product with lowest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + " %</p>"; 
+                }
+                else {
+                    html = html + "<p><strong>Product with highest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + "%</p>"; 
+                }
+
+                html = html + "<p><strong>Difference: </strong>" + get.diff + "%</p>";
+
+                html = html + "</div>"; 
+                html = html + "</li>";
+
+                count++;
+            }
+        }
+
+        html = html.replace("<p><strong>Search Result:</strong> -1 results found", "<p><strong>Search Result:</strong> " + (count - 1) + " results found");
+
+        html = html + "</ul>"; 
 
         return html;
     }

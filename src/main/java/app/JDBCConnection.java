@@ -660,4 +660,121 @@ public class JDBCConnection {
         return group;
     }
 
+    public ArrayList<FoodGroup> get3BData(String name, String similarityType, int num, String sort) {
+        ArrayList<FoodGroup> commodity = new ArrayList<FoodGroup>();
+
+        // Setup the variable for the JDBC connection
+        Connection connection = null;
+
+        try {
+            // Connect to JDBC data base
+            connection = DriverManager.getConnection(DATABASE);
+
+            // Prepare a new SQL Query & Set a timeout
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+
+            // The Query
+            String query = "WITH CommodityGroup AS (\r\n" + //
+                                "    SELECT c.GroupCode, c.GroupName, f.cpcCode, c.codeDescription\r\n" + //
+                                "    FROM CountryLossEvent f\r\n" + //
+                                "    JOIN CPC c ON f.cpcCode = c.cpcCode\r\n" + //
+                                "    WHERE c.codeDescription = 'Tomatoes'\r\n" + //
+                                "    LIMIT 1\r\n" + //
+                                "),\r\n" + //
+                                "GroupStatistics AS (\r\n" + //
+                                "    SELECT c.GroupCode, c.GroupName,\r\n" + //
+                                "           MAX(f.lossPercentage) AS max_loss_percentage,\r\n" + //
+                                "           MIN(f.lossPercentage) AS min_loss_percentage,\r\n" + //
+                                "           AVG(f.lossPercentage) AS avg_loss_percentage,\r\n" + //
+                                "           MAX(f.cpcCode) AS max_loss_cpc_code,\r\n" + //
+                                "           MIN(f.cpcCode) AS min_loss_cpc_code\r\n" + //
+                                "    FROM CountryLossEvent f\r\n" + //
+                                "    JOIN CPC c ON f.cpcCode = c.cpcCode\r\n" + //
+                                "    GROUP BY c.GroupCode, c.GroupName\r\n" + //
+                                "),\r\n" + //
+                                "GroupStatisticsWithDetails AS (\r\n" + //
+                                "    SELECT gs.*,\r\n" + //
+                                "           (SELECT cp.codeDescription\r\n" + //
+                                "            FROM CPC cp \r\n" + //
+                                "            WHERE cp.cpcCode = gs.max_loss_cpc_code) AS max_loss_commodity,\r\n" + //
+                                "           (SELECT cp.codeDescription\r\n" + //
+                                "            FROM CPC cp \r\n" + //
+                                "            WHERE cp.cpcCode = gs.min_loss_cpc_code) AS min_loss_commodity\r\n" + //
+                                "    FROM GroupStatistics gs\r\n" + //
+                                "),\r\n" + //
+                                "SelectedGroupStatistics AS (\r\n" + //
+                                "    SELECT * FROM GroupStatisticsWithDetails\r\n" + //
+                                "    WHERE GroupCode = (SELECT GroupCode FROM CommodityGroup)\r\n" + //
+                                ")\r\n" + //
+                                "SELECT gs.GroupCode, gs.GroupName,\r\n" + //
+                                "       gs.max_loss_percentage, gs.min_loss_percentage, gs.avg_loss_percentage,\r\n" + //
+                                "       gs.max_loss_commodity, gs.min_loss_commodity,\r\n" + //
+                                "       ABS(gs.max_loss_percentage - sg.max_loss_percentage) AS similarity_score\r\n" + //
+                                "FROM GroupStatisticsWithDetails gs\r\n" + //
+                                "JOIN SelectedGroupStatistics sg\r\n" + //
+                                "ORDER BY similarity_score ASC \r\n";
+
+            query = query + "LIMIT " + num + ";";
+
+            query = query.replace("Tomatoes", name);
+
+            if (sort == "Most Similar"){
+                query = query.replace("ASC", "DESC");
+            }
+
+            if (similarityType == "Lowest % of loss/waste"){
+                query = query.replace("ABS(gs.max_loss_percentage - sg.max_loss_percentage)", "ABS(gs.min_loss_percentage - sg.min_loss_percentage)");
+            }
+            else if (similarityType == "Highest % of loss/waste"){
+                query = query.replace("ABS(gs.max_loss_percentage - sg.max_loss_percentage)", "ABS(gs.max_loss_percentage - sg.max_loss_percentage)");
+            }
+
+            System.out.println(query);
+            
+            // Get Result
+            ResultSet results = statement.executeQuery(query);
+
+            // Process all of the results
+            while (results.next()) {
+                // Create a FoodGroup Object
+                FoodGroup foodgroup = new FoodGroup();
+
+                foodgroup.name = results.getString("GroupName");
+
+                if (similarityType == "Lowest % of loss/waste"){
+                    foodgroup.startPercentage = results.getDouble("min_loss_percentage");
+                    foodgroup.activity = results.getString("min_loss_commodity"); // Use activity to store commodity since they are both string (and I don't want to create a new String)
+                }
+                else {
+                    foodgroup.startPercentage = results.getDouble("max_loss_percentage");
+                    foodgroup.activity = results.getString("max_loss_commodity"); // Use activity to store commodity since they are both string (and I don't want to create a new String)
+                }
+
+                foodgroup.diff = results.getDouble("similarity_score");
+
+                commodity.add(foodgroup);
+            }
+
+            // Close the statement because we are done with it
+            statement.close();
+        } catch (SQLException e) {
+            // If there is an error, lets just pring the error
+            System.err.println(e.getMessage());
+        } finally {
+            // Safety code to cleanup
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+
+        // Finally we return all of the food groups
+        return commodity;
+    }
+
 }
