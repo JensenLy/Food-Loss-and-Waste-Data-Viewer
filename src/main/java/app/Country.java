@@ -19,6 +19,12 @@ public class Country {
    public String cause;
    public String supplyStage;
    public String groupName;
+   public double score;
+   public String dv1, dv2, dv3;
+   public String commonProducts;
+   public String totalProducts;
+   public double avgLoss;
+
 
    /**
     * Create a Country and set the fields

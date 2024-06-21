@@ -778,10 +778,11 @@ public class JDBCConnection {
         return commodity;
     }
 
-    public ArrayList<Country> get3AData(String country, String year, String common, String overall, String method) {
+    public ArrayList<Country> get3AData(String country, String year, String common, String overall, String method, String numString){
         ArrayList<Country> similarCountry = new ArrayList<>();
 
         Connection connection = null;
+        ResultSet results;
 
         try {
             connection = DriverManager.getConnection(DATABASE);
@@ -792,25 +793,114 @@ public class JDBCConnection {
             String query = "";
 
             if (common == "common" && overall == "overall") {
-                
+                query += "WITH SelectedCountryData AS (\r\n" + //
+                         "   SELECT GroupName, lossPercentage\r\n" + //
+                         "   FROM Page2A\r\n" + //
+                         "   WHERE countryName = '" + country + "'\r\n" + //
+                         "     AND year = " + year + "\r\n" + //
+                         "),\r\n" + //
+                         "OtherCountriesData AS (\r\n" + //
+                         "   SELECT P.countryName,\r\n" + // 
+                         "          COUNT(DISTINCT P.GroupName) AS common_products,\r\n" + //
+                         "          AVG(ABS(P.lossPercentage - sc.lossPercentage)) AS avg_loss_diff\r\n" + //
+                         "   FROM Page2A P\r\n" + //
+                         "   JOIN SelectedCountryData sc ON P.GroupName = sc.GroupName\r\n" + //
+                         "   WHERE P.year = " + year + "\r\n" + //
+                         "     AND P.countryName != '" + country + "'\r\n" + //
+                         "   GROUP BY P.countryName\r\n" + //
+                         "),\r\n" + //
+                         "OtherCountriesProductCount AS (\r\n" + //
+                         "   SELECT countryName, COUNT(DISTINCT GroupName) AS total_products\r\n" + //
+                         "   FROM Page2A\r\n" + //
+                         "   WHERE year = " + year + "\r\n" + //
+                         "   GROUP BY countryName\r\n" + //
+                         ")\r\n" + //
+                         "SELECT c.countryName, o.common_products, o.avg_loss_diff, oc.total_products,\r\n" + //
+                         "(o.common_products * 0.5 + (1 / NULLIF(o.avg_loss_diff, 0)) * 0.5) AS similarity_score\r\n" + //
+                         "FROM OtherCountriesData o\r\n" + //
+                         "JOIN country c ON o.countryName = c.countryName\r\n" + //
+                         "JOIN OtherCountriesProductCount oc ON o.countryName = oc.countryName\r\n" + //
+                         "ORDER BY similarity_score DESC\r\n" + //
+                         "LIMIT " + numString + ";\r\n";
+
+                System.out.println(query);
+                // Get Result
+                results = statement.executeQuery(query);
+                while (results.next()) {
+                    Country countryObj = new Country(results.getString("countryName"));
+                    
+                    countryObj.score = results.getDouble("similarity_score");
+                    countryObj.commonProducts = results.getString("common_products");
+                    countryObj.avgLoss = results.getDouble("avg_loss_diff");
+                    countryObj.totalProducts = results.getString ("total_products");
+                    
+                    similarCountry.add(countryObj);
+                }
             }
             else if (common == "common" && overall == null) {
                 if (method == "absolute") {
+                    query += """
+                        WITH SelectedCountryProducts AS (
+                            SELECT DISTINCT GroupName
+                            FROM Page2A
+                            WHERE countryName = 'United States of America'
+                              AND year = 1994
+                        ),
+                        SelectedCountryProductCount AS (
+                            SELECT COUNT(*) AS selected_country_products
+                            FROM SelectedCountryProducts
+                        ),
+                        OtherCountriesProducts AS (
+                            SELECT countryName, COUNT(DISTINCT GroupName) AS common_products
+                            FROM Page2A
+                            WHERE GroupName IN (SELECT GroupName FROM SelectedCountryProducts)
+                              AND year = 1994
+                              AND countryName != 'United States of America'
+                            GROUP BY countryName
+                        ),
+                        OtherCountriesProductCount AS (
+                            SELECT countryName, COUNT(DISTINCT GroupName) AS total_products
+                            FROM Page2A
+                            WHERE year = 1994
+                            GROUP BY countryName
+                        )
+                        SELECT c.countryName, o.common_products, oc.total_products, scp.selected_country_products
+                        FROM OtherCountriesProducts o
+                        JOIN country c ON o.countryName = c.countryName
+                        JOIN OtherCountriesProductCount oc ON o.countryName = oc.countryName
+                        CROSS JOIN SelectedCountryProductCount scp
+                        ORDER BY o.common_products DESC
+                            """;
+                    query += "LIMIT" + numString + ";";
+                    query = query.replace("United States of America", country);
+                    query = query.replace("1994", year);
 
+                    System.out.println(query);
+                // Get Result
+                results = statement.executeQuery(query);
+                while (results.next()) {
+                    Country countryObj = new Country(results.getString("countryName"));
+                    
+                    countryObj.score = results.getDouble("similarity_score");
+                    countryObj.commonProducts = results.getString("common_products");
+                    countryObj.avgLoss = results.getDouble("avg_loss_diff");
+                    countryObj.totalProducts = results.getString ("total_products");
+                    
+                    similarCountry.add(countryObj);
+                }
                 }
                 else if (method == "overlap") {
-
+                    
                 }
             }
             else if (common == null && overall == "overall") {
                 if (method == "absolute") {
-
+                    
                 }
                 else if (method == "overlap") {
-
+                    
                 }
             }
-            
         } catch (Exception e) {
             // If there is an error, lets just pring the error
             System.err.println(e.getMessage());
@@ -825,9 +915,10 @@ public class JDBCConnection {
                 System.err.println(e.getMessage());
             }
         }
+        // Process all of the results
         return similarCountry;
     }
-
-    
-
 }
+
+
+
