@@ -89,11 +89,11 @@ public class PageST3B implements Handler {
         <div class = "sorting-buttons">
 
         <div>
-        <label><input type="radio" name="similarityType" value = "By Ratio (loss : waste)">By Ratio (loss : waste)</label>
+        <label><input type="radio" name="similarityType" value = "By Ratio (loss : waste)" checked>By Ratio (loss : waste)</label>
         </div>
 
         <div>
-        <label><input type="radio" name="similarityType" value = "Highest % of loss/waste" checked>Highest % of loss/waste</label>
+        <label><input type="radio" name="similarityType" value = "Highest % of loss/waste">Highest % of loss/waste</label>
         </div>
 
         <div>
@@ -240,13 +240,16 @@ public class PageST3B implements Handler {
                 html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc" + count + "' checked>"; 
                 html = html + "<div class = 'content'>"; 
 
-                if (similarityType == "Lowest % of loss/waste") {
+                if (similarityType.equals("Lowest % of loss/waste")) {
                     html = html + "<p><strong>Product with lowest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
                     html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + " %</p>"; 
                 }
-                else {
+                else if (similarityType.equals("Highest % of loss/waste")) {
                     html = html + "<p><strong>Product with highest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
                     html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + "%</p>"; 
+                }
+                else {
+                    html = html + "<p><strong>Average loss percentage: </strong>" + get.startPercentage + "%</p>";
                 }
 
                 html = html + "<p><strong>Difference: </strong>" + get.diff + "%</p>";
@@ -262,13 +265,16 @@ public class PageST3B implements Handler {
                 html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc" + count + "'>"; 
                 html = html + "<div class = 'content'>"; 
 
-                if (similarityType == "Lowest % of loss/waste") {
+                if (similarityType.equals("Lowest % of loss/waste")) {
                     html = html + "<p><strong>Product with lowest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
                     html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + " %</p>"; 
                 }
-                else {
+                else if (similarityType.equals("Highest % of loss/waste")) {
                     html = html + "<p><strong>Product with highest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
                     html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + "%</p>"; 
+                }
+                else {
+                    html = html + "<p><strong>Average loss percentage: </strong>" + get.startPercentage + "%</p>";
                 }
 
                 html = html + "<p><strong>Difference: </strong>" + get.diff + "%</p>";
