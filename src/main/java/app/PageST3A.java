@@ -165,8 +165,8 @@ public class PageST3A implements Handler {
             html = html + "</li>"; 
 
             html = html + "<li>"; 
-            html = html + "<label for = 'acc1'>2. Brazil - 67% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+            html = html + "<label for = 'acc2'>2. Brazil - 67% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc2' checked>"; 
             html = html + "<div class = 'content'>"; 
             html = html + "<p>Values used to determine similarity</p>"; 
             html = html + "<ul id = 'food-values'>";
@@ -178,8 +178,8 @@ public class PageST3A implements Handler {
             html = html + "</li>";
 
             html = html + "<li>"; 
-            html = html + "<label for = 'acc1'>3. China - 56% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
+            html = html + "<label for = 'acc3'>3. China - 56% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc3' checked>"; 
             html = html + "<div class = 'content'>"; 
             html = html + "<p>Values used to determine similarity</p>"; 
             html = html + "<ul id = 'food-values'>";
@@ -189,8 +189,6 @@ public class PageST3A implements Handler {
             html = html + "</ul>"; 
             html = html + "</div>"; 
             html = html + "</li>";
-    
-            
     
             html = html + "</ul>"; 
             }
@@ -233,6 +231,11 @@ public class PageST3A implements Handler {
         for (Country data : countryName) {
             html = html + "<option>" + data.getName() + "</option>";
         }
+        return html;
+    }
+
+    public String outputData(String country, String year, String common, String overlap, String method, String numString, int num) {
+        String html = "";
         return html;
     }
 
