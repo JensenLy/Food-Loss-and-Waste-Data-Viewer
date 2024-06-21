@@ -235,7 +235,7 @@ public class JDBCConnection {
             
             // Processing sort
             if (sort == null){
-                query = query + " ORDER BY diff;";
+                query = query + "";
             }
             else if (sort.equals("Descending")){
                 query = query + " ORDER BY diff DESC;";
@@ -720,14 +720,17 @@ public class JDBCConnection {
             query = query.replace("Tomatoes", name);
 
             if (sort.equals("Least Similar")){
-                query = query.replace("ORDER BY similarity_score ASC", "ORDER BY similarity_score DESC");
+                query = query.replace("ASC", "DESC");
             }
 
-            if (similarityType == "Lowest % of loss/waste"){
+            if (similarityType.equals("Lowest % of loss/waste")){
                 query = query.replace("ABS(gs.max_loss_percentage - sg.max_loss_percentage)", "ABS(gs.min_loss_percentage - sg.min_loss_percentage)");
             }
-            else if (similarityType == "Highest % of loss/waste"){
+            else if (similarityType.equals("Highest % of loss/waste")){
                 query = query.replace("ABS(gs.max_loss_percentage - sg.max_loss_percentage)", "ABS(gs.max_loss_percentage - sg.max_loss_percentage)");
+            }
+            else {
+                query = query.replace("ABS(gs.max_loss_percentage - sg.max_loss_percentage)", "ABS(gs.avg_loss_percentage - sg.avg_loss_percentage)");
             }
 
             System.out.println(query);
@@ -743,13 +746,16 @@ public class JDBCConnection {
 
                 foodgroup.name = results.getString("GroupName");
 
-                if (similarityType == "Lowest % of loss/waste"){
+                if (similarityType.equals("Lowest % of loss/waste")){
                     foodgroup.startPercentage = results.getDouble("min_loss_percentage");
                     foodgroup.activity = results.getString("min_loss_commodity"); // Use activity to store commodity since they are both string (and I don't want to create a new String)
                 }
-                else {
+                else if (similarityType.equals("Highest % of loss/waste")){
                     foodgroup.startPercentage = results.getDouble("max_loss_percentage");
                     foodgroup.activity = results.getString("max_loss_commodity"); // Use activity to store commodity since they are both string (and I don't want to create a new String)
+                }
+                else {
+                    foodgroup.startPercentage = results.getDouble("avg_loss_percentage");
                 }
 
                 foodgroup.diff = results.getDouble("similarity_score");
