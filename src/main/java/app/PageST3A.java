@@ -120,6 +120,7 @@ public class PageST3A implements Handler {
                     <input type = "submit" value = "Search">
                 </div>
 
+            </form>    
             </div>
         """;
 
@@ -136,64 +137,7 @@ public class PageST3A implements Handler {
         else {
             num = Integer.parseInt(numString);
         }
-
-        if (num != 0){
-
-            html += """
-                <div class = "searchHeading">
-                    <h2>Search Results</h2> 
-                    <sub>Displaying 3 results</sub>
-                    <hr>
-            """;
-            html += "<h2 class = 'countryHeading'>Country/Region: " + country + " " + year + "</h2>";
-            html += "</div>";
-
-
-            html = html + "<ul id = 'accordion'>"; 
-    
-            html = html + "<li>"; 
-            html = html + "<label for = 'acc1'>1. New Zealand - 83% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
-            html = html + "<div class = 'content'>"; 
-            html = html + "<p>Values used to determine similarity</p>"; 
-            html = html + "<ul id = 'food-values'>";
-            html = html + "<li>Rice, Milled: 45% Food Loss</li>";
-            html = html + "<li>Wheat: 37% Food Loss</li>";
-            html = html + "<li>Millet: 12% Food Loss</li>";
-            html = html + "</ul>"; 
-            html = html + "</div>"; 
-            html = html + "</li>"; 
-
-            html = html + "<li>"; 
-            html = html + "<label for = 'acc2'>2. Brazil - 67% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc2' checked>"; 
-            html = html + "<div class = 'content'>"; 
-            html = html + "<p>Values used to determine similarity</p>"; 
-            html = html + "<ul id = 'food-values'>";
-            html = html + "<li>Oats (Cereals): 32% Food Loss</li>";
-            html = html + "<li>Millet: 28% Food Loss</li>";
-            html = html + "<li>Melons (Vegetables): 12% Food Loss</li>";
-            html = html + "</ul>"; 
-            html = html + "</div>"; 
-            html = html + "</li>";
-
-            html = html + "<li>"; 
-            html = html + "<label for = 'acc3'>3. China - 56% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc3' checked>"; 
-            html = html + "<div class = 'content'>"; 
-            html = html + "<p>Values used to determine similarity</p>"; 
-            html = html + "<ul id = 'food-values'>";
-            html = html + "<li>Rice, Milled: 45% Food Loss</li>";
-            html = html + "<li>Wheat: 37% Food Loss</li>";
-            html = html + "<li>Millet: 12% Food Loss</li>";
-            html = html + "</ul>"; 
-            html = html + "</div>"; 
-            html = html + "</li>";
-    
-            html = html + "</ul>"; 
-            }
-
-
+        html += outputData(country, year, commonCombination, overallCombination, method, numString, num);
 
         // Add Div for page Content
         // html = html + "<div class='content'>";
@@ -234,26 +178,75 @@ public class PageST3A implements Handler {
         return html;
     }
 
-    public String outputData(String country, String year, String common, String overlap, String method, String numString, int num) {
+    public String outputData(String country, String year, String common, String overall, String method, String numString, int num) {
         String html = "";
+        JDBCConnection jdbc = new JDBCConnection();
+        ArrayList<Country> similarCountry = jdbc.get3AData(country, year, common, overall, method, numString);
+
+        int i = 0;
+        for (Country simCountry : similarCountry) {
+            if (i == 0) {
+                html += """
+                    <div class = "searchHeading">
+                        <h2>Search Results</h2> 
+                        """;
+                html += "<sub>Displaying " + similarCountry.size() + " results</sub>";
+                html += "<hr>";
+                html += "<h2 class = 'countryHeading'>Country/Region: " + country + " " + year + "</h2>";
+                html += "</div>";
+            }
+            i += 1;
+                html += createCountryAccordion(simCountry.getName(), simCountry.score, common, overall, method, simCountry.commonProducts, simCountry.avgLoss, simCountry.selectedCountryAvgLoss, simCountry.totalProducts, i);
+            
+        }
         return html;
     }
 
-    public String createCountryAccordion(String country, String score, String dataValue1, String dataValue2, String dataValue3) {
+    public String createCountryAccordion(String country, double score, String common, String overall, String method, String commonProducts, double avgLoss, double selectedAvgLoss, String totalProducts, int i) {
         String html = "";
-
-        html = html + "<li>"; 
-            html = html + "<label for = 'acc1'>1. " + country + " - " + score + "% Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
-            html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc1' checked>"; 
-            html = html + "<div class = 'content'>"; 
-            html = html + "<p>Values used to determine similarity</p>"; 
-            html = html + "<ul id = 'food-values'>";
-            html = html + "<li>" + dataValue1 + "</li>";
-            html = html + "<li>" + dataValue2 + "</li>";
-            html = html + "<li>" + dataValue3 + "</li>";
-            html = html + "</ul>"; 
-            html = html + "</div>"; 
-        html = html + "</li>";
+        html += "<div>";
+        html = html + "<ul id = 'accordion'>"; 
+        if (common == "common" && overall == "overall") {
+            html = html + "<li>"; 
+                html = html + "<label for = 'acc"+ i +"'>"+ i +". " + country + " - " + String.format("%.2f%%", score * 100) + " Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+                html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc"+ i +"' checked>"; 
+                html = html + "<div class = 'content'>"; 
+                html = html + "<p>Data used to determine similarity</p>"; 
+                html = html + "<ul id = 'food-values'>";
+                html = html + "<li>Number of Products in common with Selected Country: " + commonProducts + "</li>";
+                html = html + "<li>Difference in Average Loss Percentage: " + String.format("%.2f%%", avgLoss) + "%</li>";
+                html = html + "</ul>"; 
+                html = html + "</div>"; 
+            html = html + "</li>";
+        }
+        else if (common != null && common.equals("common")) {
+            html = html + "<li>"; 
+                html = html + "<label for = 'acc"+ i +"'>"+ i +". " + country + " - " + String.format("%.2f%%", score * 100) + " Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+                html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc"+ i +"' checked>"; 
+                html = html + "<div class = 'content'>"; 
+                html = html + "<p>Data used to determine similarity</p>"; 
+                html = html + "<ul id = 'food-values'>";
+                html = html + "<li>Number of Products in common with Selected Country: " + commonProducts + "</li>";
+                html = html + "<li>Total Products of Selected Country: " + totalProducts + "</li>";
+                html = html + "</ul>"; 
+                html = html + "</div>"; 
+            html = html + "</li>";
+        }
+        else if (overall != null && overall.equals("overall")) {
+            html = html + "<li>"; 
+                html = html + "<label for = 'acc"+ i +"'>"+ i +". " + country + " - " + String.format("%.2f%%", score * 100) + " Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
+                html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc"+ i +"' checked>"; 
+                html = html + "<div class = 'content'>"; 
+                html = html + "<p>Data used to determine similarity</p>"; 
+                html = html + "<ul id = 'food-values'>";
+                html = html + "<li>Difference in Average Loss Percentage: " + String.format("%.2f%%", avgLoss) + "</li>";
+                html = html + "<li>Selected Country Average Loss: " + String.format("%.2f%%", selectedAvgLoss) + "</li>";
+                html = html + "</ul>"; 
+                html = html + "</div>"; 
+            html = html + "</li>";
+        }
+        html = html + "</ul>"; 
+        html += "</div>";
 
         return html;
     }

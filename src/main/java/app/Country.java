@@ -24,6 +24,7 @@ public class Country {
    public String commonProducts;
    public String totalProducts;
    public double avgLoss;
+   public double selectedCountryAvgLoss;
 
 
    /**

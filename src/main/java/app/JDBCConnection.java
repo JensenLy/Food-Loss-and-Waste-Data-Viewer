@@ -798,7 +798,7 @@ public class JDBCConnection {
 
             String query = "";
 
-            if (common == "common" && overall == "overall") {
+            if (common != null && common.equals("common") && overall != null && overall.equals("overall")) {
                 query += "WITH SelectedCountryData AS (\r\n" + //
                          "   SELECT GroupName, lossPercentage\r\n" + //
                          "   FROM Page2A\r\n" + //
@@ -843,8 +843,8 @@ public class JDBCConnection {
                     similarCountry.add(countryObj);
                 }
             }
-            else if (common == "common" && overall == null) {
-                if (method == "absolute") {
+            else if (common != null && common.equals("common")) {
+                if (method.equals("absolute")) {
                     query += """
                         WITH SelectedCountryProducts AS (
                             SELECT DISTINCT GroupName
@@ -877,34 +877,166 @@ public class JDBCConnection {
                         CROSS JOIN SelectedCountryProductCount scp
                         ORDER BY o.common_products DESC
                             """;
-                    query += "LIMIT" + numString + ";";
+                    query += "LIMIT " + numString + ";";
                     query = query.replace("United States of America", country);
                     query = query.replace("1994", year);
 
                     System.out.println(query);
-                // Get Result
-                results = statement.executeQuery(query);
-                while (results.next()) {
-                    Country countryObj = new Country(results.getString("countryName"));
+                    // Get Result
+                    results = statement.executeQuery(query);
+                    while (results.next()) {
+                        Country countryObj = new Country(results.getString("countryName"));
                     
-                    countryObj.score = results.getDouble("similarity_score");
-                    countryObj.commonProducts = results.getString("common_products");
-                    countryObj.avgLoss = results.getDouble("avg_loss_diff");
-                    countryObj.totalProducts = results.getString ("total_products");
+                        countryObj.score = results.getDouble("similarity_score");
+                        countryObj.commonProducts = results.getString("common_products");
+                        countryObj.avgLoss = results.getDouble("avg_loss_diff");
+                        countryObj.totalProducts = results.getString ("total_products");
+                        
                     
-                    similarCountry.add(countryObj);
+                        similarCountry.add(countryObj);
+                    }
                 }
-                }
-                else if (method == "overlap") {
+                else if (method.equals("overlap")) {
+                    query += """
+                        WITH SelectedCountryProducts AS (
+                            SELECT DISTINCT GroupName
+                            FROM Page2A
+                            WHERE countryName = 'Myanmar'
+                              AND year = 1994
+                        ),
+                        OtherCountriesProducts AS (
+                            SELECT P.countryName, 
+                                   COUNT(DISTINCT P.GroupName) AS total_products,
+                                   COUNT(DISTINCT sc.GroupName) AS common_products
+                            FROM Page2A P
+                            LEFT JOIN SelectedCountryProducts sc ON P.GroupName = sc.GroupName
+                            WHERE P.year = 1994
+                              AND P.countryName != 'Myanmar'
+                            GROUP BY P.countryName
+                        )
+                        SELECT c.countryName, o.common_products, o.total_products,
+                               (o.common_products / o.total_products) AS overlap_score
+                        FROM OtherCountriesProducts o
+                        JOIN country c ON o.countryName = c.countryName
+                        ORDER BY overlap_score DESC
+                            """;
+                    query += "LIMT " + numString +";";
+                    query = query.replace("Myanmar", country);
+                    query = query.replace("1994", year);
+
+                    // Get Result
+                    results = statement.executeQuery(query);
+                    while (results.next()) {
+                        Country countryObj = new Country(results.getString("countryName"));
                     
+                        countryObj.score = results.getDouble("similarity_score");
+                        countryObj.commonProducts = results.getString("common_products");
+                        countryObj.avgLoss = results.getDouble("avg_loss_diff");
+                        countryObj.totalProducts = results.getString ("total_products");
+                        
+                    
+                        similarCountry.add(countryObj);
+                    }
                 }
             }
-            else if (common == null && overall == "overall") {
-                if (method == "absolute") {
+            else if (overall != null && overall.equals("overall")) {
+                if (method.equals("absolute")) {
+                    query += """
+                        WITH SelectedCountryLoss AS (
+                            SELECT GroupName, lossPercentage
+                            FROM Page2A
+                            WHERE countryName = 'Myanmar'
+                              AND year = 1994
+                        ),
+                        OtherCountriesLoss AS (
+                            SELECT P.countryName, 
+                                   AVG(ABS(P.lossPercentage - sc.lossPercentage)) AS avg_loss_diff
+                            FROM Page2A P
+                            JOIN SelectedCountryLoss sc ON P.GroupName = sc.GroupName
+                            WHERE P.year = 1994
+                              AND P.countryName != 'Myanmar'
+                            GROUP BY P.countryName
+                        ),
+                        SelectedCountryLossSummary AS (
+                            SELECT AVG(lossPercentage) AS selected_country_avg_loss
+                            FROM SelectedCountryLoss
+                        ),
+                        NormalizedOtherCountriesLoss AS (
+                            SELECT o.countryName, 
+                                   o.avg_loss_diff,
+                                   (1 - (o.avg_loss_diff / (SELECT MAX(avg_loss_diff) FROM OtherCountriesLoss))) AS normalized_avg_loss_diff,
+                                   scl.selected_country_avg_loss
+                            FROM OtherCountriesLoss o
+                            CROSS JOIN SelectedCountryLossSummary scl
+                        )
+                        SELECT c.countryName, 
+                               n.avg_loss_diff, 
+                               n.selected_country_avg_loss,
+                               (n.normalized_avg_loss_diff * 0.5 + (n.selected_country_avg_loss / 100) * 0.5) AS similarity_score
+                        FROM NormalizedOtherCountriesLoss n
+                        JOIN country c ON n.countryName = c.countryName
+                        ORDER BY similarity_score DESC        
+                    """;
+                    query += "LIMIT " + numString +";";
+                    query = query.replace("Myanmar", country);
+                    query = query.replace("1994", year);
+
+                    System.out.println(query);
+                    // Get Result
+                    results = statement.executeQuery(query);
+                    while (results.next()) {
+                        Country countryObj = new Country(results.getString("countryName"));
                     
+                        countryObj.score = results.getDouble("similarity_score");
+                        countryObj.avgLoss = results.getDouble("avg_loss_diff");
+                        countryObj.selectedCountryAvgLoss = results.getDouble("selected_country_avg_loss");
+                    
+                        similarCountry.add(countryObj);
+                    }
                 }
-                else if (method == "overlap") {
+                else if (method.equals("overlap")) {
+                    query = """
+                        WITH SelectedCountryLoss AS (
+                            SELECT GroupName, lossPercentage
+                            FROM Page2A
+                            WHERE countryName = 'Myanmar'
+                              AND year = 1994
+                        ),
+                        OtherCountriesLoss AS (
+                            SELECT P.countryName,
+                                   COUNT(DISTINCT P.GroupName) AS total_products,
+                                   COUNT(DISTINCT sc.GroupName) AS common_products,
+                                   AVG(ABS(P.lossPercentage - sc.lossPercentage)) AS avg_loss_diff
+                            FROM Page2A P
+                            LEFT JOIN SelectedCountryLoss sc ON P.GroupName = sc.GroupName
+                            WHERE P.year = 1994
+                              AND P.countryName != 'Myanmar'
+                            GROUP BY P.countryName
+                        )
+                        SELECT c.countryName, o.common_products, o.total_products, o.avg_loss_diff,
+                               ((o.common_products / o.total_products) * (1 / NULLIF(o.avg_loss_diff, 0))) AS similarity_score
+                        FROM OtherCountriesLoss o
+                        JOIN country c ON o.countryName = c.countryName
+                        ORDER BY similarity_score DESC        
+                    """;
+                    query += "LIMIT " + numString + ";";
+                    query = query.replace("Myanmar", country);
+                    query = query.replace("1994", year);
+
+                    System.out.println(query);
+                    // Get Result
+                    results = statement.executeQuery(query);
+                    while (results.next()) {
+                        Country countryObj = new Country(results.getString("countryName"));
                     
+                        countryObj.score = results.getDouble("similarity_score");
+                        countryObj.commonProducts = results.getString("common_products");
+                        countryObj.avgLoss = results.getDouble("avg_loss_diff");
+                        countryObj.totalProducts = results.getString ("total_products");
+                        countryObj.selectedCountryAvgLoss = results.getDouble("selected_country_avg_loss");
+                    
+                        similarCountry.add(countryObj);
+                    }
                 }
             }
         } catch (Exception e) {
