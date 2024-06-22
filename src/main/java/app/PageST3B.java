@@ -141,8 +141,7 @@ public class PageST3B implements Handler {
 
         String similarity = context.formParam("similarityType");
 
-        String sort = context.formParam("sort");
-
+        String sort = context.formParam("sort");     
 
         if (num != 0){
         html = html + displaySelectedOptions(commodity, num, similarity, sort);
@@ -173,7 +172,7 @@ public class PageST3B implements Handler {
 
         // Finish the HTML webpage
         html = html + "</body>" + "</html>";
-        
+
 
         // DO NOT MODIFY THIS
         // Makes Javalin render the webpage
@@ -182,7 +181,7 @@ public class PageST3B implements Handler {
 
     public String outputCommodity() {
         String html = "";
-        html = html + "<input list = 'commodities' name = 'commodity' placeholder = 'Enter Food'>";
+        html = html + "<input list = 'commodities' name = 'commodity' placeholder = 'Enter Food' required>";
         html = html + "<datalist id= 'commodities'>";
 
         // Look up Food Groups from JDBC
@@ -242,17 +241,17 @@ public class PageST3B implements Handler {
 
                 if (similarityType.equals("Lowest % of loss/waste")) {
                     html = html + "<p><strong>Product with lowest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
-                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + " %</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + String.format("%.3f", get.startPercentage) + "%</p>"; 
                 }
                 else if (similarityType.equals("Highest % of loss/waste")) {
                     html = html + "<p><strong>Product with highest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
-                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + "%</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + String.format("%.3f", get.startPercentage) + "%</p>"; 
                 }
                 else {
-                    html = html + "<p><strong>Average loss percentage: </strong>" + get.startPercentage + "%</p>";
+                    html = html + "<p><strong>Average loss percentage: </strong>" + String.format("%.3f", get.startPercentage) + "%</p>";
                 }
 
-                html = html + "<p><strong>Difference: </strong>" + get.diff + "%</p>";
+                html = html + "<p><strong>Similarity Score (Difference): </strong>" + String.format("%.3f", get.diff) + "%</p>";
 
                 html = html + "</div>"; 
                 html = html + "</li>";
@@ -267,17 +266,17 @@ public class PageST3B implements Handler {
 
                 if (similarityType.equals("Lowest % of loss/waste")) {
                     html = html + "<p><strong>Product with lowest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
-                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + " %</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + String.format("%.3f", get.startPercentage) + "%</p>"; 
                 }
                 else if (similarityType.equals("Highest % of loss/waste")) {
                     html = html + "<p><strong>Product with highest percentage of food loss/waste : </strong>" + get.activity + "</p>"; 
-                    html = html + "<p><strong>Loss percentage: </strong>" + get.startPercentage + "%</p>"; 
+                    html = html + "<p><strong>Loss percentage: </strong>" + String.format("%.3f", get.startPercentage) + "%</p>"; 
                 }
                 else {
-                    html = html + "<p><strong>Average loss percentage: </strong>" + get.startPercentage + "%</p>";
+                    html = html + "<p><strong>Average loss percentage: </strong>" + String.format("%.3f", get.startPercentage) + "%</p>";
                 }
 
-                html = html + "<p><strong>Difference: </strong>" + get.diff + "%</p>";
+                html = html + "<p><strong>Similarity Score (Difference): </strong>" + String.format("%.3f", get.diff) + "%</p>";
 
                 html = html + "</div>"; 
                 html = html + "</li>";
