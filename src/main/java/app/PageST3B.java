@@ -74,7 +74,7 @@ public class PageST3B implements Handler {
         <div class = "sidemenu">
         <form action = "/page3B.html" method = 'post'>
 
-        <h2>Enter Food Commodity</h2>
+        <h2>Enter name of a Food</h2>
 
         """;
         
@@ -182,7 +182,7 @@ public class PageST3B implements Handler {
 
     public String outputCommodity() {
         String html = "";
-        html = html + "<input list = 'commodities' name = 'commodity' placeholder = 'Enter Food Commodity'>";
+        html = html + "<input list = 'commodities' name = 'commodity' placeholder = 'Enter Food'>";
         html = html + "<datalist id= 'commodities'>";
 
         // Look up Food Groups from JDBC

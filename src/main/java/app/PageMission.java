@@ -61,7 +61,7 @@ public class PageMission implements Handler {
 
         // List each sidebar's items
         html = html + "<li><a href='#section1'>Purpose</a></li>";
-        html = html + "<li><a href='#section2'>Tutorial</a></li>";
+        html = html + "<li><a href='#section2'>Instruction</a></li>";
         html = html + "<li><a href='#section3'>Personas</a></li>";
         html = html + "<li><a href='#section4'>About Us</a></li>";
 
@@ -69,7 +69,11 @@ public class PageMission implements Handler {
         html = html + "</ul>";
         html = html + "</div>";
 
+
+        // Content 
         html = html + "<div class = 'content1B'>";
+
+        // Purpose
         html = html + "<section id = 'section1'>";
         html = html + "<h2>Purpose</h2>";
         html = html + "<p>";
@@ -77,15 +81,31 @@ public class PageMission implements Handler {
         html = html + "</p>";
         html = html + "</section>";
 
+        // Instruction
         html = html + "<section id = 'section2'>";
-        html = html + "<h2>Tutorial</h2>";
+        html = html + "<h2>Instruction</h2>";
         html = html + "<p style = 'margin-bottom: 0'><strong>Use the Main Navigation Menu:</strong> Located at the top of every page, this menu allows you to quickly jump between different sections of the website.</p>";
-        html = html + "<p style = 'margin-bottom: 10px'>1.Using on the 'Surface Data' link in the main navigation menu.</p>";
+        
+        // 1st part of instruction
+        html = html + "<p style = 'margin-bottom: 10px'>1.Navigating on the 'About Us' page.</p>";
+        html = html + "<p style = 'margin-left: 200px; margin-bottom: 10px'>+This page is pretty straight forward, use the menu on the left side of the page to scroll the part you want to read by clicking on the buttons with the title name (which will turns black when hovers)</p>";
+        html = html + "<p style = 'margin-left: 200px; margin-bottom: 10px'>+In the persona section, you can either scroll horizontally with the scrollbar at bottom, by trackpad if on laptop or click on the black circle at the bottom to jump to each persona. </p>";
+
+        // 2nd part of instruction
+        html = html + "<p style = 'margin-bottom: 10px'>2.Using on the 'Surface Data' link in the main navigation menu.</p>";
         html = html + "<p style = 'margin-left: 200px; margin-bottom: 10px'>+There will be two tab when clicked onto 'Surface Data' on the navigation bar: Country and Food Group, click on the one that is more relevant to you. </p>";
         html = html + "<p style = 'margin-left: 240px; margin-bottom: 10px'>-In 'Country', you will be able to look up data about country of food loss, years, food commodity, activity, food supply stage and cause of loss.</p>";
         html = html + "<p style = 'margin-left: 240px'>-In 'Food Group', you will be able to look up data by choosing food group of loss, years, activity, food supply stage and cause of loss.</p>";
-        html = html + "</section>";
+
+        // 3rd part of instruction
+        html = html + "<p style = 'margin-bottom: 10px'>3.Using on the 'In-Depth Data' link in the main navigation menu.</p>";
+        html = html + "<p style = 'margin-left: 200px; margin-bottom: 10px'>+There will be two tab when clicked onto 'In-Depth Data' on the navigation bar: Location and Food Commodity, click on the one that is more relevant to you. </p>";
+        html = html + "<p style = 'margin-left: 240px; margin-bottom: 10px'>-In 'Location', you will be able to look up data by entering a country, a specific year (singular), the number of results you want to display (current up to 5 on this page), Similarity Combination, Similarity Method. After you have entered all the necessary information, a list of dropdowns will appear and show each country in their separate dropdown with relevant information.</p>";
+        html = html + "<p style = 'margin-left: 240px'>-In 'Food Commodity', you will be able to look up data by entering a name of a food, the number of results you want to display (as many as you want on this page), Similarity Type, Sort by Similarity. After you have entered all the necessary information, a list of dropdowns will appear and show each food group in their separate dropdown with information about the loss percentage (depends on similarity type), the food that have lowest/highest percentage on their group (not available when similarity type set to Ratio) and the how much different that group compared to the group of chosen food. </p>";
+
+        html = html + "</section>"; //close the instruction 
         
+        // Persona 
         html = html + "<section id = 'section3'>";
         html = html + "<h2>Personas</h2>";
 
@@ -96,6 +116,7 @@ public class PageMission implements Handler {
         html = html + outputPersona();
         html = html + "</div>";
 
+        // The 'dot' things that have the url to the personas 
         html = html + "<div class = 'slider-nav'>";
         html = html + "<a href = '#persona1'></a>";
         html = html + "<a href = '#persona2'></a>";
@@ -106,6 +127,7 @@ public class PageMission implements Handler {
         html = html + "</section>";
         html = html + "</section>";
 
+        // About Us
         html = html + "<section id = 'section4'>";
         html = html + "<h2>About us</h2>";
         html = html + "<p>This website is presented by:</p>";
@@ -131,10 +153,10 @@ public class PageMission implements Handler {
         //     """;
 
         // This example uses JDBC to lookup the countries
-        JDBCConnection jdbc = new JDBCConnection();
+        // JDBCConnection jdbc = new JDBCConnection();
 
         // Next we will ask this *class* for the Countries
-        ArrayList<Country> countries = jdbc.getAllCountries();
+        // ArrayList<Country> countries = jdbc.getAllCountries();
 
         // // Add HTML for the countries list
         // html = html + "<h1>All Countries in the foodloss database (using JDBC Connection)</h1>" + "<ul>";
