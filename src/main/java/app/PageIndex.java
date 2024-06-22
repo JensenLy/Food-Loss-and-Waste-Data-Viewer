@@ -58,28 +58,27 @@ public class PageIndex implements Handler {
         html = html + """
             <div class='image-container'>
                 <img>
-                    <img src='food.png' class='top-image' alt='Food image' width  = '1434' height='300'>
+                    <img src='food-waste-problem.png' class='top-image' alt='Food image' width  = '1500' height='1080'>
                 </img>
                 <div class = 'overlay-text'>
                     View Food Loss and Waste data
                     <br>1966 - 2022</br>
                 </div>
-            </div>
+            </div>   
         """;
 
         // Add Div for page Content
-        html = html + "<div class='content'>";
+        // html = html + "<div class='content'>";
 
         // Add HTML for the country list
-        html = html + "<h1>All Time Data 1966 - 2022 (Global)</h1>";
+        html = html + "<div class = 'title'><h1>All Time Data 1966 - 2022 (Global)</h1></div>";
 
         html += outputSnapshot();
 
         html += """
-                
-                <div class = "aboutUslink">
+                <div class = "aboutUsLink">
                     <a href="/mission.html#section2">
-                        <button>View Instructions</button>
+                        <button id = 'linkButton'>View Instructions</button>
                     </a>                
                 </div>
         """;
