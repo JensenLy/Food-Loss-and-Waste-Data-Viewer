@@ -117,7 +117,7 @@ public class PageST2B implements Handler {
 
         <h2>----------------------------------------</h2>
 
-        <h2>Sort loss percentage</h2>
+        <h2>Sort by difference in %</h2>
 
         <div>
         <label><input type="radio" name="sort" value = "Ascending" checked>Ascending</label>
@@ -172,7 +172,10 @@ public class PageST2B implements Handler {
         // Display selected group(s) and years 
         if (start != 0){
             html = html + displaySelectedGroupsAndYears(foodGroup, start, end, sort);
-        }  
+        }
+        else {
+            html = html + "<div class = 'inputRemind'>PLEASE INPUT DATA INTO THE MENU ON THE LEFT HAND SIDE OF THE PAGE</div>";
+        }
         
         // Output table data
         html = html + outputTable(foodGroup, start, end, activity, cause, supplyStage, sort);
@@ -302,22 +305,22 @@ public class PageST2B implements Handler {
     }
 
     public String displaySelectedGroupsAndYears(List<String> foodGroup, int start, int end, String sort){
-        String html = "<div class = displaySelectedOption>";
+        String html = "<div class = displaySelectedOption><ul style = 'border: none'>";
 
         // Display chosen years
         if (start == end){
-            html = html + "<p>Showing data at year " + start;
+            html = html + "<li>Showing data at year " + start + "</li>";
         }
         else {
-            html = html + "<p>Showing data from year " + start + " to " + end;
+            html = html + "<li>Showing data from year " + start + " to " + end + "</li>";
         }
 
         // Display chosen food groups
-        html = html + " <strong>|</strong> " + foodGroup.size() + " selected food group(s):";
+        html = html + "<li>Sort by the difference in loss percentage: " + sort + "</li>";
+        
+        html = html + "<li>" + foodGroup.size() + " selected food group(s):" + "</li></ul>";
 
-        html = html + " <strong>|</strong> " + sort + "</p>";
-
-        html = html + "<ul>";
+        html = html + "<ul style = 'margin-top: -20px'>";
         for (int i = 0; i < foodGroup.size(); i++){
             html = html + "<li>" + foodGroup.get(i) + "</li>";
         }

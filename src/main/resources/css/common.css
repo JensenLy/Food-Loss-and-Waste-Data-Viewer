@@ -430,6 +430,16 @@ button {
    border: solid green 3px;
 }
 
+/* Format for the big text which tell the user to input the fields.*/
+.inputRemind {
+   font-size: 50px;
+   font-weight: 600;
+   margin-left: 350px;
+   margin-top: 400px;
+   padding: 0px 50px;
+   text-align: center;
+}
+
 /* Table format */
 table {
    margin-left: 370px;

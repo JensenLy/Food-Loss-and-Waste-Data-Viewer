@@ -145,10 +145,10 @@ public class PageST3B implements Handler {
 
         if (num != 0){
         html = html + displaySelectedOptions(commodity, num, similarity, sort);
-        }
-
-        if (num != 0){
         html = html + accordion(commodity, similarity, num, sort);
+        }
+        else {
+            html = html + "<div class = 'inputRemind'>PLEASE INPUT DATA INTO THE MENU ON THE LEFT HAND SIDE OF THE PAGE</div>";
         }
 
         //     <div class='header'>
@@ -205,14 +205,16 @@ public class PageST3B implements Handler {
         String html = "<div class = displaySelectedOption>";
 
         // Display chosen commodity
-        html = html + "<p><strong>Selected commodity:</strong> " + commodity + " <strong>from Group:</strong> " + jdbc.getGroupByFood(commodity);
+        html = html + "<ul style = 'border: none; max-height: 300px'>";
+
+        html = html + "<li><strong>Selected commodity:</strong> " + commodity + " <strong>from Group:</strong> " + jdbc.getGroupByFood(commodity) + "</li>";
 
         // Display chosen food groups
-        html = html + " <strong>|</strong> <strong>Similarity Type:</strong> " + similarType;
+        html = html + "<li><strong>Similarity Type:</strong> " + similarType + "</li>";
 
-        html = html + " <strong>|</strong> <strong>Requested number of groups:</strong> " + num;
+        html = html + "<li><strong>Requested number of groups:</strong> " + num + "</li>";
 
-        html = html + " <strong>|</strong> <strong>Sort:</strong> " + sort + "</p>";
+        html = html + "<li><strong>Sort:</strong> " + sort + "</li>";
 
         return html;
     }
@@ -225,7 +227,7 @@ public class PageST3B implements Handler {
 
         int count = 1; 
 
-        html = html + "<p><strong>Search Result:</strong> -1 results found";
+        html = html + "<li><strong>Search Result:</strong> -1 results found" + "</li>";
 
         html = html + "</ul>";
         html = html + "</div>";
@@ -285,7 +287,7 @@ public class PageST3B implements Handler {
             }
         }
 
-        html = html.replace("<p><strong>Search Result:</strong> -1 results found", "<p><strong>Search Result:</strong> " + (count - 1) + " results found");
+        html = html.replace("<li><strong>Search Result:</strong> -1 results found", "<li><strong>Search Result:</strong> " + (count - 1) + " results found");
 
         html = html + "</ul>"; 
 
