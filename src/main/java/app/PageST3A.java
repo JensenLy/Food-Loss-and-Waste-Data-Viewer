@@ -137,7 +137,14 @@ public class PageST3A implements Handler {
         else {
             num = Integer.parseInt(numString);
         }
-        html += outputData(country, year, commonCombination, overallCombination, method, numString, num);
+
+        if (country != null) {
+            html += outputData(country, year, commonCombination, overallCombination, method, numString, num);
+        }
+        else {
+            html = html + "<div class = 'inputRemind'>PLEASE INPUT DATA INTO THE MENU ON THE LEFT HAND SIDE OF THE PAGE</div>";
+        }
+        
 
         // Add Div for page Content
         // html = html + "<div class='content'>";

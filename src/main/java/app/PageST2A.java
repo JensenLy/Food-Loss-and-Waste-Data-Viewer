@@ -187,8 +187,13 @@ public class PageST2A implements Handler {
         String cause = context.formParam("cause");
         
         // Begin html table to display output
-        html = html + outputTable(foodGroup, country, activity, supplyStage, cause, sort, start, end);
-
+        if (country != null) {
+            html = html + outputTable(foodGroup, country, activity, supplyStage, cause, sort, start, end);
+        }
+        else {
+            html = html + "<div class = 'inputRemind'>PLEASE INPUT DATA INTO THE MENU ON THE LEFT HAND SIDE OF THE PAGE</div>";
+        }
+       
         // Add Div for page Content
        /*  html = html + "<div class='content'>";
 
