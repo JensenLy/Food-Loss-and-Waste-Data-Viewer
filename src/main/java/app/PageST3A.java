@@ -213,7 +213,7 @@ public class PageST3A implements Handler {
         String html = "";
         html += "<div>";
         html = html + "<ul id = 'accordion'>"; 
-        if (common == "common" && overall == "overall") {
+        if (common == "common" && overall == "overall" && !String.format("%.2f%%", score * 100).equals("0.00%")) {
             html = html + "<li>"; 
                 html = html + "<label for = 'acc"+ i +"'>"+ i +". " + country + " - " + String.format("%.2f%%", score * 100) + " Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
                 html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc"+ i +"' checked>"; 
@@ -226,7 +226,7 @@ public class PageST3A implements Handler {
                 html = html + "</div>"; 
             html = html + "</li>";
         }
-        else if (common != null && common.equals("common")) {
+        else if (common != null && common.equals("common") && !String.format("%.2f%%", score * 100).equals("0.00%")) {
             html = html + "<li>"; 
                 html = html + "<label for = 'acc"+ i +"'>"+ i +". " + country + " - " + String.format("%.2f%%", score * 100) + " Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
                 html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc"+ i +"' checked>"; 
@@ -239,7 +239,7 @@ public class PageST3A implements Handler {
                 html = html + "</div>"; 
             html = html + "</li>";
         }
-        else if (overall != null && overall.equals("overall")) {
+        else if (overall != null && overall.equals("overall") && !String.format("%.2f%%", score * 100).equals("0.00%")) {
             html = html + "<li>"; 
                 html = html + "<label for = 'acc"+ i +"'>"+ i +". " + country + " - " + String.format("%.2f%%", score * 100) + " Similarity<span><img src='triangle-png-28.png' width  = '20' height='20'></span> </label>"; 
                 html = html + "<input type = 'checkbox' name = 'accordion' id = 'acc"+ i +"' checked>"; 

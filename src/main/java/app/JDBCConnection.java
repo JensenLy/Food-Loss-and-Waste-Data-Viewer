@@ -1033,7 +1033,7 @@ public class JDBCConnection {
                         countryObj.commonProducts = results.getString("common_products");
                         countryObj.avgLoss = results.getDouble("avg_loss_diff");
                         countryObj.totalProducts = results.getString ("total_products");
-                        countryObj.selectedCountryAvgLoss = results.getDouble("selected_country_avg_loss");
+                        
                     
                         similarCountry.add(countryObj);
                     }
